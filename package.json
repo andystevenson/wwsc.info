@@ -1,0 +1,36 @@
+{
+  "name": "wwsc.info",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve --incremental",
+    "build": "npx @11ty/eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andystevenson/wwsc.info.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andystevenson/wwsc.info/issues"
+  },
+  "homepage": "https://github.com/andystevenson/wwsc.info#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0-canary.15",
+    "@11ty/eleventy-plugin-vite": "^1.0.0",
+    "@andystevenson/lib": "^0.2.15",
+    "@andystevenson/sass": "^0.1.2",
+    "@andystevenson/theme-toggle": "^0.1.5",
+    "@types/node": "^18.7.18",
+    "dotenv": "^16.0.2",
+    "open-props": "^1.4.15",
+    "postcss": "^8.4.16",
+    "postcss-custom-media": "^8.0.2",
+    "postcss-jit-props": "^1.0.7",
+    "sass": "^1.54.9",
+    "vite-plugin-minify": "^1.5.2"
+  }
+}

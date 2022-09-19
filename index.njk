@@ -1,0 +1,180 @@
+---
+layout: 'base.njk'
+---
+
+<section class="hero">
+  <header>
+    <h1>West Warwickshire Sports Complex</h1>
+    <form action="/join">
+      <button>join us</button>
+    </form>
+  </header>
+
+  <section class="queen">
+    {{imgc(cms.image['her majesty queen elizabeth'])}}
+  </section>
+  
+  {% set promotions = cms.tags['main-promotion'] %}
+  {% include "partials/promotions.njk" %}
+
+  <section title="gallery" id="home-gallery" class="gallery">
+    <a title="bar" href="/bar">
+      <picture>
+        {{ imgc(cms.image['bar-main']) }}
+      </picture>
+    </a>
+    <a title="cricket" href="/cricket">
+      <picture>
+        {{ imgc(cms.image['cricket-pavillion']) }}
+      </picture>
+    </a>
+    <a title="tennis" href="/tennis">
+      <picture>
+        {{ imgc(cms.image['tennis-juniors']) }}
+      </picture>
+    </a>
+    <a title="gym" href="/gym">
+      <picture>
+        {{ imgc(cms.image['fitness-rowing']) }}
+      </picture>
+    </a>
+    <a title="restaurant" href="/restaurant">
+      <picture>
+        {{ imgc(cms.image['restaurant-burger-and-chips']) }}
+      </picture>
+    </a>
+    <a title="hockey" href="/hockey">
+      <picture>
+        {{ imgc(cms.image['hockey-ladies-match']) }}
+      </picture>
+    </a>
+    <a title="squash" href="/squash">
+      <picture>
+        {{ imgc(cms.image['squash-professionals']) }}
+      </picture>
+    </a>
+    <a title="football" href="/football">
+      <picture>
+        {{ imgc(cms.image['football-juniors']) }}
+      </picture>
+    </a>
+    <a title="events" href="/events">
+      <picture>
+        {{ imgc(cms.image['events-wedding-setting']) }}
+      </picture>
+    </a>
+    <a title="tennis" href="/tennis">
+      <picture>
+        {{ imgc(cms.image['tennis-courts-sunny-day']) }}
+      </picture>
+    </a>
+    <a title="fitness" href="/fitness">
+      <picture>
+        {{ imgc(cms.image['fitness-ladies-bar-bell']) }}
+      </picture>
+    </a>
+    <a title="clubhouse" href="/contact">
+      <picture>
+        {{ imgc(cms.image['clubhouse-view-from-carpark']) }}
+      </picture>
+    </a>
+  </section>
+</section>
+<section title="welcome" id="welcome" class="welcome">
+  <header  data-theme="light">
+    <h2>Welcome</h2>
+    <p>West Warwickshire Sports Complex (WWSC) is in the heart of Solihull and welcomes members and the public to enjoy our great multi-sports and hospitality facility. We can trace the roots of WWSC back to 1888 with Olton & West Warwicks Cricket Club and 1898 with Olton & West Warwicks Hockey Club. WWSC has been an established charity since 2005 with the objective of providing the best multi-sports facility to the local community. </p>
+    <section class="cto">
+      <form action="/contact">
+        <button>book a tour</button>
+      </form>
+      <form action="/opening-times">
+        <button>opening times</button>
+      </form>
+    </section>
+  </header>
+  <section title="aerial-video" id="aerial-video" class="aerial-video">
+    <video controls>
+      
+
+      <source src="https://videos.ctfassets.net/ffrbyg3cfykl/2JFdc3PK3y2JllOM1b4qaL/806e87c1a2a553b1037000614e7d7935/wwsc-video.webm" type="video/webm">      
+      
+      <source src="https://videos.ctfassets.net/ffrbyg3cfykl/1KFWVj1TRlDdzBQj5YDnay/61aab460e1c4eadf3aaba38328f82b79/wwsc-video.mp4" type="video/mp4">
+    </video>
+  </section>
+
+</section>
+<section id="sports-gallery">
+  <h2>Sports</h2>
+  <section class="sports-gallery">
+    <article class="fitness">
+      <a href="/fitness">
+        <h3>group exercise</h3>
+      </a>
+      <form action="{{ bookNow }}">
+        <button>book now</button>
+      </form>
+    </article>
+    <article class="gym">
+      <a href="/gym">
+        <h3>gym</h3>
+      </a>
+      <form action="{{ bookNow }}">
+        <button>book now</button>
+      </form>
+    </article>
+    <article class="tennis">
+      <a href="/tennis">
+        <h3>tennis</h3>
+      </a>
+      <form action="{{ bookNow }}">
+        <button>book now</button>
+      </form>
+    </article>
+    <article class="squash">
+      <a href="/squash">
+        <h3>squash</h3>
+      </a>
+      <form action="{{ bookNow }}">
+        <button>book now</button>
+      </form>
+    </article>
+    <article class="racketball">
+      <a href="/racketball">
+        <h3>racketball</h3>
+      </a>
+      <form action="{{ bookNow }}">
+        <button>book now</button>
+      </form>
+    </article>
+    <article class="hockey">
+      <a href="/hockey">
+        <h3>hockey</h3>
+      </a>
+      <a href="mailto:hockey@westwarwicks.co.uk?Subject=booking">
+        <button>contact</button>
+      </a>
+    </article>
+    <article class="cricket">
+      <a href="/cricket">
+        <h3>cricket</h3>
+      </a>
+      <a href="mailto:cricket@westwarwicks.co.uk?Subject=booking">
+        <button>contact</button>
+      </a>
+    </article>
+    <article class="football">
+      <a href="/football">
+        <h3>football</h3>
+      </a>
+      <a href="mailto:football@westwarwicks.co.uk?Subject=booking">
+        <button>contact</button>
+      </a>
+    </article>
+  </section>
+</section>
+
+{% set group = club %}
+{% include 'partials/links.njk' %}
+
+{% include "partials/find-us.njk" %}

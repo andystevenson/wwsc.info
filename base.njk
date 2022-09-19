@@ -1,0 +1,26 @@
+{# {{ page | inspect }} #}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>{{ title if title else meta.title }}</title>
+
+    {# deliberately early non-deferred use of theme toggle to render the color-scheme correctly while loading #}
+    <script type="module" src="/@input/js/theme-toggle.js"></script>
+
+    {% include "partials/meta-tags.njk" %}
+  </head>
+
+  <body class="{{page.fileSlug}}">
+
+    <a href="#main" class="skip-to-content">Skip to content</a>
+
+    <div class="site container">
+      {% include 'partials/header.njk' %}
+      {% include 'partials/main.njk' %}
+      {% include 'partials/footer.njk' %}
+    </div>
+    {% include "partials/scroll-to-top.njk" %}
+  </body>
+
+</html>
