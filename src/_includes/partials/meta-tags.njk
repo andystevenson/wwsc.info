@@ -1,0 +1,43 @@
+<meta charset="UTF-8"/>
+<meta name="generator" content="{{ eleventy.generator }}">
+<meta name="description" content="{{ description if description else meta.description }}">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google / Search Engine Tags -->
+<meta itemprop="name" content="{{ company if company else meta.company }}">
+<meta itemprop="description" content="{{ description if description else meta.description }}">
+<meta itemprop="image" content="{{ site if site else meta.site }}/west-warwicks-social-image.png">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:url" content="{{ site if site else meta.site }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ company if company else meta.company }}">
+<meta property="og:description"
+    content="{{ description if description else meta.description }}">
+<meta property="og:image" content="{{ site if site else meta.site }}/west-warwicks-social-image.png">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ company if company else meta.company }}">
+<meta name="twitter:description"
+    content="{{ description if description else meta.description }}">
+<meta name="twitter:image" content="{{ site if site else meta.site }}/west-warwicks-social-image.png">
+
+<!-- favicon  -->
+<!-- https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- 32×32 -->
+<link rel="apple-touch-icon" type="image/png" href="/favicon-180.png">
+<!-- 180×180 -->
+
+<!-- manifest -->
+<link rel="manifest" href="/manifest.webmanifest">
+
+<link rel="stylesheet" href="/@input/sass/styles.scss">
+
+{% if script %}
+  <script src="/@input/js/{{script}}" type="module" defer></script>
+{% endif %}

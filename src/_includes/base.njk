@@ -12,15 +12,13 @@
   </head>
 
   <body class="{{page.fileSlug}}">
-
-    <a href="#main" class="skip-to-content">Skip to content</a>
-
+    {{ link(cms.links['skip-to-content'], 'skip to content', id='skip-to-content' ) }}
     <div class="site container">
       {% include 'partials/header.njk' %}
       {% include 'partials/main.njk' %}
       {% include 'partials/footer.njk' %}
     </div>
-    {% include "partials/scroll-to-top.njk" %}
+    {{ link(cms.links['scroll-to-top'], id='scroll-to-top' )}}
   </body>
 
 </html>
