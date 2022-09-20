@@ -1,5 +1,5 @@
 export default (request, context) => {
-  const { url } = request
+  const { url, destination } = request
   const identity = context.cookies.get('nf_jwt')
-  context.log({ url, identity })
+  context.log({ url, destination, identity })
 }
