@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx @11ty/eleventy --serve --incremental",
-    "build": "npx @11ty/eleventy --input=src"
+    "build": "npx @11ty/eleventy",
+    "clean": "rm -rf _site .11ty*"
   },
   "repository": {
     "type": "git",

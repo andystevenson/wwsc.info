@@ -3,7 +3,7 @@
 <html lang="en">
 
   <head>
-    <title>{{ title if title else meta.title }}</title>
+    <title>{{page.fileSlug}}</title>
 
     {# deliberately early non-deferred use of theme toggle to render the color-scheme correctly while loading #}
     <script type="module" src="/@input/js/theme-toggle.js"></script>
@@ -12,7 +12,7 @@
   </head>
 
   <body class="{{page.fileSlug}}">
-    {{ link(cms.links['skip-to-content'], 'skip to content', id='skip-to-content' ) }}
+    {{ link(cms.links['skip-to-content'], 'skip to content', id='skip-to-content') }}
     <div class="site container">
       {% include 'partials/header.njk' %}
       {% include 'partials/main.njk' %}
