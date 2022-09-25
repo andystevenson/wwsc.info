@@ -1,1 +1,13 @@
-<h1>card check</h1>
+{{ h1('card checker')}}
+<section class="card-checker">
+  <form class='card-checker' action="?">
+    <label for="cardnumber">
+      <strong>Card Number</strong>
+      <input type="text" name="cardnumber" id="cardnumber" autofocus>
+    </label>
+    <button>submit</button>
+  </form>
+</section>
+
+{# this gets replaced by the check #}
+<section class="placeholder"></section>

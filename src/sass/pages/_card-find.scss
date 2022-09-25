@@ -1,0 +1,54 @@
+body.card-find {
+  main {
+    > * {
+      place-self: center;
+      min-inline-size: 60vh;
+      text-align: center;
+    }
+
+    a.review {
+      place-self: unset;
+      inline-size: unset;
+    }
+
+    strong {
+      font-size: var(--font-size-3);
+    }
+
+    input {
+      background-color: var(--surface-1);
+      border: var(--border-size-2) solid var(--text-1);
+      border-radius: var(--radius-2);
+    }
+
+    ul {
+      display: grid;
+      grid-auto-rows: min-content;
+      min-block-size: 50vh;
+
+      li {
+        max-inline-size: unset;
+        place-self: center;
+        display: grid;
+        grid-template-columns: 8ch 20ch 25ch 15ch 8ch 4ch;
+        gap: var(--size-2);
+        text-align: right;
+        padding-inline-end: var(--size-3);
+
+        &[false] {
+          background-color: red;
+          p {
+            color: white;
+          }
+        }
+
+        p {
+          font-size: var(--font-size-fluid-0);
+        }
+        > p:nth-of-type(1) {
+          font-weight: var(--font-weight-9);
+        }
+      }
+    }
+  }
+}

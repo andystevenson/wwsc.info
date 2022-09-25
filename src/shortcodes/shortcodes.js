@@ -1,12 +1,12 @@
 const safetify = require('@andystevenson/lib/safetify')
 const isAsyncFunction = require('@andystevenson/lib/isAsyncFunction')
-const icon = require('./icon')
-const link = require('./link')
+const iconc = require('./iconc')
+const linkc = require('./linkc')
 const imgc = require('./imgc')
 
 const localShortcodes = {
-  icon,
-  link,
+  iconc,
+  linkc,
   imgc,
 }
 const safeShortcodes = {}

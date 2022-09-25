@@ -38,5 +38,6 @@
 
 <link rel="stylesheet" href="/@input/sass/styles.scss">
 
-{% if script %}
+{% if pageScript %}
+  <script src="/@input/js/{{pageScript}}" type="module" defer></script>
 {% endif %}

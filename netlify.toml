@@ -21,6 +21,34 @@
   ## more info on configuring this file: https://docs.netlify.com/configure-builds/file-based-configuration/
 
 
+# [[edge_functions]]
+# function = "cookies"
+# path = "/*"
+
 [[edge_functions]]
-function = "cookies"
-path = "/*"
+  path = '/card-check'
+  function = 'card-check'
+
+[[edge_functions]]
+  path = '/card-find'
+  function = 'card-find'
+
+[[edge_functions]]
+function = "ashbourne-json"
+path = "/api/ashbourne-json"
+
+[[edge_functions]]
+function = "opening-times"
+path = "/api/opening-times"
+
+[[edge_functions]]
+function = "stripe-join"
+path = "/api/stripe-join"
+
+[[edge_functions]]
+function = "sumup-customers"
+path = "/api/sumup-customers"
+
+[[edge_functions]]
+function = "hello"
+path = "/hello"

@@ -3,7 +3,7 @@
 <html lang="en">
 
   <head>
-    <title>{{page.fileSlug}}</title>
+    <title>{{pageTitle}}</title>
 
     {# deliberately early non-deferred use of theme toggle to render the color-scheme correctly while loading #}
     <script type="module" src="/@input/js/theme-toggle.js"></script>
@@ -15,13 +15,13 @@
   </head>
 
   <body class="{{page.fileSlug}}">
-    {{ link(cms.links['skip-to-content'], 'skip to content', id='skip-to-content') }}
-    <div class="site container">
-      {% include 'partials/header.njk' %}
-      {% include 'partials/main.njk' %}
-      {% include 'partials/footer.njk' %}
-    </div>
-    {{ link(cms.links['scroll-to-top'], id='scroll-to-top' )}}
+    {{ linkc(cms.links['skip-to-content'], 'skip to content', id='skip-to-content') }}
+
+    {% include 'partials/header.njk' %}
+    {% include 'partials/main.njk' %}
+    {% include 'partials/footer.njk' %}
+
+    {{ linkc(cms.links['scroll-to-top'], id='scroll-to-top' )}}
   </body>
 
 </html>
