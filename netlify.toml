@@ -51,4 +51,4 @@ path = "/api/sumup-customers"
 
 [[edge_functions]]
 function = "hello"
-path = "/hello"
+path = "/api/hello"
