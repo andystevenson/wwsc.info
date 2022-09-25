@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx @11ty/eleventy --serve --incremental",
-    "build": "npx @11ty/eleventy",
+    "dev": "run-s build-cache serve:11ty",
+    "serve:11ty": "npx @11ty/eleventy --serve --incremental",
+    "build": "run-s build-cache production",
+    "production": "npx @11ty/eleventy",
     "clean": "rm -rf _site .11ty* .cache/*",
     "clean-cache": "concurrently --timings npm:clean:*",
     "clean:cache-ashbourne-csv": "rm -f .cache/ashbourne/ashbourne.csv",
@@ -20,7 +22,7 @@
     "clean:cache-sumup-updates": "rm -f .cache/sumup/sumup-updates.json",
     "clean:cache-sumup-checks": "rm -f .cache/sumup/sumup-check*",
     "clean:cache-sumup-reconcile": "rm -f .cache/sumup/sumup-ashbourne-reconcile.json",
-    "build-cache": "npm-run-all build:*",
+    "build-cache": "run-s build:*",
     "build:cache-ashbourne-csv": "npx cache-ashbourne-csv",
     "build:cache-ashbourne-lint": "npx cache-ashbourne-lint",
     "build:cache-ashbourne-json": "npx cache-ashbourne-json",
@@ -80,7 +82,6 @@
     "postcss-jit-props": "^1.0.7",
     "sass": "^1.54.9",
     "stripe": "^10.10.0",
-    "vite-plugin-minify": "^1.5.2",
     "xlsx": "^0.18.5"
   },
   "dependencies": {
