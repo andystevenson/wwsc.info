@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "run-s build-cache serve:11ty",
+    "init": "npm link",
+    "dev": "run-s init build-cache serve:11ty",
     "serve:11ty": "npx @11ty/eleventy --serve --incremental",
-    "build": "run-s build-cache production",
+    "build": "run-s init build-cache production",
     "production": "npx @11ty/eleventy",
     "clean": "rm -rf _site .11ty* .cache/*",
     "clean-cache": "concurrently --timings npm:clean:*",
