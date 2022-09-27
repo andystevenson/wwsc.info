@@ -2,17 +2,26 @@
 const _ = require('lodash')
 
 const array = [
-  { price: '£1' },
+  { tag: 'a', price: '£1' },
   { price: '-£1' },
   { price: '£8' },
   { price: '£1.081' },
-  { price: '£6' },
+  { tag: 'b', price: '£6' },
   { price: '£1.11' },
   { price: '-£0.999' },
-  { price: '£3' },
+  { tag: 'b', price: '£3' },
   { price: '£9' },
-  { price: '£2' },
+  { names: ['a', 'b', 'c'], price: '£2' },
 ]
 
 const sorted = _.sortBy(array, [(e) => +e.price.replace('£', '')])
 console.log(sorted)
+
+let as = _.filter(array, ['tag', 'b'])
+console.log({ as })
+
+as = _.filter(array, ['names', ['a', 'b', 'c']])
+console.log({ as })
+
+as = _.filter(array, ['names', _.includes('b', 'c')])
+console.log({ as })

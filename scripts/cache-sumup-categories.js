@@ -10,7 +10,7 @@ const {
 } = require('node:fs')
 const { exit } = require('node:process')
 const date = require('dayjs')
-const { kebabCase, sortBy } = require('lodash')
+const { kebabCase, sortBy, uniq } = require('lodash')
 const { stripIndents } = require('common-tags')
 
 const { log } = require('@andystevenson/lib/logger')
@@ -57,8 +57,9 @@ const mapFields = (product, normalized) => {
     currency: 'GBP',
   }).format(price)
 
-  // log.info({ id, sku, name, display, parent, category, price, active })
-  return { id, sku, name, display, parent, category, price, active }
+  let tag = sku.split('/')[1]?.toLowerCase()
+
+  return { id, sku, name, tag, display, parent, category, price, active }
 }
 
 const variants = (all, product) => {
@@ -66,13 +67,31 @@ const variants = (all, product) => {
   if (parent) {
     all[parent] = all[parent]
       ? all[parent]
-      : { name: name.replace(/\s*\(.*\)\s*/, ''), active: 1, variants: [] }
+      : {
+          name: name.replace(/\s*\(.*\)\s*/, ''),
+          tag: null,
+          active: 1,
+          variants: [],
+        }
     all[parent].variants.push(product)
     return all
   }
 
   all[id] = product
   return all
+}
+
+const tagsFromVariants = (variants) => {
+  let tags = variants.reduce((tags, { tag }) => {
+    tag && tags.push(tag)
+    return tags
+  }, [])
+
+  if (tags.length === 0) return null
+  tags = uniq(tags)
+  tags = tags.length === 1 ? tags[0] : tags
+  log.info({ tags })
+  return tags
 }
 
 const simplify = (normalized) => {
@@ -97,6 +116,7 @@ const simplify = (normalized) => {
 
     // verify at least one variant is active
     product.active = variants.some((variant) => variant.active)
+    product.tag = tagsFromVariants(variants)
   })
 
   // group the products back into their categories
