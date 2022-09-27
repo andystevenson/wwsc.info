@@ -62,9 +62,11 @@ const mapFields = (product, normalized) => {
 }
 
 const variants = (all, product) => {
-  const { id, parent } = product
+  const { id, parent, name } = product
   if (parent) {
-    all[parent] = all[parent] ? all[parent] : { variants: [] }
+    all[parent] = all[parent]
+      ? all[parent]
+      : { name: name.replace(/\s*\(.*\)\s*/, ''), variants: [] }
     all[parent].variants.push(product)
     return all
   }

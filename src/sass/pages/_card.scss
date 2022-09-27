@@ -31,11 +31,13 @@ body.card {
       min-block-size: 40vh;
       place-items: center;
       background-color: var(--surface-1);
+      color: white;
 
       h2 {
         border: var(--border-size-2) solid white;
         border-radius: var(--radius-3);
         inline-size: 100%;
+        color: white;
       }
       p {
         place-self: center;

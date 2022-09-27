@@ -123,3 +123,8 @@ path="/api/sports-teas"
 function="mothers-day"
 path="/api/mothers-day"
 # end-generated-edge-functions
+
+
+[[edge_functions]]
+function = "age"
+path = "/age"

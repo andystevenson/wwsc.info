@@ -1,22 +1,37 @@
-body.finder {
+body.age {
   main {
     gap: var(--size-7);
+
     > * {
       grid-template-columns: 1fr;
       place-self: center;
       min-inline-size: 60vh;
       text-align: center;
       padding: var(--size-3);
+      gap: var(--size-2);
+    }
+
+    fieldset {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      place-content: center;
+      input {
+        inline-size: var(--size-4);
+        block-size: var(--size-4);
+        translate: 0 0.2rem;
+      }
     }
 
     strong {
       font-size: var(--font-size-3);
     }
 
-    input {
+    input[type='number'] {
+      inline-size: 8ch;
       background-color: var(--surface-1);
-      border: var(--border-size-2) solid var(--text-1);
-      border-radius: var(--radius-2);
+      color: var(--text-1);
+      padding-block: var(--size-3);
     }
 
     ul {
