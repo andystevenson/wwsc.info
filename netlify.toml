@@ -4,6 +4,11 @@
   functions = "netlify/functions"
   publish = "_site"
 
+[dev]
+  command = "npm run dev" # Command to start your dev server
+  functions = "netlify/functions"
+  publish = "_site" # Folder with the static content for _redirect file
+
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
   #[[redirects]]
@@ -26,12 +31,12 @@
 # path = "/*"
 
 [[edge_functions]]
-  path = '/card-check'
-  function = 'card-check'
+function = "card"
+path = "/card"
 
 [[edge_functions]]
-  path = '/card-find'
-  function = 'card-find'
+function = "finder"
+path = "/finder"
 
 [[edge_functions]]
 function = "ashbourne-json"
@@ -52,3 +57,69 @@ path = "/api/sumup-customers"
 [[edge_functions]]
 function = "hello"
 path = "/api/hello"
+
+# start-generated-edge-functions
+[[edge_functions]]
+function="sunday-lunch"
+path="/api/sunday-lunch"
+
+[[edge_functions]]
+function="cocktails"
+path="/api/cocktails"
+
+[[edge_functions]]
+function="wine"
+path="/api/wine"
+
+[[edge_functions]]
+function="breakfast"
+path="/api/breakfast"
+
+[[edge_functions]]
+function="soft-drinks"
+path="/api/soft-drinks"
+
+[[edge_functions]]
+function="spirits"
+path="/api/spirits"
+
+[[edge_functions]]
+function="beer"
+path="/api/beer"
+
+[[edge_functions]]
+function="bar-food"
+path="/api/bar-food"
+
+[[edge_functions]]
+function="bbq"
+path="/api/bbq"
+
+[[edge_functions]]
+function="tea-coffee"
+path="/api/tea-coffee"
+
+[[edge_functions]]
+function="liquer-coffee"
+path="/api/liquer-coffee"
+
+[[edge_functions]]
+function="snacks"
+path="/api/snacks"
+
+[[edge_functions]]
+function="food"
+path="/api/food"
+
+[[edge_functions]]
+function="kids-menu"
+path="/api/kids-menu"
+
+[[edge_functions]]
+function="sports-teas"
+path="/api/sports-teas"
+
+[[edge_functions]]
+function="mothers-day"
+path="/api/mothers-day"
+# end-generated-edge-functions

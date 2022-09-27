@@ -9,7 +9,7 @@ module.exports = {
     let src = `${data.page.fileSlug || 'WWSC'}.js`
     try {
       // throws if file does not exist
-      const stat = statSync(`./src/js/${src}`)
+      const stat = statSync(`./src/js/pages/${src}`)
     } catch (error) {
       src = undefined
     }

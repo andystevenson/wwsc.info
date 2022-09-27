@@ -1,6 +1,6 @@
 import { debounce } from 'lodash'
 
-console.log('card finder')
+console.log('finder...')
 
 const input = document.querySelector('input')
 const placeholder = document.querySelector('.placeholder')
@@ -13,7 +13,6 @@ const send = debounce(async (e) => {
 
   const params = new URLSearchParams()
   params.append('search', value)
-  console.log(`[${value}][${params}]`)
   const uri = `${location.href}?${params}`
   let html = await fetch(uri)
   html = await html.text()

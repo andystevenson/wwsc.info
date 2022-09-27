@@ -8,14 +8,25 @@ const createCacheDir = require('./src/createCacheDir')
 
 // make sure the cache directory exists
 const cacheDir = '.cache/sumup'
-const cacheFile = `${cacheDir}/sumup-product-categories.json`
+const cacheFile = `${cacheDir}/sumup-products.json`
 
+const lib = {
+  category: '@andystevenson/goodtill/category',
+  product: '@andystevenson/goodtill/product',
+  authentication: '@andystevenson/goodtill/authentication',
+}
 const buildProductCategories = async () => {
   try {
-    const goodtill = await import('@andystevenson/goodtill/category')
-    const { categorize } = goodtill
-    let categories = await categorize()
-    return categories
+    const { login, logout } = await import(lib.authentication)
+    const { categories: allCategories } = await import(lib.category)
+    const { products: allProducts } = await import(lib.product)
+
+    await login()
+    const categories = await allCategories()
+    const products = await allProducts()
+    await logout()
+
+    return { categories, products }
   } catch (error) {
     log.error(
       `cache-sumup-products failed building product categories because [${error.message}]`,

@@ -9,7 +9,8 @@
     "serve:11ty": "npx @11ty/eleventy --serve --incremental",
     "build": "run-s init build-cache production",
     "production": "npx @11ty/eleventy",
-    "clean": "rm -rf _site .11ty* .cache/*",
+    "clean": "run-s clean-cache rm:11ty",
+    "rm:11ty": "rm -rf _site .11ty* .cache",
     "clean-cache": "concurrently --timings npm:clean:*",
     "clean:cache-ashbourne-csv": "rm -f .cache/ashbourne/ashbourne.csv",
     "clean:cache-ashbourne-lint": "rm -f .cache/ashbourne/ashbourne-lint*",
@@ -23,6 +24,9 @@
     "clean:cache-sumup-updates": "rm -f .cache/sumup/sumup-updates.json",
     "clean:cache-sumup-checks": "rm -f .cache/sumup/sumup-check*",
     "clean:cache-sumup-reconcile": "rm -f .cache/sumup/sumup-ashbourne-reconcile.json",
+    "clean:cache-sumup-categories": "run-s rm:cache-sumup-categories rm:cache-sumup-edge-functions",
+    "rm:cache-sumup-categories": "rm -f .cache/sumup/sumup-categories.json .cache/sumup/sumup-category-*",
+    "rm:cache-sumup-edge-functions": "rm -rf `cat .cache/sumup/sumup-edge-functions.json | jq -j 'join(\" \")'`",
     "build-cache": "run-s build:*",
     "build:cache-ashbourne-csv": "npx cache-ashbourne-csv",
     "build:cache-ashbourne-lint": "npx cache-ashbourne-lint",
@@ -36,6 +40,7 @@
     "build:cache-sumup-updates": "npx cache-sumup-updates",
     "build:cache-sumup-checks": "npx cache-sumup-checks",
     "build:cache-sumup-reconcile": "npx cache-sumup-reconcile",
+    "build:cache-sumup-categories": "npx cache-sumup-categories",
     "clean-build": "run-s clean-cache build-cache"
   },
   "bin": {
@@ -48,6 +53,7 @@
     "cache-sumup-updates": "./scripts/cache-sumup-updates.js",
     "cache-sumup-checks": "./scripts/cache-sumup-checks.js",
     "cache-sumup-reconcile": "./scripts/cache-sumup-reconcile.js",
+    "cache-sumup-categories": "./scripts/cache-sumup-categories.js",
     "cache-ashbourne-csv": "./scripts/cache-ashbourne-csv.js",
     "cache-ashbourne-lint": "./scripts/cache-ashbourne-lint.js",
     "cache-ashbourne-json": "./scripts/cache-ashbourne-json.js"
@@ -71,6 +77,7 @@
     "@andystevenson/sass": "^0.1.2",
     "@andystevenson/theme-toggle": "^0.1.5",
     "@types/node": "^18.7.18",
+    "common-tags": "^1.8.2",
     "concurrently": "^7.4.0",
     "csv-parse": "^5.3.0",
     "dayjs": "^1.11.5",

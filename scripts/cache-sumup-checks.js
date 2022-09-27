@@ -56,6 +56,9 @@ const checks = async () => {
 
 function nameCheck(sumup) {
   return sumup.reduce((checks, member) => {
+    // skip invalid records
+    if (!member.active) return checks
+
     const membership = member.membership_no
     const cardNo = member.account_code ? member.account_code : ''
     const valid = member.customer_group === 'MEMBERS'
@@ -79,6 +82,9 @@ function nameCheck(sumup) {
 
 function cardCheck(sumup) {
   return sumup.reduce((checks, member) => {
+    // skip invalid records
+    if (!member.active) return checks
+
     let cardNo = member.account_code
 
     if (cardNo) {

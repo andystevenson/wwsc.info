@@ -1,14 +1,11 @@
-body.card-find {
+body.finder {
   main {
     > * {
+      grid-template-columns: 1fr;
       place-self: center;
       min-inline-size: 60vh;
       text-align: center;
-    }
-
-    a.review {
-      place-self: unset;
-      inline-size: unset;
+      padding: var(--size-3);
     }
 
     strong {
@@ -34,6 +31,7 @@ body.card-find {
         gap: var(--size-2);
         text-align: right;
         padding-inline-end: var(--size-3);
+        background-color: var(--surface-1);
 
         &[false] {
           background-color: red;

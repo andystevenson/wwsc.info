@@ -4,14 +4,10 @@
 
   <head>
     <title>{{pageTitle}}</title>
-
     {# deliberately early non-deferred use of theme toggle to render the color-scheme correctly while loading #}
     <script type="module" src="/@input/js/theme-toggle.js"></script>
-
-    {% include "partials/meta-tags.njk" %}
-
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
+    {%- include "partials/meta-tags.njk" -%}
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
   </head>
 
   <body class="{{page.fileSlug}}">

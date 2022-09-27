@@ -6,6 +6,6 @@ module.exports = (dir) => {
     mkdirSync(dir, { recursive: true })
   } catch (error) {
     console.log(`failed to create [${cacheDir}] because [${error.message}]`)
-    process.exit(1)
+    throw error
   }
 }
