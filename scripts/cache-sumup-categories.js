@@ -66,7 +66,7 @@ const variants = (all, product) => {
   if (parent) {
     all[parent] = all[parent]
       ? all[parent]
-      : { name: name.replace(/\s*\(.*\)\s*/, ''), variants: [] }
+      : { name: name.replace(/\s*\(.*\)\s*/, ''), active: 1, variants: [] }
     all[parent].variants.push(product)
     return all
   }
@@ -90,9 +90,13 @@ const simplify = (normalized) => {
     const { variants } = product
     if (!variants) return
 
+    // sort
     product.variants = sortBy(variants, [
       (variant) => +variant.price.replace('£', ''),
     ])
+
+    // verify at least one variant is active
+    product.active = variants.some((variant) => variant.active)
   })
 
   // group the products back into their categories

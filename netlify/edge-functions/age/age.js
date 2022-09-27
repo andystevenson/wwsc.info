@@ -1,6 +1,6 @@
 import sumup from '../../../.cache/sumup/sumup-check-find.json' assert { type: 'json' }
 
-export default (request, { log }) => {
+export default (request) => {
   const url = new URL(request.url)
   let search = url.searchParams.get('search')
   if (!search) return
