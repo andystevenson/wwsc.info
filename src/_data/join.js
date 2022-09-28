@@ -225,7 +225,7 @@ const join = {
             {
               interval: 'year',
               price: 100 * 0.8,
-              nickname: 'social-annual-family-member',
+              nickname: 'social-annual-family-member-new',
               discounted: true,
             },
           ],
