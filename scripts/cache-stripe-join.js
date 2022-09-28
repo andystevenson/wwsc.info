@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const { statSync, writeFileSync } = require('node:fs')
+const { exit } = require('node:process')
 const { log } = require('@andystevenson/lib/logger')
 const date = require('dayjs')
 
@@ -11,17 +12,34 @@ const cacheDir = '.cache/stripe'
 const cacheFile = `${cacheDir}/join.json`
 const joinFile = './src/_data/join.js'
 
+const formatPrice = (price) => {
+  const newPrice = Intl.NumberFormat('en', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(price)
+  return newPrice
+}
+
+const transformPrice = (object) => {
+  if ('price' in object) object.price = formatPrice(object.price)
+  Object.values(object).forEach(
+    (value) =>
+      value !== null && typeof value === 'object' && transformPrice(value),
+  )
+}
+
 // buildCache
 const buildCache = async () => {
   try {
     createCacheDir(cacheDir)
     log.info(`cache-stripe-join building...`)
     const fullJoin = await buildProducts()
+    transformPrice(fullJoin)
     writeFileSync(cacheFile, JSON.stringify(fullJoin, null, 2))
     log.info(`cache-stripe-join updated`)
   } catch (error) {
     log.error(`cache-stripe-join failed because [${error.message}]`)
-    process.exit(1)
+    exit(1)
   }
 }
 
@@ -47,7 +65,7 @@ const process = async () => {
     log.info(`cache-stripe-join is up to date`)
   } catch (error) {
     log.error(`cache-stripe-join failed because [${error.message}]`)
-    process.exit(1)
+    exit(1)
   }
 }
 

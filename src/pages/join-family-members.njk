@@ -1,0 +1,21 @@
+{% if joinFamilyMembers %}
+  <section>
+  {% for product in joinFamilyMembers %}
+    <article>
+      <section>
+        <h2>{{product.name}}</h2>
+        <p>{{product.description}}</p>
+      </section>
+      {% for price in product.prices %}
+        <section>
+          <p>{{price.price}}</p>
+          <p><small>per</small><small>{{price.interval}}</small></p>
+          <form action="{{price.link.url}}" target="_blank">
+            <button>Buy</button>
+          </form>
+        </section>
+      {% endfor %}
+    </article>
+  {% endfor %}  
+  </section>
+{% endif %}

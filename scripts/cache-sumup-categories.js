@@ -90,7 +90,6 @@ const tagsFromVariants = (variants) => {
   if (tags.length === 0) return null
   tags = uniq(tags)
   tags = tags.length === 1 ? tags[0] : tags
-  log.info({ tags })
   return tags
 }
 

@@ -82,17 +82,12 @@ const createPrices = async (stripeProduct, price) => {
 }
 
 const createProducts = async () => {
-  const withDummies = process.env.TEST_DUMMIES
-  if (withDummies) console.log('processing with test dummies')
-
   for (const category of join.categories) {
     console.log('category', category.name)
 
     for (const product of category.products) {
       let stripeProduct = null
       const exists = product.name in normalized
-
-      if (!withDummies && product.name.startsWith('Dummy')) continue
 
       if (exists) {
         alreadyExists.push(product.name)
