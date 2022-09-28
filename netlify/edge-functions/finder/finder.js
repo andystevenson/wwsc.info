@@ -8,7 +8,11 @@ export default (request) => {
   search = search.trim().toLowerCase()
   search = search.replaceAll(/\s+/g, ' ')
 
-  const matches = Object.entries(sumup)
+  let active = url.searchParams.get('active')
+  active = active === 'true'
+
+  let matches = Object.entries(sumup)
+    .filter(([, member]) => member[0] === active)
     .filter(([, member]) => {
       const [, , fullname] = member
       const passes = fullname.toLowerCase().includes(search)
@@ -20,6 +24,8 @@ export default (request) => {
       return template
     })
     .join('\n')
+
+  matches = `<li ${true}><p>card no</p><p>name</p><p>email</p></a><p>status</p><p>mem id</p><p>age</p></li>\n${matches}`
 
   return new Response(matches)
 }

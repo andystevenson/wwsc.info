@@ -2,17 +2,20 @@ import { debounce } from 'lodash'
 
 console.log('finder...')
 
-const input = document.querySelector('input')
+const input = document.querySelector('input[type="text"]')
+const active = document.querySelector('input[name="active"]')
 const placeholder = document.querySelector('.placeholder')
 
 const send = debounce(async (e) => {
   e.preventDefault()
-  const value = e.target?.value.trim()
+  const value = input.value.trim()
 
   if (!value) return (placeholder.innerHTML = '')
 
   const params = new URLSearchParams()
   params.append('search', value)
+  params.append('active', active.checked)
+
   const uri = `${location.href.replace(/#+\w*/g, '')}?${params}`
   console.log({ uri })
   let html = await fetch(uri)
@@ -21,3 +24,4 @@ const send = debounce(async (e) => {
 }, 300)
 
 input?.addEventListener('input', send)
+active?.addEventListener('change', send)

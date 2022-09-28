@@ -8,21 +8,46 @@ body.finder {
       text-align: center;
       padding: var(--size-3);
     }
+    fieldset {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      place-content: center;
+      input {
+        inline-size: var(--size-4);
+        block-size: var(--size-4);
+        translate: 0 0.1rem;
+      }
+    }
 
     strong {
       font-size: var(--font-size-3);
     }
 
-    input {
+    input[type='text'] {
+      inline-size: 30ch;
+      block-size: 3ch;
+
       background-color: var(--surface-1);
       border: var(--border-size-2) solid var(--text-1);
       border-radius: var(--radius-2);
+      margin-inline-end: var(--size-4);
     }
 
     ul {
       display: grid;
       grid-auto-rows: min-content;
       min-block-size: 50vh;
+
+      li:first-of-type {
+        background-color: var(--surface-1);
+        outline: 1px var(--text-1);
+        outline-style: groove;
+        translate: 0 var(--size-000);
+        > * {
+          font-weight: var(--font-weight-9);
+        }
+      }
 
       li {
         max-inline-size: unset;

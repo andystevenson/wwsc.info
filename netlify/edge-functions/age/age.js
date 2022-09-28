@@ -13,7 +13,7 @@ export default (request) => {
 
   search = +search.replaceAll(/\s+/g, ' ')
 
-  const matches = Object.values(sumup)
+  let matches = Object.values(sumup)
     .filter((member) => member[0] === active)
     .filter((member) => {
       const { length } = member
@@ -34,6 +34,8 @@ export default (request) => {
       return template
     })
     .join('\n')
+
+  matches = `<li true><p>card</p><p>name</p><p>email</p></a><p>status</p><p>age</p></li>\n${matches}`
 
   return new Response(matches)
 }

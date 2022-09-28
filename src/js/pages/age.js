@@ -9,7 +9,7 @@ const placeholder = document.querySelector('.placeholder')
 
 const send = debounce(async (e) => {
   e.preventDefault()
-  const value = e.target?.value.trim()
+  const value = input.value.trim()
 
   if (!value) return (placeholder.innerHTML = '')
 
@@ -25,3 +25,5 @@ const send = debounce(async (e) => {
 }, 300)
 
 input?.addEventListener('input', send)
+active?.addEventListener('change', send)
+ascending?.addEventListener('change', send)

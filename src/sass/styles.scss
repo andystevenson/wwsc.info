@@ -118,6 +118,7 @@ main > section > article {
 [title='stripe logo'] {
   padding-inline: var(--size-3);
   padding-block: var(--size-1);
+  filter: unset;
 }
 
 [title='ashbourne logo'] {
@@ -140,7 +141,7 @@ main > section > article {
   padding: var(--size-2);
 }
 
-[data-theme='dark'] img[src$='.svg'] {
+:where([data-theme='dark'] img[src$='.svg']) {
   filter: invert(1);
 }
 

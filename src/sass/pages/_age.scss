@@ -19,7 +19,7 @@ body.age {
       input {
         inline-size: var(--size-4);
         block-size: var(--size-4);
-        translate: 0 0.2rem;
+        translate: 0 0.1rem;
       }
     }
 
@@ -39,6 +39,15 @@ body.age {
       grid-auto-rows: min-content;
       min-block-size: 50vh;
 
+      li:first-of-type {
+        background-color: var(--surface-1);
+        outline: 1px var(--text-1);
+        outline-style: groove;
+        translate: 0 var(--size-000);
+        > * {
+          font-weight: var(--font-weight-9);
+        }
+      }
       li {
         max-inline-size: unset;
         place-self: center;
