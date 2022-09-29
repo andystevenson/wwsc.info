@@ -60,6 +60,10 @@ path = "/api/hello"
 
 # start-generated-edge-functions
 [[edge_functions]]
+function="resources"
+path="/api/resources"
+
+[[edge_functions]]
 function="sunday-lunch"
 path="/api/sunday-lunch"
 

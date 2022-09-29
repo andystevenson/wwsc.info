@@ -141,6 +141,15 @@ const writeCategoryFiles = (simplified) => {
   writeFileSync(categoriesFile, JSON.stringify(simplified, null, 2))
 }
 
+const edgeFunctionsList = (simplified) => {
+  const list = [
+    'resources',
+    ...Object.keys(simplified).map((key) => kebabCase(key)),
+  ]
+  log.info({ list })
+  return list
+}
+
 const edgeFunctionTemplate = (category) => `
 import category from '../../../.cache/sumup/sumup-category-${category}.json' assert { type: 'json' }
 export default () => {
@@ -149,28 +158,30 @@ export default () => {
   })
 }
 `
-const edgeFunctions = (simplified) => {
-  const edgeFunctionList = []
-  for (const category in simplified) {
-    const kCategory = kebabCase(category)
-    const edgeFunctionDir = `./netlify/edge-functions/${kCategory}`
+const edgeFunctions = (list) => {
+  const functionFiles = []
+  for (const category of list) {
+    const edgeFunctionDir = `./netlify/edge-functions/${category}`
     mkdirSync(edgeFunctionDir, { recursive: true })
-    const edgeFunctionFile = `${edgeFunctionDir}/${kCategory}.js`
-    edgeFunctionList.push(edgeFunctionDir)
-    writeFileSync(edgeFunctionFile, edgeFunctionTemplate(kCategory))
+    const edgeFunctionFile = `${edgeFunctionDir}/${category}.js`
+    functionFiles.push(edgeFunctionDir)
+    writeFileSync(edgeFunctionFile, edgeFunctionTemplate(category))
   }
 
   const edgeFunctionListFile = `${cacheDir}/sumup-edge-functions.json`
-  writeFileSync(edgeFunctionListFile, JSON.stringify(edgeFunctionList, null, 2))
+  writeFileSync(edgeFunctionListFile, JSON.stringify(functionFiles, null, 2))
+
+  const resourcesFile = `${cacheDir}/sumup-category-resources.json`
+  writeFileSync(resourcesFile, JSON.stringify(list, null, 2))
 }
 
-const edgeFunctionRedirects = (simplified) => {
-  const edgeFunctions = Object.keys(simplified)
+const edgeFunctionRedirects = (list) => {
+  const edgeFunctions = list
     .map(
       (category) => stripIndents`
     [[edge_functions]]
-    function="${kebabCase(category)}"
-    path="/api/${kebabCase(category)}"
+    function="${category}"
+    path="/api/${category}"
   `,
     )
     .join('\n\n')
@@ -178,7 +189,7 @@ const edgeFunctionRedirects = (simplified) => {
   return `\n${edgeFunctions}\n`
 }
 
-const updateNetlifyToml = (simplified) => {
+const updateNetlifyToml = (list) => {
   const netlifyTomlFile = './netlify.toml'
   const backupFile = '.cache/.netlify.toml'
 
@@ -186,7 +197,7 @@ const updateNetlifyToml = (simplified) => {
 
   const regex =
     /(?<=# start-generated-edge-functions)([\S\s]*)(?=# end-generated-edge-functions)/gm
-  const replaceWith = edgeFunctionRedirects(simplified)
+  const replaceWith = edgeFunctionRedirects(list)
 
   let file = readFileSync(netlifyTomlFile, 'utf-8')
   file = file.replace(regex, replaceWith)
@@ -199,8 +210,9 @@ const buildCategories = () => {
   const simplified = simplify(normalize(categories, products))
 
   writeCategoryFiles(simplified)
-  edgeFunctions(simplified)
-  updateNetlifyToml(simplified)
+  const list = edgeFunctionsList(simplified)
+  edgeFunctions(list)
+  updateNetlifyToml(list)
 
   log.info(`${name} updated`)
 }
