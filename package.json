@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "npm link",
-    "dev": "run-s init build-cache serve:11ty",
+    "dev": "run-s serve:11ty",
     "serve:11ty": "npx @11ty/eleventy --serve --incremental",
     "build": "run-s init build-cache production",
     "production": "npx @11ty/eleventy",

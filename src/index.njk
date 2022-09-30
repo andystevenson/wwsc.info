@@ -5,7 +5,7 @@ layout: 'base.njk'
   <h2>customers</h2>
   <article>
     <header>
-      {{iconc(cms.image.ashbourne)}}
+      {{iconc(cms.image['ashbourne.logo'])}}
     </header>
     <section>
       <p>{{b(ashbourne.count)}}<span>records</span></p>
@@ -16,7 +16,7 @@ layout: 'base.njk'
   {{iconc(cms.icons['arrow-right-circle-fill'])}}
   <article>
     <header>
-     {{iconc(cms.image.stripe)}}
+     {{iconc(cms.image['stripe.logo'])}}
     </header>
     <section>
       <p>{{b(stripe.subscriptions)}}<span>subscriptions</span></p>
@@ -26,11 +26,26 @@ layout: 'base.njk'
   </article>
   {{iconc(cms.icons['arrow-right-circle-fill'])}}
   <article>
-    <header>{{iconc(cms.image.sumup)}}</header>
+    <header>{{iconc(cms.image['sumup.logo'])}}</header>
     <section>
       <p>{{b(sumup.active)}}<span>registered</span></p>
       <p>{{b(sumup.members)}}<span>members</span></p>
     </section>
     <footer></footer>
   </article>
+</section>
+
+<section>
+  <h2>demographics</h2>
+  <article>
+    <header>
+    </header>
+    <section>
+      <p>{{b(sumup.male)}}<span>male</span></p>
+      <p>{{b(sumup.female)}}<span>female</span></p>
+      <p>{{b(sumup.unknown)}}<span>unknown</span></p>
+    </section>
+    <footer></footer>
+  </article>
+  <canvas id="ages-chart"></canvas>
 </section>
