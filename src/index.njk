@@ -35,17 +35,8 @@ layout: 'base.njk'
   </article>
 </section>
 
-<section>
+<section id="demographics">
   <h2>demographics</h2>
-  <article>
-    <header>
-    </header>
-    <section>
-      <p>{{b(sumup.male)}}<span>male</span></p>
-      <p>{{b(sumup.female)}}<span>female</span></p>
-      <p>{{b(sumup.unknown)}}<span>unknown</span></p>
-    </section>
-    <footer></footer>
-  </article>
+  <canvas id="gender-chart"></canvas>
   <canvas id="ages-chart"></canvas>
 </section>

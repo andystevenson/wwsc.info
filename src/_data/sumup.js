@@ -37,10 +37,7 @@ module.exports = {
       member.customer_group === 'MEMBERS' ? (count = count + 1) : count,
     0,
   ),
-  male: data.reduce(
-    (count, member) => (member.active ? (count = count + 1) : count),
-    0,
-  ),
+
   male: data.reduce(
     (count, member) =>
       member.customer_group === 'MEMBERS' && member.gender === 'male'

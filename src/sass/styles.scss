@@ -85,6 +85,7 @@ main > section {
   }
 
   canvas {
+    place-self: center;
     max-inline-size: 40ch;
     max-block-size: 40ch;
   }
@@ -171,4 +172,8 @@ main > section > article {
   position: absolute;
   bottom: 1ch;
   right: 0;
+}
+
+#demographics {
+  --article-size: 60ch;
 }

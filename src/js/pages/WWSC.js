@@ -1,4 +1,6 @@
-console.log('hello WWSC')
+import find from '../../../.cache/sumup/sumup-check-find.json'
+import customers from '../../../.cache/sumup/sumup-customers-updated.json'
+
 Chart.register(ChartDataLabels)
 Chart.defaults.set('plugins.datalabels', {
   anchor: 'end',
@@ -9,7 +11,6 @@ Chart.defaults.set('plugins.datalabels', {
     size: 14,
   },
 })
-import find from '../../../.cache/sumup/sumup-check-find.json'
 
 const defaultAgeGroups = [
   [Number.MIN_SAFE_INTEGER, 6],
@@ -32,11 +33,10 @@ const ageGroups = () => {
     }, 0),
   )
 
-  console.log({ result })
   return result
 }
 
-const data = {
+const ageGroupData = {
   labels: defaultAgeGroups.map(
     ([from, to]) => `${from < 0 ? 0 : from}-${to > 100 ? '' : to}`,
   ),
@@ -56,9 +56,9 @@ const data = {
   ],
 }
 
-const config = {
+const configAgeGroups = {
   type: 'pie',
-  data,
+  data: ageGroupData,
   options: {
     plugins: {
       title: {
@@ -82,5 +82,61 @@ const config = {
   },
 }
 
-console.log(Chart.defaults)
-new Chart(document.getElementById('ages-chart'), config)
+const genderCount = (gender) => {
+  return customers.reduce(
+    (count, member) =>
+      member.customer_group === 'MEMBERS' && member.gender === gender
+        ? (count = count + 1)
+        : count,
+    0,
+  )
+}
+
+const genders = () => [
+  genderCount('male'),
+  genderCount('female'),
+  genderCount('unknown'),
+]
+
+const genderData = {
+  labels: ['male', 'female', 'unknown'],
+  datasets: [
+    {
+      label: 'gender',
+      backgroundColor: [
+        'rgba(54, 162, 235)',
+        'rgba(255, 99, 132)',
+        'rgba(255, 159, 64)',
+      ],
+      data: genders(),
+    },
+  ],
+}
+const configGender = {
+  type: 'pie',
+  data: genderData,
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        position: 'top',
+        text: 'gender',
+        color: '#FFF',
+        font: {
+          weight: 'bold',
+          size: 24,
+        },
+      },
+      legend: {
+        display: true,
+        position: 'left',
+        labels: {
+          color: 'rgb(255, 255,255)',
+        },
+      },
+    },
+  },
+}
+
+new Chart(document.getElementById('gender-chart'), configGender)
+new Chart(document.getElementById('ages-chart'), configAgeGroups)
