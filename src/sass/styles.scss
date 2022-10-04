@@ -32,6 +32,8 @@ body > header {
   z-index: var(--layer-important);
   position: fixed;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   > h1 {
@@ -55,6 +57,8 @@ body > footer {
   gap: unset;
   position: fixed;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
 
   small {
@@ -92,6 +96,7 @@ main > section {
 }
 
 main > section > article {
+  padding-block-start: var(--size-2);
   place-self: center;
   aspect-ratio: 1;
   inline-size: var(--article-size);
@@ -120,19 +125,25 @@ main > section > article {
     font-weight: var(--font-weight-9);
     font-size: var(--font-size-4);
   }
+
+  span[id] {
+    font-weight: var(--font-weight-9);
+    font-size: var(--font-size-3);
+  }
 }
 
 [title='sumup logo'],
 [title='ashbourne logo'],
-[title='stripe logo'] {
+[title='stripe logo'],
+[title='zettle logo'] {
   background-color: white;
   border-radius: var(--radius-2);
   inline-size: calc(0.9 * var(--size-content-1));
   block-size: calc(0.2 * var(--size-content-1));
 }
 
-[title='stripe logo'] {
-  padding-inline: var(--size-3);
+[title='stripe logo'],
+[title='zettle logo'] {
   padding-block: var(--size-1);
   filter: unset;
 }
@@ -141,8 +152,11 @@ main > section > article {
   padding-inline: var(--size-1);
 }
 
-#logo {
+#logo,
+[title='west warwicks icon'] {
   flex-shrink: 0;
+  filter: unset;
+
   img {
     filter: unset;
   }
@@ -176,4 +190,16 @@ main > section > article {
 
 #demographics {
   --article-size: 60ch;
+}
+
+#sales {
+  > :last-child {
+    background-color: green;
+  }
+}
+
+[data-theme='light'] #sales {
+  > :last-child {
+    background-color: orange;
+  }
 }

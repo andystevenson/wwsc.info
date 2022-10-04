@@ -1,5 +1,6 @@
 import find from '../../../.cache/sumup/sumup-check-find.json'
 import customers from '../../../.cache/sumup/sumup-customers-updated.json'
+import observer from './utilities/observer.mjs'
 
 Chart.register(ChartDataLabels)
 Chart.defaults.set('plugins.datalabels', {
@@ -140,3 +141,52 @@ const configGender = {
 
 new Chart(document.getElementById('gender-chart'), configGender)
 new Chart(document.getElementById('ages-chart'), configAgeGroups)
+
+// tie in the dynamic sections
+
+const hof = (api) =>
+  async function () {
+    let timer = null
+
+    console.log('hof....')
+
+    async function process() {
+      if (timer) clearInterval(timer)
+      const url = `${location.origin}/api/${api}`
+
+      const today = document.getElementById(`${api}:today`)
+      const mtd = document.getElementById(`${api}:mtd`)
+      const ytd = document.getElementById(`${api}:ytd`)
+
+      const update = async () => {
+        console.log(`${api}...`)
+        try {
+          const response = await fetch(url)
+          const json = await response.json()
+
+          today.textContent = json.today
+          mtd.textContent = json.mtd
+          ytd.textContent = json.ytd
+        } catch (error) {
+          console.error(`${api} failed [${error.message}]`)
+          throw error
+        }
+      }
+      // update to bootstrap and then every 60seconds
+
+      await update()
+      timer = setInterval(update, 1000 * 60)
+    }
+
+    removeEventListener('load', process)
+    addEventListener('load', process)
+  }
+
+const resources = ['stripe', 'zettle', 'sumup', 'ashbourne']
+let running = resources
+  .map((fn) => hof(fn))
+  .map(async (fn) => {
+    await fn()
+  })
+
+observer(resources)

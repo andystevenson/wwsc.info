@@ -58,6 +58,22 @@ path = "/api/sumup-customers"
 function = "hello"
 path = "/api/hello"
 
+[[edge_functions]]
+function = "age"
+path = "/age"
+
+[[edge_functions]]
+function = "zettle"
+path = "/api/zettle"
+
+[[edge_functions]]
+function = "stripe"
+path = "/api/stripe"
+
+[[edge_functions]]
+function = "sumup"
+path = "/api/sumup"
+
 # start-generated-edge-functions
 [[edge_functions]]
 function="resources"
@@ -130,5 +146,5 @@ path="/api/mothers-day"
 
 
 [[edge_functions]]
-function = "age"
-path = "/age"
+function = "ashbourne"
+path = "/api/ashbourne"
