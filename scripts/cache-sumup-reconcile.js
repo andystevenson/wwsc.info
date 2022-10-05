@@ -30,6 +30,8 @@ const process = async () => {
     const sumup = JSON.parse(readFileSync(sumupFile))
 
     const reconciled = reconcile(ashbourne, sumup)
+    writeFileSync(outputFile, JSON.stringify(reconciled))
+
     // otherwise we're all up to date
     log.info(`cache-sumup-reconcile up to date`)
   } catch (error) {
@@ -38,38 +40,82 @@ const process = async () => {
   }
 }
 
-const normalize = (ashbourne, sumup) => {
-  return {
-    ashbourne: ashbourne.reduce((mapped, member) => {
-      const memberNo = member['Member No']
-      if (memberNo in mapped) {
-        log.error(`${memberNo} duplicate in ashbourne!!!`)
-        return mapped
-      }
-      mapped[memberNo] = member
-      return mapped
-    }, {}),
-    sumup: sumup.reduce((mapped, member) => {
-      const memberNo = member.membership_no
-      if (member.active && memberNo in mapped) {
-        log.error(
-          `${memberNo}, ${member.name} duplicate of ${mapped[memberNo].name} sumup!!!`,
-        )
-        return mapped
-      }
-      mapped[memberNo] = member
-      return mapped
-    }, {}),
-  }
-}
-
-const notInSumup = ({ ashbourne, sumup }) => {
-  for (const member in ashbourne) {
-    log.info(`checking ${member} in ashbourne`)
-  }
-}
 function reconcile(ashbourne, sumup) {
-  const normalized = normalize(ashbourne, sumup)
+  const duplicates = {
+    ashbourne: [],
+    sumup: [],
+    names: [],
+    email: [],
+  }
+
+  // check ashbourne for duplicate membership no's
+  log.info(`ashbourne checking duplicate 'Member No'...`)
+  ashbourne.reduce((mapped, member) => {
+    const memberNo = member['Member No']
+    if (memberNo in mapped) {
+      const message = `${memberNo} duplicate`
+      // log.error(`${memberNo} duplicate in ashbourne`)
+      duplicates.ashbourne.push(message)
+      return mapped
+    }
+    mapped[memberNo] = member
+    return mapped
+  }, {})
+  log.info(`duplicates ${duplicates.ashbourne.length}`)
+
+  // check ashbourne for duplicate membership no's
+  log.info(`sumup checking duplicate 'membership_no'...`)
+
+  sumup.reduce((mapped, member) => {
+    const memberNo = member.membership_no
+    if (member.active && memberNo in mapped) {
+      const message = `${memberNo}, ${member.name} duplicate of ${mapped[memberNo].name}`
+      // log.error(`${message} sumup`)
+      duplicates.sumup.push(message)
+      return mapped
+    }
+    mapped[memberNo] = member
+    return mapped
+  }, {})
+  log.info(`duplicates ${duplicates.sumup.length}`)
+
+  // check sumup for duplicate names
+  log.info(`sumup checking duplicate full names...`)
+
+  sumup.reduce((mapped, member) => {
+    const { name } = member
+    if (name in mapped) {
+      const { membership_no } = member
+      const { membership_no: other } = mapped[name]
+      const message = `${membership_no}, ${name} duplicate name ${other}`
+      // log.warn(`${message} sumup`)
+      duplicates.names.push(message)
+      return mapped
+    }
+    mapped[name] = member
+    return mapped
+  }, {})
+  log.info(`duplicates ${duplicates.names.length}`)
+
+  // check sumup for duplicate email
+  log.info(`sumup checking duplicate email...`)
+
+  sumup.reduce((mapped, member) => {
+    const { email } = member
+    if (email && email in mapped) {
+      const { name, membership_no } = member
+      const { name: otherName, membership_no: other } = mapped[email]
+      const message = `[${email}], ${name} ${membership_no} duplicate email ${otherName} ${other}`
+      // log.warn(`${message} sumup`)
+      duplicates.email.push(message)
+      return mapped
+    }
+    mapped[email] = member
+    return mapped
+  }, {})
+  log.info(`duplicates ${duplicates.email.length}`)
+
+  return duplicates
 }
 
 process()

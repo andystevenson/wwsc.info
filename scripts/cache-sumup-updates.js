@@ -4,6 +4,7 @@ const { statSync, readFileSync, writeFileSync } = require('node:fs')
 const { exit } = require('node:process')
 const date = require('dayjs')
 const { log } = require('@andystevenson/lib/logger')
+const { cloneDeep } = require('lodash')
 
 const cacheDir = `.cache/sumup`
 const cacheFile = `${cacheDir}/sumup-updates.json`
@@ -27,6 +28,13 @@ const mapToMembership = (members) => {
 
 const prepareNewMembers = (ashbourne, sumup) => {
   const newMembers = {}
+  const emailDuplicates = {}
+
+  const emails = Object.values(sumup).reduce((list, member) => {
+    const { email } = member
+    if (email) list.push(email)
+    return list
+  }, [])
 
   for (const memberNo in ashbourne) {
     const memberExists = memberNo in sumup
@@ -40,10 +48,15 @@ const prepareNewMembers = (ashbourne, sumup) => {
 
     // otherwise we're going to create
     const transformed = ashbourne2sumup(member)
-    newMembers[memberNo] = transformed
+    const { email } = transformed
+    const emailExists = emails.includes(email)
+    emailExists
+      ? (emailDuplicates[memberNo] = transformed)
+      : (newMembers[memberNo] = transformed)
     // log.info(`new sumup member ${transformed.name}`)
   }
-  return newMembers
+
+  return { newMembers, emailDuplicates }
 }
 
 const verbose = true
@@ -89,20 +102,27 @@ const prepareUpdates = (ashbourne, sumup) => {
     const ashbourneMembers = mapToMembership(ashbourne)
     const sumupMembers = mapToMembership(sumup)
     const updates = prepareMemberUpdates(ashbourneMembers, sumupMembers)
-    const newMembers = prepareNewMembers(ashbourneMembers, sumupMembers)
+    const { newMembers, emailDuplicates } = prepareNewMembers(
+      ashbourneMembers,
+      sumupMembers,
+    )
 
-    return { updates, newMembers }
+    return { updates, newMembers, emailDuplicates }
   } catch (error) {
-    return { statusCode: 500, body: error.message }
+    log.error(`prepareUpdates failed with [${error.message}]`)
+    throw error
   }
 }
 
-const goodtill = async (updates, newMembers) => {
+const goodtill = async (updates, newMembers, emailDuplicates) => {
   const nUpdates = Object.keys(updates).length
   const nNewMembers = Object.keys(newMembers).length
+  const nEmailDuplicates = Object.keys(emailDuplicates).length
 
   if (nUpdates === 0) log.info(`no sumup updates`)
   if (nNewMembers === 0) log.info(`no sumup new members`)
+  if (nEmailDuplicates === 0)
+    log.info(`no sumup new members with duplicate emails`)
 
   try {
     const authentication = (
@@ -126,8 +146,35 @@ const goodtill = async (updates, newMembers) => {
     }
 
     for (const member in newMembers) {
-      const created = await create(newMembers[member])
-      log.info(`created`, created.name)
+      try {
+        const created = await create(newMembers[member])
+        log.info(`created`, created.name)
+      } catch (error) {
+        const { name, email, membership_no } = newMembers[member]
+        log.info(`create failed on ${name},${email},${membership_no}`)
+        log.error(error.cause)
+      }
+    }
+
+    for (const member in emailDuplicates) {
+      try {
+        const { name, email } = emailDuplicates[member]
+
+        // clone it and remove the email duplicate which would cause the create to fail
+        const clone = cloneDeep(emailDuplicates[member])
+        delete clone.email
+
+        const created = await create(clone)
+        const { id } = created
+        const updated = await update({ id, email })
+
+        log.info(`created email duplicate ${name},${email}=${updated.email}`)
+      } catch (error) {
+        const { name, email, membership_no } = emailDuplicates[member]
+        log.info(`email duplicate failed on ${name},${email},${membership_no}`)
+        log.error(error)
+        throw error
+      }
     }
 
     // final step is read them all back
@@ -205,13 +252,18 @@ const doUpdates = async () => {
 
     if (cacheBuildRequired()) {
       const { ashbourne, sumup } = readCustomers()
-      const { updates, newMembers } = prepareUpdates(ashbourne, sumup)
+      const { updates, newMembers, emailDuplicates } = prepareUpdates(
+        ashbourne,
+        sumup,
+      )
 
+      log.info('doUpdates...', { updates, newMembers, emailDuplicates })
       const nUpdates = Object.keys(updates).length
       const nNewMembers = Object.keys(newMembers).length
-      log.info({ nUpdates, nNewMembers })
+      const nEmailDuplicates = Object.keys(emailDuplicates).length
+      log.info({ nUpdates, nNewMembers, nEmailDuplicates })
 
-      const customers = await goodtill(updates, newMembers)
+      const customers = await goodtill(updates, newMembers, emailDuplicates)
       writeFileSync(cacheFile, JSON.stringify({ updates, newMembers }, null, 2))
       writeFileSync(updatedFile, JSON.stringify(customers, null, 2))
       log.info(`cache-sumup-updates updated`)

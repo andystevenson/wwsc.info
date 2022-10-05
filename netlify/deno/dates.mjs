@@ -1,4 +1,4 @@
-import dayjs from 'https://deno.land/x/deno_dayjs@v0.2.1/mod.ts'
+import dayjs from 'dayjs'
 export const date = dayjs
 
 export const dateFormat = 'YYYY-MM-DD'

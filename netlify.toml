@@ -26,6 +26,26 @@
   ## more info on configuring this file: https://docs.netlify.com/configure-builds/file-based-configuration/
 
 
+[[redirects]]
+  to = "/.netlify/functions/ashbourne"
+  from = "/api/ashbourne"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/zettle"
+  from = "/api/zettle"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/stripe"
+  from = "/api/stripe"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/sumup"
+  from = "/api/sumup"
+  status = 200
+
 # [[edge_functions]]
 # function = "cookies"
 # path = "/*"
@@ -62,17 +82,7 @@ path = "/api/hello"
 function = "age"
 path = "/age"
 
-[[edge_functions]]
-function = "zettle"
-path = "/api/zettle"
 
-[[edge_functions]]
-function = "stripe"
-path = "/api/stripe"
-
-[[edge_functions]]
-function = "sumup"
-path = "/api/sumup"
 
 # start-generated-edge-functions
 [[edge_functions]]
@@ -120,6 +130,10 @@ function="tea-coffee"
 path="/api/tea-coffee"
 
 [[edge_functions]]
+function="sports-teas"
+path="/api/sports-teas"
+
+[[edge_functions]]
 function="liquer-coffee"
 path="/api/liquer-coffee"
 
@@ -136,15 +150,8 @@ function="kids-menu"
 path="/api/kids-menu"
 
 [[edge_functions]]
-function="sports-teas"
-path="/api/sports-teas"
-
-[[edge_functions]]
 function="mothers-day"
 path="/api/mothers-day"
 # end-generated-edge-functions
 
 
-[[edge_functions]]
-function = "ashbourne"
-path = "/api/ashbourne"

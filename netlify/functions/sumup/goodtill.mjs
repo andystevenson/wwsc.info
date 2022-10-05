@@ -1,4 +1,4 @@
-import * as log from 'https://deno.land/std/log/mod.ts'
+import fetch from 'node-fetch'
 
 export async function sales(daterange = null) {
   try {
@@ -18,7 +18,7 @@ export async function sales(daterange = null) {
 
     throw Error(`sumup sales failed [${response.statusText}]`)
   } catch (error) {
-    log.error(`sumup sales for today failed [${error.message}]`)
+    console.error(`sumup sales for today failed [${error.message}]`)
     throw error
   }
 }
@@ -26,9 +26,9 @@ export async function sales(daterange = null) {
 let credentials = null
 export async function login() {
   const authentication = {
-    subdomain: Deno.env.get('GOODTILL_SUBDOMAIN'),
-    username: Deno.env.get('GOODTILL_USERNAME'),
-    password: Deno.env.get('GOODTILL_PASSWORD'),
+    subdomain: process.env.GOODTILL_SUBDOMAIN,
+    username: process.env.GOODTILL_USERNAME,
+    password: process.env.GOODTILL_PASSWORD,
   }
 
   const url = 'https://api.thegoodtill.com/api/login'
@@ -67,11 +67,13 @@ export async function logout() {
     })
     if (response.ok) {
       const json = await response.json()
-      return
+      return json
     }
     throw Error(`sumup logout failed [${response.statusText}]`)
   } catch (error) {
-    log.error(`sumup logout error [${error.message}]`)
+    console.error(`sumup logout error [${error.message}]`)
     throw error
   }
 }
+
+export default sales

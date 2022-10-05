@@ -1,6 +1,6 @@
-import ashbourne from '../../../.cache/ashbourne/ashbourne.json' assert { type: 'json' }
-import { date } from '../../../src/deno/dates.mjs'
-import { gbp } from '../../../src/deno/gbp.mjs'
+import ashbourne from '../../../.cache/ashbourne/ashbourne.json'
+import { date } from '../../deno/dates.mjs'
+import gbp from '../../deno/gbp.mjs'
 
 const memberStatuses = [
   'live',
@@ -63,20 +63,14 @@ const sumMonthToDate = (ashref) => {
   }, 0)
 }
 
-export default (_, { log }) => {
-  try {
-    return new Response(
-      JSON.stringify({
-        today: gbp.format(sumToday(ashref)),
-        mtd: gbp.format(sumMonthToDate(ashref)),
-        ytd: gbp.format(sumMonthToDate(ashref)),
-      }),
-      {
-        headers: { 'content-type': 'application/json' },
-      },
-    )
-  } catch (error) {
-    log(`sumup failed to fetch data [${error.message}]`)
-    throw error
+export const handler = async () => {
+  return {
+    statusCode: 200,
+    headers: { 'content-type': 'application/json; charset="utf-8"' },
+    body: JSON.stringify({
+      today: gbp.format(sumToday(ashref)),
+      mtd: gbp.format(sumMonthToDate(ashref)),
+      ytd: gbp.format(sumMonthToDate(ashref)),
+    }),
   }
 }

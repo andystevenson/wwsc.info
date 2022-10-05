@@ -1,15 +1,21 @@
-import * as log from 'https://deno.land/std/log/mod.ts'
-import { dateFormat, lastOctober } from './dates.mjs'
+import gbp from '../../deno/gbp.mjs'
+import {
+  salesToday,
+  salesMonthToDate,
+  salesYearToDate,
+} from '../../deno/sales.mjs'
+
+import { dateFormat, lastOctober, sortDescending } from '../../deno/dates.mjs'
+import fetch from 'node-fetch'
 
 export const env = {
   oauth: 'https://oauth.zettle.com/token',
   purchases: 'https://purchase.izettle.com/purchases/v2',
-  client: Deno.env.get('ZETTLE_CLIENT_ID'),
-  apiKey: Deno.env.get('ZETTLE_API_KEY'),
+  client: process.env.ZETTLE_CLIENT_ID,
+  apiKey: process.env.ZETTLE_API_KEY,
 }
 
 if (!env.client || !env.apiKey) {
-  log.error('ZETTLE_CLIENT_ID and ZETTLE_API_KEY must be set')
   throw Error(`ZETTLE CREDENTIALS MISSING`)
 }
 
@@ -34,7 +40,6 @@ export const accessToken = async () => {
 
     return json
   } catch (error) {
-    log.error(`zettle accessToken failed because [${error.message}]`)
     throw error
   }
 }
@@ -63,7 +68,37 @@ export const purchases = async (
     }
     return json
   } catch (error) {
-    log.error(`zettle fetch purchases failed [${error.message}]`)
     throw error
+  }
+}
+
+export const handler = async () => {
+  try {
+    let p = await purchases()
+    p = p.purchases
+      .map((purchase) => ({
+        amount: purchase.amount,
+        timestamp: purchase.timestamp,
+      }))
+      .sort(sortDescending)
+    p = {
+      today: gbp.format(salesToday(p)),
+      mtd: gbp.format(salesMonthToDate(p)),
+      ytd: gbp.format(salesYearToDate(p)),
+    }
+
+    return {
+      statusCode: 200,
+      headers: { 'content-type': 'application/json; charset="utf-8"' },
+      body: JSON.stringify(p),
+    }
+  } catch (error) {
+    const message = `zettle error [${error.message}]`
+    console.error(message)
+    return {
+      statusCode: 500,
+      headers: { 'content-type': 'application/json; charset="utf-8"' },
+      body: JSON.stringify({ message }),
+    }
   }
 }
