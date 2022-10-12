@@ -1,4 +1,4 @@
-import { date } from './dates.mjs'
+import { date, lastOctober } from './dates.mjs'
 
 export const salesToday = (purchases = []) => {
   const today = date()
@@ -13,7 +13,7 @@ export const salesToday = (purchases = []) => {
 export const salesMonthToDate = (purchases = []) => {
   const today = date()
   return purchases.reduce((total, purchase) => {
-    const { amount, timestamp } = purchase
+    const { paid, amount, timestamp } = purchase
     const purchaseDate = date(timestamp)
     if (purchaseDate.isSame(today, 'month')) total = total + amount / 100
     return total
@@ -22,7 +22,6 @@ export const salesMonthToDate = (purchases = []) => {
 
 // ytd assumes all the sales are for the current 'financial' year
 export const salesYearToDate = (purchases = []) => {
-  const today = date()
   return purchases.reduce((total, purchase) => {
     const { amount } = purchase
     total = total + amount / 100

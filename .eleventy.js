@@ -3,9 +3,6 @@ const shortcodes = require('./src/shortcodes/shortcodes')
 const EleventyVitePlugin = require('@11ty/eleventy-plugin-vite')
 
 const vite = {
-  tempFolderName: '.11ty-vite', // Default name of the temp folder
-
-  // Defaults are shown:
   viteOptions: {
     resolve: {
       alias: {

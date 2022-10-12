@@ -20,8 +20,6 @@ if (!env.client || !env.apiKey) {
 }
 
 export const accessToken = async () => {
-  if (env.token) return env.token
-
   try {
     const params = new URLSearchParams()
     params.append('grant_type', 'urn:ietf:params:oauth:grant-type:jwt-bearer')

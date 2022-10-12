@@ -22,7 +22,6 @@ const ageGroups = () => {
     }, 0),
   )
 
-  console.log({ result })
   return result
 }
 

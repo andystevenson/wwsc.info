@@ -87,10 +87,10 @@ const prepareMemberUpdates = (ashbourne, sumup) => {
       }
     } else {
       // there is no
-      const { name } = updates[memberNo]
-      log.info(
-        `member ${name}, number ${memberNo}, does not exist in ashbourne`,
-      )
+      const { name, customer_group } = updates[memberNo]
+      customer_group === 'NON-MEMBERS'
+        ? log.info(`${name}, number ${memberNo}, does not exist in ashbourne`)
+        : log.error(`${name}, number ${memberNo}, does not exist in ashbourne`)
       delete updates[memberNo]
     }
   }

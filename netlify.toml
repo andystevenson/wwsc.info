@@ -46,6 +46,11 @@
   from = "/api/sumup"
   status = 200
 
+[[redirects]]
+  to = "/.netlify/functions/zettle-webhooks"
+  from = "/webhooks/zettle"
+  status = 200
+
 # [[edge_functions]]
 # function = "cookies"
 # path = "/*"

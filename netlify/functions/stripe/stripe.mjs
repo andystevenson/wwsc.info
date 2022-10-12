@@ -13,7 +13,7 @@ export async function charges() {
   try {
     const all = await stripe.charges
       .list({
-        created: { gt: `${lastOctober().unix()}` },
+        created: { gte: `${lastOctober().unix()}` },
         limit: 100,
       })
       .autoPagingToArray({ limit: 10000 })
@@ -31,9 +31,11 @@ export const handler = async () => {
     c = c
       .filter((charge) => charge.paid)
       .map((charge) => ({
+        paid: charge.paid,
         amount: charge.amount,
         timestamp: charge.created * 1000,
       }))
+
     c = {
       today: gbp.format(salesToday(c)),
       mtd: gbp.format(salesMonthToDate(c)),
