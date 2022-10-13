@@ -56,6 +56,10 @@
 # path = "/*"
 
 [[edge_functions]]
+function = "new-social-members"
+path = "/new-social-members"
+
+[[edge_functions]]
 function = "card"
 path = "/card"
 
@@ -158,5 +162,4 @@ path="/api/kids-menu"
 function="mothers-day"
 path="/api/mothers-day"
 # end-generated-edge-functions
-
 

@@ -8,7 +8,6 @@ export const lastOctober = (from = date()) => {
 
   const octoberMonth = 9
   if (month === octoberMonth) {
-    console.log('in october')
     return from.startOf('month').startOf('day')
   }
 

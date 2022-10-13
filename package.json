@@ -15,6 +15,7 @@
     "clean:cache-ashbourne-csv": "rm -f .cache/ashbourne/ashbourne.csv",
     "clean:cache-ashbourne-lint": "rm -f .cache/ashbourne/ashbourne-lint*",
     "clean:cache-ashbourne-json": "rm -f .cache/ashbourne/ashbourne.json",
+    "clean:cache-new-social-members": "rm -f .cache/ashbourne/new-social-members.json",
     "clean:cache-stripe-join": "rm -f .cache/stripe/join.json",
     "clean:cache-stripe-subscriptions": "rm -f .cache/stripe/subscriptions.json",
     "clean:cache-stripe-customers": "rm -f .cache/stripe/customers.json",
@@ -31,6 +32,7 @@
     "build:cache-ashbourne-csv": "npx cache-ashbourne-csv",
     "build:cache-ashbourne-lint": "npx cache-ashbourne-lint",
     "build:cache-ashbourne-json": "npx cache-ashbourne-json",
+    "build:cache-new-social-members": "npx cache-new-social-members",
     "build:cache-stripe-join": "npx cache-stripe-join",
     "build:cache-stripe-subscriptions": "npx cache-stripe-subscriptions",
     "build:cache-stripe-customers": "npx cache-stripe-customers",
@@ -56,7 +58,8 @@
     "cache-sumup-categories": "./scripts/cache-sumup-categories.js",
     "cache-ashbourne-csv": "./scripts/cache-ashbourne-csv.js",
     "cache-ashbourne-lint": "./scripts/cache-ashbourne-lint.js",
-    "cache-ashbourne-json": "./scripts/cache-ashbourne-json.js"
+    "cache-ashbourne-json": "./scripts/cache-ashbourne-json.js",
+    "cache-new-social-members": "./scripts/cache-new-social-members.mjs"
   },
   "repository": {
     "type": "git",

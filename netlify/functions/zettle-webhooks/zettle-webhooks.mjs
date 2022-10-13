@@ -1,4 +1,3 @@
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 import { list } from '../../../src/zettle/webhooks.mjs'
 import crypto from 'node:crypto'
 
