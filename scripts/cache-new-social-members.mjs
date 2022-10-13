@@ -1,4 +1,4 @@
-#!/usr/bin/env node --no-warnings
+#!/usr/bin/env node
 
 import date from 'dayjs'
 import ashbourne from '../.cache/ashbourne/ashbourne.json' assert { type: 'json' }
