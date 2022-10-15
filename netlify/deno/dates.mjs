@@ -8,7 +8,9 @@ export const lastOctober = (from = date()) => {
 
   const octoberMonth = 9
   if (month === octoberMonth) {
-    return from.startOf('month').startOf('day')
+    const oct1 = from.startOf('month').startOf('day')
+    console.log('new oct', oct1.format(), oct1.unix())
+    return oct1
   }
 
   const diff = octoberMonth - month

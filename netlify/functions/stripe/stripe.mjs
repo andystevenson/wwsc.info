@@ -11,6 +11,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 export async function charges() {
   try {
+    console.log('stripe oct1', lastOctober().format(), lastOctober().unix())
     const all = await stripe.charges
       .list({
         created: { gte: `${lastOctober().unix()}` },
