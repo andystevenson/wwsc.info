@@ -1,6 +1,11 @@
 import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+dayjs.extend(timezone)
+dayjs.tz.setDefault('UK/London')
 export const date = dayjs
+export const today = date().startOf('day')
 
+console.log(today)
 export const dateFormat = 'YYYY-MM-DD'
 
 export const lastOctober = (from = date()) => {
