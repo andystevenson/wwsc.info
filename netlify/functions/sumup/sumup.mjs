@@ -5,7 +5,7 @@ import sales from './goodtill.mjs'
 export const handler = async () => {
   try {
     const today = await sales()
-    const from = `${lastOctober().format('DD/MM/YYYY')} 00:00 AM`
+    const from = `${lastOctober.format('DD/MM/YYYY')} 00:00 AM`
     const to = `${date().format('DD/MM/YYYY')} 11:59 PM`
     const month = await sales({ daterange: `${from} - ${to}` })
 

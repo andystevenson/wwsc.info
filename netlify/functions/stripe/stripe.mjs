@@ -4,17 +4,16 @@ import {
   salesYearToDate,
 } from '../../deno/sales.mjs'
 
-import { lastOctober } from '../../deno/dates.mjs'
+import { lastOctoberUK } from '../../deno/dates.mjs'
 import gbp from '../../deno/gbp.mjs'
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 export async function charges() {
   try {
-    console.log('stripe oct1', lastOctober().format(), lastOctober().unix())
     const all = await stripe.charges
       .list({
-        created: { gte: `${lastOctober().unix()}` },
+        created: { gte: `${lastOctoberUK.unix()}` },
         limit: 100,
       })
       .autoPagingToArray({ limit: 10000 })

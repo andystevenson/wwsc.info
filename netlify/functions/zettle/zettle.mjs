@@ -5,7 +5,7 @@ import {
   salesYearToDate,
 } from '../../deno/sales.mjs'
 
-import { dateFormat, lastOctober, sortDescending } from '../../deno/dates.mjs'
+import { dateFormat, lastOctoberUK, sortDescending } from '../../deno/dates.mjs'
 import fetch from 'node-fetch'
 
 export const env = {
@@ -43,7 +43,7 @@ export const accessToken = async () => {
 }
 
 export const purchases = async (
-  options = { startDate: lastOctober().format(dateFormat) },
+  options = { startDate: lastOctoberUK.format(dateFormat) },
 ) => {
   const token = await accessToken()
   const params = new URLSearchParams(options)

@@ -1,61 +1,58 @@
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc.js'
+import timezone from 'dayjs/plugin/timezone.js'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 export const date = dayjs
-date.extend(utc)
-date.extend(timezone)
-date.tz.setDefault('Europe/London')
 
-export const today = date().startOf('day')
+export const tz = 'Europe/London'
+export const todayUK = dayjs().tz(tz).startOf('day')
+export const today = dayjs().utc().startOf('day')
 
-console.log(today, date.tz.guess())
-export const dateFormat = 'YYYY-MM-DD'
+console.log(today, todayUK)
+console.log(today.unix(), todayUK.unix())
+console.log(today.format(), todayUK.format())
 
-export const lastOctober = (from = date()) => {
-  const month = from.month()
+export const lastOctoberUK =
+  todayUK.month() >= 9
+    ? todayUK.month(9).date(1)
+    : todayUK
+        .year(year - 1)
+        .month(9)
+        .date(1)
 
-  const octoberMonth = 9
-  if (month === octoberMonth) {
-    const oct1 = from.startOf('month').startOf('day')
-    console.log('new oct', oct1.format(), oct1.unix())
-    return oct1
-  }
+export const lastOctober =
+  today.month() >= 9
+    ? today.month(9).date(1)
+    : today
+        .year(year - 1)
+        .month(9)
+        .date(1)
 
-  const diff = octoberMonth - month
-
-  if (diff < 0) {
-    const october1st = from.startOf('month').add(diff, 'months').startOf('day')
-    return october1st
-  }
-
-  const october1st = from
-    .startOf('month')
-    .add(diff - 12, 'months')
-    .startOf('day')
-  return october1st
-}
+// const lastOctoberUK = lastOctober.tz(tz)
+console.log('oct1', lastOctober, lastOctoberUK)
+console.log('oct1', lastOctober.unix(), lastOctoberUK.unix())
+console.log('oct1', lastOctober.format(), lastOctoberUK.format())
 
 export const sortAscending = (a, b) => {
-  const aDate = date(a.timestamp)
-  const bDate = date(b.timestamp)
-  if (aDate.isBefore(bDate)) return -1
-  if (aDate.isAfter(bDate)) return 1
-  return 0
+  return a.timestamp - b.timestamp
 }
 
 export const sortDescending = (a, b) => {
-  const aDate = date(a.timestamp)
-  const bDate = date(b.timestamp)
-  if (aDate.isBefore(bDate)) return 1
-  if (aDate.isAfter(bDate)) return -1
-  return 0
+  return b.timestamp - a.timestamp
 }
+
+export const dateFormat = 'YYYY-MM-DD'
 
 export default {
   date,
   dateFormat,
+  today,
+  todayUK,
   lastOctober,
+  lastOctoberUK,
   sortAscending,
   sortDescending,
 }
