@@ -1,21 +1,19 @@
-import { date, lastOctober } from './dates.mjs'
+import { date, tz, todayUK } from './dates.mjs'
 
 export const salesToday = (purchases = []) => {
-  const today = date()
   return purchases.reduce((total, purchase) => {
     const { amount, timestamp } = purchase
-    const purchaseDate = date(timestamp)
-    if (purchaseDate.isSame(today, 'day')) total = total + amount / 100
+    const purchaseDate = date(timestamp).tz(tz)
+    if (purchaseDate.isSame(todayUK, 'day')) total = total + amount / 100
     return total
   }, 0)
 }
 
 export const salesMonthToDate = (purchases = []) => {
-  const today = date()
   return purchases.reduce((total, purchase) => {
-    const { paid, amount, timestamp } = purchase
-    const purchaseDate = date(timestamp)
-    if (purchaseDate.isSame(today, 'month')) total = total + amount / 100
+    const { amount, timestamp } = purchase
+    const purchaseDate = date(timestamp).tz(tz)
+    if (purchaseDate.isSame(todayUK, 'month')) total = total + amount / 100
     return total
   }, 0)
 }
