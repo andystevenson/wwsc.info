@@ -43,36 +43,13 @@ const join = {
       name: 'membership',
       products: [
         {
-          name: 'Dummy',
-          description: 'Dummy dummy dummy.',
-          conditions: 'No conditions dummy',
-          images: ['https://westwarwicks.club/favicon.svg'],
-          discounted: true,
-          prices: [
-            { interval: 'year', price: 1, nickname: 'dummy-annual' },
-            { interval: 'month', price: 1, nickname: 'dummy-monthly' },
-            {
-              interval: 'year',
-              price: 1 * 0.8,
-              nickname: 'dummy-annual-family-member',
-              discounted: true,
-            },
-            {
-              interval: 'month',
-              price: 1 * 0.8,
-              nickname: 'dummy-monthly-family-member',
-              discounted: true,
-            },
-          ],
-        },
-        {
           name: 'Family',
           description: 'All sports and gym with classes.',
           conditions: 'Up to 3 children under 18',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'year', price: 1000, nickname: 'family-annual' },
-            { interval: 'month', price: 100, nickname: 'family-monthly' },
+            { interval: 'year', price: 1000, nickname: 'family-annual-v2' },
+            { interval: 'month', price: 100, nickname: 'family-monthly-v2' },
           ],
         },
         {
@@ -81,18 +58,18 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 600, nickname: 'classes-annual' },
-            { interval: 'month', price: 55, nickname: 'classes-monthly' },
+            { interval: 'year', price: 600, nickname: 'classes-annual-v2' },
+            { interval: 'month', price: 55, nickname: 'classes-monthly-v2' },
             {
               interval: 'year',
               price: 600 * 0.8,
-              nickname: 'classes-annual-family-member',
+              nickname: 'classes-annual-family-member-v2',
               discounted: true,
             },
             {
               interval: 'month',
               price: 55 * 0.8,
-              nickname: 'classes-monthly-family-member',
+              nickname: 'classes-monthly-family-member-v2',
               discounted: true,
             },
           ],
@@ -103,23 +80,22 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 550, nickname: 'adult-annual' },
-            { interval: 'month', price: 50, nickname: 'adult-monthly' },
+            { interval: 'year', price: 550, nickname: 'adult-annual-v2' },
+            { interval: 'month', price: 50, nickname: 'adult-monthly-v2' },
             {
               interval: 'year',
               price: 550 * 0.8,
-              nickname: 'adult-annual-family-member',
+              nickname: 'adult-annual-family-member-v2',
               discounted: true,
             },
             {
               interval: 'month',
               price: 50 * 0.8,
-              nickname: 'adult-monthly-family-member',
+              nickname: 'adult-monthly-family-member-v2',
               discounted: true,
             },
           ],
         },
-
         {
           name: 'Off-Peak',
           description: 'All sports and gym.',
@@ -127,22 +103,22 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 400, nickname: 'off-peak-annual' },
+            { interval: 'year', price: 400, nickname: 'off-peak-annual-v2' },
             {
               interval: 'month',
               price: 37.5,
-              nickname: 'off-peak-monthly',
+              nickname: 'off-peak-monthly-v2',
             },
             {
               interval: 'year',
               price: 400 * 0.8,
-              nickname: 'off-peak-annual-family-member-new',
+              nickname: 'off-peak-annual-family-member-v2',
               discounted: true,
             },
             {
               interval: 'month',
               price: 37.5 * 0.8,
-              nickname: 'off-peak-monthly-family-member',
+              nickname: 'off-peak-monthly-family-member-v2',
               discounted: true,
             },
           ],
@@ -154,22 +130,22 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 400, nickname: 'over-65-annual' },
+            { interval: 'year', price: 400, nickname: 'over-65-annual-v2' },
             {
               interval: 'month',
               price: 37.5,
-              nickname: 'over-65-monthly',
+              nickname: 'over-65-monthly-v2',
             },
             {
               interval: 'year',
               price: 400 * 0.8,
-              nickname: 'over-65-annual-family-member',
+              nickname: 'over-65-annual-family-member-v2',
               discounted: true,
             },
             {
               interval: 'month',
               price: 37.5 * 0.8,
-              nickname: 'over-65-monthly-family-member',
+              nickname: 'over-65-monthly-family-member-v2',
               discounted: true,
             },
           ],
@@ -181,22 +157,22 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 400, nickname: 'young-adult-annual' },
+            { interval: 'year', price: 400, nickname: 'young-adult-annual-v2' },
             {
               interval: 'month',
               price: 37.5,
-              nickname: 'young-adult-monthly',
+              nickname: 'young-adult-monthly-v2',
             },
             {
               interval: 'year',
               price: 400 * 0.8,
-              nickname: 'young-adult-annual-family-member',
+              nickname: 'young-adult-annual-family-member-v2',
               discounted: true,
             },
             {
               interval: 'month',
               price: 37.5 * 0.8,
-              nickname: 'young-adult-monthly-family-member',
+              nickname: 'young-adult-monthly-family-member-v2',
               discounted: true,
             },
           ],
@@ -206,14 +182,18 @@ const join = {
           description: 'All sports and gym, kids & family classes.',
           conditions: 'Aged 12-17',
           images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'year', price: 105, nickname: 'teens-annual' }],
+          prices: [
+            { interval: 'year', price: 105, nickname: 'teens-annual-v2' },
+          ],
         },
         {
           name: 'Junior',
           description: 'All sports and gym.',
           conditions: 'Aged 7-11',
           images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'year', price: 75, nickname: 'junior-annual' }],
+          prices: [
+            { interval: 'year', price: 75, nickname: 'junior-annual-v2' },
+          ],
         },
         {
           name: 'Social',
@@ -221,11 +201,11 @@ const join = {
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 100, nickname: 'social-annual' },
+            { interval: 'year', price: 100, nickname: 'social-annual-v2' },
             {
               interval: 'year',
               price: 100 * 0.8,
-              nickname: 'social-annual-family-member-new',
+              nickname: 'social-annual-family-member-new-v2',
               discounted: true,
             },
           ],
@@ -245,13 +225,13 @@ const join = {
               interval: 'once',
               price: 3,
               qty: 1,
-              nickname: 'classes-member-1',
+              nickname: 'classes-member-1-v2',
             },
             {
               interval: 'once',
               price: 30,
               qty: 12,
-              nickname: 'classes-member-12',
+              nickname: 'classes-member-12-v2',
             },
           ],
         },
@@ -265,13 +245,13 @@ const join = {
               interval: 'once',
               price: 5,
               qty: 1,
-              nickname: 'classes-social-member-1',
+              nickname: 'classes-social-member-1-v2',
             },
             {
               interval: 'once',
               price: 50,
               qty: 12,
-              nickname: 'classes-social-member-12',
+              nickname: 'classes-social-member-12-v2',
             },
           ],
         },
@@ -285,13 +265,13 @@ const join = {
               interval: 'once',
               price: 7,
               qty: 1,
-              nickname: 'classes-visitor-1',
+              nickname: 'classes-visitor-1-v2',
             },
             {
               interval: 'once',
               price: 70,
               qty: 12,
-              nickname: 'classes-visitor-12',
+              nickname: 'classes-visitor-12-v2',
             },
           ],
         },
@@ -301,18 +281,13 @@ const join = {
       name: 'visitors',
       products: [
         {
-          name: 'DummyVisit',
-          description: 'Dummy dummy dummy.',
-          conditions: 'With a member',
-          images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'once', price: 1, nickname: 'visitors-dummy' }],
-        },
-        {
           name: 'Guest',
           description: 'Rackets and gym access.',
           conditions: 'With a member',
           images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'once', price: 5, nickname: 'visitors-guest' }],
+          prices: [
+            { interval: 'once', price: 5, nickname: 'visitors-guest-v2' },
+          ],
         },
         {
           name: 'Session',
@@ -320,7 +295,7 @@ const join = {
           conditions: 'A single booking',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'once', price: 10, nickname: 'visitors-session' },
+            { interval: 'once', price: 10, nickname: 'visitors-session-v2' },
           ],
         },
         {
@@ -328,14 +303,18 @@ const join = {
           description: 'Rackets and gym access.',
           conditions: 'Up to 3 bookings',
           images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'once', price: 15, nickname: 'visitors-day' }],
+          prices: [
+            { interval: 'once', price: 15, nickname: 'visitors-day-v2' },
+          ],
         },
         {
           name: 'Week',
           description: 'Rackets and gym access.',
           conditions: '7 days, 2 bookings per day',
           images: ['https://westwarwicks.club/favicon.svg'],
-          prices: [{ interval: 'once', price: 20, nickname: 'visitors-week' }],
+          prices: [
+            { interval: 'once', price: 20, nickname: 'visitors-week-v2' },
+          ],
         },
         {
           name: '2 Weeks',
@@ -343,7 +322,44 @@ const join = {
           conditions: '14 days, 2 bookings per day',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'once', price: 30, nickname: 'visitors-2-week' },
+            { interval: 'once', price: 30, nickname: 'visitors-2-week-v2' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'test',
+      products: [
+        {
+          name: 'Dummy',
+          description: 'Dummy dummy dummy.',
+          conditions: 'No conditions dummy',
+          images: ['https://westwarwicks.club/favicon.svg'],
+          discounted: true,
+          prices: [
+            { interval: 'year', price: 1, nickname: 'dummy-annual-v2' },
+            { interval: 'month', price: 1, nickname: 'dummy-monthly-v2' },
+            {
+              interval: 'year',
+              price: 1 * 0.8,
+              nickname: 'dummy-annual-family-member-v2',
+              discounted: true,
+            },
+            {
+              interval: 'month',
+              price: 1 * 0.8,
+              nickname: 'dummy-monthly-family-member-v2',
+              discounted: true,
+            },
+          ],
+        },
+        {
+          name: 'DummyVisit',
+          description: 'Dummy dummy dummy.',
+          conditions: 'With a member',
+          images: ['https://westwarwicks.club/favicon.svg'],
+          prices: [
+            { interval: 'once', price: 1, nickname: 'visitors-dummy-v2' },
           ],
         },
       ],

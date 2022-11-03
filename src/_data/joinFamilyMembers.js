@@ -5,11 +5,15 @@ const { cloneDeep } = require('lodash')
 const getDiscountedPrices = () => {
   const clone = cloneDeep(stripeJoin)
   const discounted = clone.categories
-    .find((category) => category.name === 'membership')
-    ?.products.filter((product) => product.discounted)
+    // .find((category) => category.name === 'membership')
+    // ?.products.filter((product) => product.discounted)
+    .reduce((list, category) => {
+      list = list.concat(category.products)
+      return list
+    }, [])
     .map((product) => {
       const prices = product.prices
-        .filter((price) => price.discounted)
+        // .filter((price) => price.discounted)
         .map((price) => {
           const { paymentLink } = price
 

@@ -51,6 +51,21 @@
   from = "/webhooks/zettle"
   status = 200
 
+[[redirects]]
+  to = "/.netlify/functions/getaddress"
+  from = "/api/getaddress"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/stripe-customers"
+  from = "/api/stripe-customers"
+  status = 200
+  
+[[redirects]]
+  to = "/.netlify/functions/staff"
+  from = "/api/staff"
+  status = 200
+
 # [[edge_functions]]
 # function = "cookies"
 # path = "/*"
@@ -157,6 +172,10 @@ path="/api/food"
 [[edge_functions]]
 function="kids-menu"
 path="/api/kids-menu"
+
+[[edge_functions]]
+function="fizz-friday"
+path="/api/fizz-friday"
 
 [[edge_functions]]
 function="mothers-day"

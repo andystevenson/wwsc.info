@@ -1,3 +1,4 @@
+const { inspect } = require('node:util')
 const env = require('./stripeEnv.js')
 const { stripe } = env
 
@@ -5,21 +6,27 @@ const join = require('../../src/_data/join.js')
 
 let products = []
 const listProducts = async () => {
-  products = await stripe.products.list({ limit: 100, active: true })
+  products = await stripe.products
+    .list({ limit: 100, active: true })
+    .autoPagingToArray({ limit: 10000 })
   return products
 }
 
 let prices = []
 const listPrices = async () => {
-  prices = await stripe.prices.list({ limit: 100 })
+  prices = await stripe.prices
+    .list({ limit: 100 })
+    .autoPagingToArray({ limit: 10000 })
   return prices
 }
 
 let paymentLinks = []
 const listPaymentLinks = async () => {
-  paymentLinks = await stripe.paymentLinks.list({
-    limit: 100,
-  })
+  paymentLinks = await stripe.paymentLinks
+    .list({
+      limit: 100,
+    })
+    .autoPagingToArray({ limit: 10000 })
   return paymentLinks
 }
 
@@ -38,7 +45,7 @@ const createPrices = async (stripeProduct, price) => {
   const nickname = price.nickname
   const unit_amount = price.price * 100
   const currency = 'gbp'
-  const tax_behavior = 'inclusive'
+  // const tax_behavior = 'inclusive'
   const recurring =
     price.interval === 'once' ? null : { interval: price.interval }
   const product = stripeProduct.id
@@ -49,7 +56,7 @@ const createPrices = async (stripeProduct, price) => {
       nickname,
       currency,
       unit_amount,
-      tax_behavior,
+      // tax_behavior,
       recurring,
       product,
     })
@@ -58,22 +65,30 @@ const createPrices = async (stripeProduct, price) => {
       nickname,
       currency,
       unit_amount,
-      tax_behavior,
+      // tax_behavior,
       product,
     })
   }
+
+  const line_item = {
+    price: newPrice.id,
+    quantity: 1,
+  }
+
+  // subcriptions are recurring... others can be picked by quantity
+  if (!recurring)
+    line_item.adjustable_quantity = {
+      enabled: true,
+      minimum: 1,
+      maximum: 99,
+    }
 
   const paymentLink = await stripe.paymentLinks.create({
     metadata: { name: `payment-link-${newPrice.nickname}` },
     billing_address_collection: 'required',
     phone_number_collection: { enabled: true },
-    automatic_tax: { enabled: true },
-    line_items: [
-      {
-        price: newPrice.id,
-        quantity: 1,
-      },
-    ],
+    // automatic_tax: { enabled: true },
+    line_items: [line_item],
   })
 
   price.paymentLink = paymentLink
@@ -90,22 +105,31 @@ const createProducts = async () => {
       const exists = product.name in normalized
 
       if (exists) {
+        console.log(`product ${product.name} already exists`)
         alreadyExists.push(product.name)
         stripeProduct = normalized[product.name]
       }
 
       if (!exists) {
-        console.log('new product', product.name, exists)
+        console.log('new product', product.name)
         const { name, description, images } = product
+        const tax_code = 'txcd_00000000'
         stripeProduct = images
-          ? await stripe.products.create({ name, description, images })
-          : await stripe.products.create({ name, description })
+          ? await stripe.products.create({
+              name,
+              description,
+              images,
+              tax_code,
+            })
+          : await stripe.products.create({ name, description, tax_code })
       }
 
       let stripePrice = null
       for (const price of product.prices) {
         const exists = price.nickname in normalized
         if (exists) {
+          console.log(`price ${price.nickname} exists`)
+
           alreadyExists.push(price.nickname)
           stripePrice = normalized[price.nickname]
           const stripePaymentLink = normalized[`payment-link-${price.nickname}`]
@@ -115,8 +139,7 @@ const createProducts = async () => {
         }
 
         if (!exists) {
-          console.log('new price', price.nickname, exists)
-
+          console.log('new price', price.nickname)
           stripePrice = await createPrices(stripeProduct, price)
         }
       }
@@ -128,14 +151,14 @@ const normalized = {}
 
 const normalize = () => {
   // take the products and prices from stripe and normalize them into a lookup structure
-  paymentLinks.data.forEach((link) => {
+  paymentLinks.forEach((link) => {
     const name = link.metadata.name
     if (name) {
       normalized[name] = link
     }
   })
-  products.data.forEach((product) => (normalized[product.name] = product))
-  prices.data.forEach((price) => {
+  products.forEach((product) => (normalized[product.name] = product))
+  prices.forEach((price) => {
     if (price.nickname) {
       normalized[price.nickname] = price
     }
@@ -154,3 +177,8 @@ const assets = async () => {
 }
 
 module.exports = assets
+;(async () => {
+  const json = await assets()
+  console.log('done')
+  // console.log(inspect(json, { depth: null, colors: true }))
+})()

@@ -4,6 +4,7 @@ let env = null
 
 if (!env && process.env.STRIPE_TEST_SECRET_KEY) {
   // we're in a test environment
+  console.log('stripe test environment')
   const secret = process.env.STRIPE_TEST_SECRET_KEY
 
   const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY)

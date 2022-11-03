@@ -1,6 +1,4 @@
-import { debounce } from 'lodash'
-
-console.log('finder...')
+import debounce from 'lodash.debounce'
 
 const input = document.querySelector('input[type="text"]')
 const active = document.querySelector('input[name="active"]')

@@ -1,0 +1,36 @@
+{% for category in membership %}
+  <section class="{{category.name}}">
+    <h2>{{category.name}}</h2>
+    {% for product in category.products %}
+    <article>
+      <header>
+        <p>{{product.name}}</p>
+        <small>{{product.description}}</small>
+      </header>
+      <section>
+        <ul>
+        {% for price in product.prices %}
+          <li>
+            {% if price.discounted %}
+              <span><small>family</small><small>member</small></span>
+            {% else %}
+              <span></span>                
+            {% endif %}
+            <strong>{{price.price}}</strong>
+            {% if price.interval !== 'once' %}
+              <p><small>per</small><small>{{price.interval}}</small></p>     
+            {% elif price.qty %}
+              <p><small>{{'per' if price.qty === 1 else price.qty}}</small><small>{{'class' if price.qty === 1 else 'classes'}}</small></p>                     
+            {% endif %}
+            <form action="{{price.link.url}}" target="_blank">
+              <button>Buy</button>
+            </form>                      
+          </li>
+        {% endfor %}
+        </ul>
+
+      </section>
+    </article>
+    {% endfor %}
+  </section>
+{% endfor %}

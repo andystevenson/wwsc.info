@@ -1,0 +1,60 @@
+body.membership {
+  main {
+    text-align: center;
+
+    section {
+      --article-size: 30ch;
+      padding-inline: var(--size-3);
+
+      article {
+        grid-auto-rows: min-content;
+        padding-block-end: var(--size-3);
+        align-self: start;
+        justify-self: center;
+        aspect-ratio: unset;
+        block-size: 100%;
+      }
+    }
+
+    header {
+      gap: unset;
+      inline-size: 100%;
+      border-block-end: 1px solid var(--text-1);
+      padding-block-end: var(--size-3);
+    }
+
+    ul {
+      display: grid;
+      gap: var(--size-1);
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: var(--size-2);
+
+      > span {
+        margin-inline-start: auto;
+        inline-size: max-content;
+        display: grid;
+        gap: 0;
+        line-height: 1;
+        text-align: right;
+        margin-right: auto;
+      }
+
+      p {
+        gap: 0;
+        place-items: end;
+        text-align: right;
+        > * {
+          inline-size: 6ch;
+        }
+      }
+
+      button {
+        --_size: var(--font-size-1);
+      }
+    }
+  }
+}

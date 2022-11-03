@@ -1,0 +1,65 @@
+{# <button id="login">login</button> #}
+
+<dialog id="dialog">
+  <section>
+    <ul id="digits">
+      <li><button>7</button></li>
+      <li><button>8</button></li>
+      <li><button>9</button></li>
+      <li><button>4</button></li>
+      <li><button>5</button></li>
+      <li><button>6</button></li>
+      <li><button>1</button></li>
+      <li><button>2</button></li>
+      <li><button>3</button></li>
+      <li></li>
+      <li><button>0</button></li>      
+    </ul>
+  </section>
+  <form method="dialog" id="form">
+    <input type="password" name="password" id="password" maxlength="4" minlength="4" pattern="[0-9]{4}" placeholder="4 digit passcode required" required autofocus>
+    <div id="error-message"></div>
+  </form>
+</dialog>
+
+<h2 id="username"></h2>
+<section id="timesheet"></section>
+
+<section id="logged-in">
+  <section id="wall-clock"></section>
+  <section id="shift-time">
+    <small>Shift Time</small>
+    <h3 id="duration"></h3>
+  </section>
+  <div>
+    <button id="clock-in">Clock In</button>
+    <button id="clock-out">Clock Out</button>
+    <button id="logout">Logout</button>
+  </div>
+  <button id="all-timesheets">All Timesheets</button>
+</section>
+
+<section id="timesheets">
+  <section id="date-range">
+    <button id="today" class="active">today</button>
+    <button id="week">week</button>
+    <button id="month">month</button>
+    <button id="last7">last 7 days</button>
+    <button id="last14">last 14 days</button>
+    <button id="last30">last 30 days</button>
+    <button id="logout2">logout</button>
+  </section>
+
+  <form id="timesheet-database" action="#"></form>
+
+</section>
+
+<div id="spinner">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+

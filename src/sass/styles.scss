@@ -1,14 +1,33 @@
 @forward '@andystevenson/sass';
 @forward 'pages';
 
-p {
+::placeholder {
+  font-size: var(--font-size-0);
+  font-style: italic;
+  color: var(--text-1);
+  opacity: 0.5;
+}
+p,
+strong,
+b,
+i,
+small {
   max-inline-size: unset;
 }
 
 ul,
 ol {
+  display: grid;
+  gap: var(--size-2);
   padding: 0;
   margin: 0;
+  list-style: none;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+  max-inline-size: unset;
 }
 
 @mixin container($size: min(95%, 80em)) {

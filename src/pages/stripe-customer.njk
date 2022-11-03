@@ -1,0 +1,160 @@
+
+<form action="#" id="stripe-customer">
+  <fieldset id="customer">
+    <legend>Customer</legend>
+    <section>
+      <label for="name">
+        <span>Name</span>
+        <input type="text" name="name" id="name" placeholder="Full Name ... e.g.: Joe Bloggs" autofocus required>
+      </label>
+      <div id="name-autocomplete"></div>
+      <label for="email">
+        <span>Email</span>
+        <input type="email" name="email" id="email" placeholder="e.g.: someone@example.com" required>
+      </label>
+      <div id="email-autocomplete"></div>
+    </section>
+
+    <section id="new-or-existing">
+        <label for="new">
+          <span>new</span>
+          <input type="radio" name="new-or-existing" id="new" >
+        </label>
+        <label for="existing">
+          <span>existing</span>
+          <input type="radio" name="new-or-existing" id="existing" checked>
+        </label>
+
+    </section>
+  </fieldset>
+
+  <fieldset id="on-behalf-of">
+    <legend>On Behalf Of</legend>
+    <label for="on-behalf-of-name">
+      <span>Name</span>
+      <input type="text" name="on-behalf-of-name" id="on-behalf-of-name" placeholder="Full Name ... e.g.: Junior Bloggs">
+      <small>(optional) for a child/spouse/dependent</small>
+    </label>
+  </fieldset>
+
+  <section id='date-of-birth'>
+    <label for="dob">
+      <span>Date Of Birth</span>
+      <input type="date" name="dob" id="dob" required>
+    </label>
+  </section>
+{# https://www.ruth-ng.co.uk/how-to-ask-about-gender-in-forms-respectfully #}
+  <fieldset id="gender">
+    <legend>Gender</legend>
+    <section>
+      <small>Which of the following most accurately describes you ... (choose as many as you like)</small>
+    </section>
+    <section>
+      <label for="male">
+        <span>male</span>
+        <input type="checkbox" name="male" id="male">
+      </label>
+      <label for="female">
+        <span>female</span>
+        <input type="checkbox" name="female" id="female">
+      </label>
+      <label for="non-binary">
+        <span>non-binary</span>
+        <input type="checkbox" name="non-binary" id="non-binary">
+      </label>
+      <label for="transgender">
+        <span>transgender</span>
+        <input type="checkbox" name="transgender" id="transgender">
+      </label>
+      <label for="intersex">
+        <span>intersex</span>
+        <input type="checkbox" name="intersex" id="intersex">
+      </label>
+      <label for="let-me-say">
+        <span>let me say</span>
+        <input type="text" name="let-me-say" id="let-me-say">
+      </label>
+      <label for="prefer-not-to-say">
+        <span>prefer not to say</span>
+        <input type="checkbox" name="prefer-not-to-say" id="prefer-not-to-say">
+      </label>      
+    </section>
+  </fieldset>
+
+  <fieldset id="address">
+    <legend>Address</legend>
+      <label for="postcode">
+        <span>Postcode</span>
+        <input type="text" name="postcode" id="postcode">
+        <small>select postcode will automatically give address choices</small>
+      </label>
+      <div id="postcode-autocomplete"></div>
+      <div id="postcode-addresses"></div>
+      <ul id="customer-address">
+          <li>
+            <label for="address-line1">
+              <input type="text" name="address-line1" id="address-line1">
+            </label>
+          </li>
+          <li>
+            <label for="address-line2">
+              <input type="text" name="address-line2" id="address-line2">
+            </label>
+          </li>
+          <li>
+            <label for="street">
+              <input type="text" name="street" id="street" placeholder="House Number and Street/Road/Thoroughfare">
+            </label>
+          </li>
+          <li>
+            <label for="address-level1">
+              <input type="text" name="address-level1" id="address-level1" placeholder="Town/City">
+            </label>
+          </li>
+      </ul>
+  </fieldset>
+
+  <fieldset id="preferences">
+    <legend>Preferences</legend>
+    <section>
+      <label for="all">
+        <span>ALL</span>
+        <input type="checkbox" name="all" id="all">
+      </label>
+    </section>
+    <section>
+      <label for="gym">
+        <span>gym</span>
+        <input type="checkbox" name="gym" id="gym">
+      </label>
+      <label for="tennis">
+        <span>tennis</span>
+        <input type="checkbox" name="tennis" id="tennis">
+      </label>
+      <label for="squash">
+        <span>squash</span>
+        <input type="checkbox" name="squash" id="squash">
+      </label>
+      <label for="racketball">
+        <span>racketball</span>
+        <input type="checkbox" name="racketball" id="racketball">
+      </label>
+      <label for="cricket">
+        <span>cricket</span>
+        <input type="checkbox" name="cricket" id="cricket">
+      </label>
+      <label for="hockey">
+        <span>hockey</span>
+        <input type="checkbox" name="hockey" id="hockey">
+      </label>
+      <label for="football">
+        <span>football</span>
+        <input type="checkbox" name="football" id="football">
+      </label>
+      <label for="social">
+        <span>social</span>
+        <input type="checkbox" name="social" id="social">
+      </label>
+    </section>
+  </fieldset>  
+</form>

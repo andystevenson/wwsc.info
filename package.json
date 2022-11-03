@@ -80,6 +80,7 @@
     "@andystevenson/sass": "^0.1.2",
     "@andystevenson/theme-toggle": "^0.1.5",
     "@types/node": "^18.7.18",
+    "autoprefixer": "^10.4.12",
     "common-tags": "^1.8.2",
     "concurrently": "^7.4.0",
     "csv-parse": "^5.3.0",
@@ -97,7 +98,12 @@
     "xlsx": "^0.18.5"
   },
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.7.2",
+    "@algolia/autocomplete-theme-classic": "^1.7.2",
+    "algoliasearch": "^4.14.2",
     "lodash": "^4.17.21",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.debounce": "^4.0.8",
     "node-fetch": "^2.6.7"
   }
 }

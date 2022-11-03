@@ -1,0 +1,103 @@
+body.stripe-customer {
+  main {
+    input {
+      background-color: var(--surface-2);
+    }
+
+    small {
+      font-style: italic;
+    }
+
+    label {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--label-space);
+      align-items: center;
+      input[type='text'],
+      input[type='email'] {
+        min-inline-size: 10ch;
+        inline-size: 40ch;
+      }
+
+      input[type='text'][id='postcode'] {
+        min-inline-size: 10ch;
+        inline-size: 10ch;
+      }
+      input[type='text'][id='let-me-say'] {
+        min-inline-size: 10ch;
+        inline-size: 10ch;
+      }
+      span {
+        inline-size: var(--label-size);
+      }
+    }
+
+    form {
+      --label-space: var(--size-2);
+      --label-size: max-content;
+
+      place-self: center;
+      min-width: 50vw;
+
+      fieldset {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--size-3);
+
+        @media (--md-n-above) {
+          grid-template-columns: 3fr 1fr;
+        }
+      }
+
+      fieldset:first-of-type {
+        section:first-of-type {
+          --label-size: 4ch;
+        }
+        section:last-of-type {
+          display: flex;
+          flex-wrap: wrap;
+          --label-space: var(--size-1);
+        }
+      }
+
+      fieldset:nth-of-type(n + 2) {
+        grid-template-columns: 1fr;
+        gap: var(--size-2);
+      }
+
+      fieldset:nth-of-type(n + 2) {
+        section {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+
+  #postcode-autocomplete,
+  #postcode-addresses,
+  #email-autocomplete,
+  #name-autocomplete {
+    display: none;
+    position: absolute;
+    background-color: var(--surface-1);
+    z-index: var(--layer-important);
+    padding: var(--size-2);
+    width: 10ch;
+    height: 20vh;
+    border: 1px solid var(--text-1);
+    border-radius: var(--size-2);
+    overflow-y: scroll;
+  }
+
+  #postcode-addresses,
+  #name-autocomplete,
+  #email-autocomplete {
+    padding: var(--size-2);
+    width: 70ch;
+    li {
+      overflow-y: scroll;
+      text-overflow: ellipsis;
+    }
+  }
+}
