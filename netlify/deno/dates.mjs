@@ -11,10 +11,6 @@ export const tz = 'Europe/London'
 export const todayUK = dayjs().tz(tz).startOf('day')
 export const today = dayjs().utc().startOf('day')
 
-console.log(today, todayUK)
-console.log(today.unix(), todayUK.unix())
-console.log(today.format(), todayUK.format())
-
 export const lastOctoberUK =
   todayUK.month() >= 9
     ? todayUK.month(9).date(1)
@@ -30,11 +26,6 @@ export const lastOctober =
         .year(year - 1)
         .month(9)
         .date(1)
-
-// const lastOctoberUK = lastOctober.tz(tz)
-console.log('oct1', lastOctober, lastOctoberUK)
-console.log('oct1', lastOctober.unix(), lastOctoberUK.unix())
-console.log('oct1', lastOctober.format(), lastOctoberUK.format())
 
 export const sortAscending = (a, b) => {
   return a.timestamp - b.timestamp

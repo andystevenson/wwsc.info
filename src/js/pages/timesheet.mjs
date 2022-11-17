@@ -198,7 +198,6 @@ const displayLoggedIn = () => {
 }
 
 const loginUser = (staff) => {
-  spinner.on()
   clearTimesheet()
   clearErrorMessage()
 
@@ -207,20 +206,22 @@ const loginUser = (staff) => {
   displayTimesheet(timesheet)
   checkIfClockedIn()
   displayLoggedIn()
-  spinner.off()
 }
 
 const handleLogin = async (passcode) => {
   if (passcode.length !== 4) return
 
-  const url = `/api/staff/?login=${passcode}`
+  const url = `/api/timesheet?login=${passcode}`
+  dialog.close()
+  console.log('dialog close')
+  spinner.on()
   try {
     const response = await fetch(url)
     if (response.ok) {
       const json = await response.json()
       user = json
-      dialog.close()
       loginUser(user)
+      spinner.off()
       return user
     }
 
@@ -228,6 +229,10 @@ const handleLogin = async (passcode) => {
     setErrorMessage(message)
     throw Error(message)
   } catch (error) {
+    spinner.off()
+    dialog.showModal()
+    console.log('dialog showModal')
+
     setErrorMessage(error.message)
     console.error(error)
   }
@@ -238,11 +243,8 @@ const doLogin = () => {
   clearErrorMessage()
   clearTimesheet()
   dialog.showModal()
+  console.log('dialog showModal')
 }
-
-dialog.addEventListener('close', () => {
-  if (user === null) doLogin()
-})
 
 login?.addEventListener('click', doLogin)
 if (!login) doLogin()
@@ -280,7 +282,7 @@ clockInButton.addEventListener('click', async () => {
   const start = now.format('YYYY-MM-DD HH:mm:ss')
   const params = new URLSearchParams({ update: staff_id, start })
   if (id) params.append('id', id)
-  let url = `/api/staff/?${params}`
+  let url = `/api/timesheet?${params}`
   try {
     const response = await fetch(url)
     if (response.ok) {
@@ -303,7 +305,7 @@ clockOutButton.addEventListener('click', async () => {
   const { id, clock_in: start } = user.clockedIn
   const end = now.format('YYYY-MM-DD HH:mm:ss')
   const params = new URLSearchParams({ update: staff_id, id, start, end })
-  let url = `/api/staff/?${params}`
+  let url = `/api/timesheet?${params}`
 
   try {
     const response = await fetch(url)
@@ -455,7 +457,7 @@ function updateOnduty() {
 
 const getDB = async () => {
   try {
-    const url = '/api/staff/?ts=null'
+    const url = '/api/timesheet?ts=null'
     const response = await fetch(url)
     if (response.ok) {
       const json = await response.json()
@@ -613,7 +615,7 @@ const updateDB = async () => {
     for (const change of updates) {
       const { id, staff_id: update, clock_in: start, clock_out: end } = change
       const params = new URLSearchParams({ update, id, start, end })
-      const url = `/api/staff/?${params}`
+      const url = `/api/timesheet?${params}`
       const response = await fetch(url)
       if (response.ok) {
         const json = await response.json()

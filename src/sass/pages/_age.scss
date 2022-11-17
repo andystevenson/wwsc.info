@@ -35,7 +35,7 @@ body.age {
     }
 
     ul {
-      display: grid;
+      gap: 0;
       grid-auto-rows: min-content;
       min-block-size: 50vh;
 

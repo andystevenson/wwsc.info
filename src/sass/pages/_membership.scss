@@ -1,59 +1,84 @@
 body.membership {
   main {
-    text-align: center;
-
-    section {
-      --article-size: 30ch;
-      padding-inline: var(--size-3);
-
-      article {
-        grid-auto-rows: min-content;
-        padding-block-end: var(--size-3);
-        align-self: start;
-        justify-self: center;
-        aspect-ratio: unset;
-        block-size: 100%;
-      }
-    }
-
-    header {
-      gap: unset;
-      inline-size: 100%;
-      border-block-end: 1px solid var(--text-1);
-      padding-block-end: var(--size-3);
-    }
-
-    ul {
-      display: grid;
+    > section {
+      grid-template-columns: 1fr;
       gap: var(--size-1);
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-      gap: var(--size-2);
-
-      > span {
-        margin-inline-start: auto;
-        inline-size: max-content;
-        display: grid;
-        gap: 0;
-        line-height: 1;
-        text-align: right;
-        margin-right: auto;
+      h3 {
+        text-align: center;
       }
 
-      p {
-        gap: 0;
-        place-items: end;
-        text-align: right;
-        > * {
-          inline-size: 6ch;
-        }
+      > section {
+        --article-size: 25ch;
+
+        padding-block: var(--size-2);
+        padding-inline: var(--size-2);
+        gap: var(--size-3);
+      }
+    }
+
+    article {
+      background-color: var(--surface-3);
+
+      grid-auto-rows: max-content;
+      padding-block: var(--size-3);
+      padding-inline: var(--size-3);
+      place-self: stretch;
+      aspect-ratio: unset;
+      max-width: 30ch;
+
+      h2 {
+        font-size: var(--font-size-5);
       }
 
       button {
-        --_size: var(--font-size-1);
+        --_size: 0.75rem;
+      }
+
+      p {
+        text-align: center;
+      }
+
+      > section {
+        border-block-end: 3px solid var(--text-1);
+        padding-block-end: var(--size-3);
+        inline-size: 100%;
+        gap: var(--size-1);
+      }
+
+      li {
+        padding-block-end: var(--size-2);
+        border-block-end: 0.1px solid var(--text-1);
+        display: grid;
+        section {
+          // place-self: center;
+          gap: 0;
+          line-height: 1;
+          small {
+            text-align: center;
+          }
+          > small:last-of-type {
+            margin-block-end: var(--size-1);
+          }
+
+          section {
+            display: flex;
+            gap: var(--size-1);
+            align-items: center;
+            p:nth-child(1) {
+              font-weight: var(--font-weight-7);
+              margin-inline-start: auto;
+            }
+            p:nth-child(2) {
+              display: grid;
+              place-items: start;
+              line-height: 1;
+            }
+
+            form:nth-of-type(1) {
+              margin-inline-start: auto;
+            }
+          }
+        }
       }
     }
   }

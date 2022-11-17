@@ -1,36 +1,50 @@
+{% if membership %}
 {% for category in membership %}
-  <section class="{{category.name}}">
-    <h2>{{category.name}}</h2>
+  <section>
+    <h3>{{category.name}}</h3>
+    <section>
     {% for product in category.products %}
-    <article>
-      <header>
-        <p>{{product.name}}</p>
-        <small>{{product.description}}</small>
-      </header>
-      <section>
-        <ul>
-        {% for price in product.prices %}
-          <li>
-            {% if price.discounted %}
-              <span><small>family</small><small>member</small></span>
-            {% else %}
-              <span></span>                
-            {% endif %}
-            <strong>{{price.price}}</strong>
-            {% if price.interval !== 'once' %}
-              <p><small>per</small><small>{{price.interval}}</small></p>     
-            {% elif price.qty %}
-              <p><small>{{'per' if price.qty === 1 else price.qty}}</small><small>{{'class' if price.qty === 1 else 'classes'}}</small></p>                     
-            {% endif %}
-            <form action="{{price.link.url}}" target="_blank">
-              <button>Buy</button>
-            </form>                      
-          </li>
-        {% endfor %}
-        </ul>
-
-      </section>
-    </article>
-    {% endfor %}
+      <article>
+        <section>
+          <h2>{{product.name}}</h2>
+          <p>{{product.description}}</p>
+        </section>
+          <ul class="price-list">
+            {% for price in product.prices %}
+              <li>
+                <section>
+                  {% if price.type %}
+                    <small>{{price.name}}</small>
+                    {% if price.description %}
+                    <small>{{price.description}}</small>
+                    {% endif %}          
+                  {% endif %}
+                  <section>
+                    <p>{{price.price}}</p>
+                    {% if price.interval !== 'once' %}
+                      <p><small>per</small><small>{{price.interval}}</small></p>          
+                    {% endif %}
+                    <form action="{{price.link.url}}" target="_blank">
+                      <button>Card</button>
+                    </form>
+                    <form action="/stripe-customer/">
+                      <button>Cash</button>
+                      <input type="hidden" value="{{product.name}}" name="name">
+                      <input type="hidden" value="{{price.interval}}" name="recurring">
+                      <input type="hidden" value="{{price.price}}" name="price">
+                      <input type="hidden" value="{{price.id}}" name="id">
+                      <input type="hidden" value="{{product.id}}" name="product">
+                      <input type="hidden" value="cash" name="payment">
+                    </form>
+                  </section>
+                </section>
+              </li>
+            {% endfor %}
+          </ul>
+      </article>
+    {% endfor %}  
+    </section>
   </section>
 {% endfor %}
+
+{% endif %}

@@ -8,7 +8,7 @@ body.stripe-customer {
       font-style: italic;
     }
 
-    label {
+    label[for] {
       display: flex;
       flex-wrap: wrap;
       gap: var(--label-space);
@@ -38,42 +38,36 @@ body.stripe-customer {
 
       place-self: center;
       min-width: 50vw;
-
-      fieldset {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--size-3);
-
-        @media (--md-n-above) {
-          grid-template-columns: 3fr 1fr;
-        }
-      }
-
-      fieldset:first-of-type {
-        section:first-of-type {
-          --label-size: 4ch;
-        }
-        section:last-of-type {
-          display: flex;
-          flex-wrap: wrap;
-          --label-space: var(--size-1);
-        }
-      }
-
-      fieldset:nth-of-type(n + 2) {
-        grid-template-columns: 1fr;
-        gap: var(--size-2);
-      }
-
-      fieldset:nth-of-type(n + 2) {
-        section {
-          display: flex;
-          flex-wrap: wrap;
-        }
-      }
     }
   }
 
+  #purchase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    #recurring {
+      display: grid;
+      gap: 0;
+      line-height: 1;
+    }
+  }
+
+  #customer {
+    --label-size: 5ch;
+    grid-template-columns: 1fr 1fr;
+
+    #new-or-existing {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  #gender,
+  #preferences {
+    section {
+      display: flex;
+    }
+  }
   #postcode-autocomplete,
   #postcode-addresses,
   #email-autocomplete,

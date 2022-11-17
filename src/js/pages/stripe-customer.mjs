@@ -126,7 +126,8 @@ const handleCustomer = async () => {
         displayName(names, nameAutocomplete)
       }
     } catch (error) {
-      console.log(`stripe-customers failed because [${error.message}]`)
+      console.console.error()
+      ;`stripe-customers failed because [${error.message}]`
     }
   }
 
@@ -156,7 +157,7 @@ const handleCustomer = async () => {
         displayEmail(emails, emailAutocomplete)
       }
     } catch (error) {
-      console.log(`stripe-customers failed because [${error.message}]`)
+      console.error(`stripe-customers failed because [${error.message}]`)
     }
   }
 
@@ -181,8 +182,8 @@ const handleCustomer = async () => {
 
     console.log({ li }, li.dataset)
     const index = li.dataset.index
-    const selected = emails[index]
-    console.log('name selected', index, selected, this)
+    const selected = names[index]
+    console.log('name selected', index, selected)
     selectCustomer(selected)
     hideCustomers(nameAutocomplete)
   })

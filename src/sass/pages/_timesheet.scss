@@ -116,6 +116,7 @@ body.timesheet {
   }
 
   #wall-clock {
+    margin-block-start: var(--size-2);
     place-self: center;
     padding-inline: 1rem;
     padding-block-end: 0;

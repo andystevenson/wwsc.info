@@ -2,28 +2,30 @@ import { debounce } from 'lodash'
 
 console.log('finder...')
 
-const input = document.querySelector('input[type="number"]')
-const active = document.querySelector('input[name="active"]')
-const ascending = document.querySelector('input[name="ascending"]')
+const input = {
+  search: document.getElementById('search'),
+  active: document.getElementById('active'),
+  ascending: document.getElementById('ascending'),
+}
+
 const placeholder = document.querySelector('.placeholder')
 
 const send = debounce(async (e) => {
   e.preventDefault()
-  const value = input.value.trim()
+  const search = input.search?.value.trim()
+  if (!search) return (placeholder.innerHTML = '')
 
-  if (!value) return (placeholder.innerHTML = '')
+  const active = input.active?.checked
+  const ascending = input.ascending?.checked
 
-  const params = new URLSearchParams()
-  params.append('search', value)
-  params.append('active', active.checked)
-  params.append('ascending', ascending.checked)
-  const uri = `${location.href.replace(/#+\w*/g, '')}?${params}`
+  const params = new URLSearchParams({ search, active, ascending })
+  const uri = `/api/age?${params}`
   console.log({ uri }, active.checked)
   let html = await fetch(uri)
   html = await html.text()
   placeholder.innerHTML = html
 }, 300)
 
-input?.addEventListener('input', send)
-active?.addEventListener('change', send)
-ascending?.addEventListener('change', send)
+input.search?.addEventListener('input', send)
+input.active?.addEventListener('change', send)
+input.ascending?.addEventListener('change', send)

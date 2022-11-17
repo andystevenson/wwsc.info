@@ -1,5 +1,11 @@
 
 <form action="#" id="stripe-customer">
+  <fieldset id="purchase">
+    <legend>Purchase</legend>
+    <p id="purchase">Classes</p>
+    <strong id="price">£100</strong>
+    <small id="recurring"><span>per</span><span>month</span></small>
+  </fieldset>
   <fieldset id="customer">
     <legend>Customer</legend>
     <section>
@@ -16,11 +22,11 @@
     </section>
 
     <section id="new-or-existing">
-        <label for="new">
+        <label>
           <span>new</span>
           <input type="radio" name="new-or-existing" id="new" >
         </label>
-        <label for="existing">
+        <label>
           <span>existing</span>
           <input type="radio" name="new-or-existing" id="existing" checked>
         </label>

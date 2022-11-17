@@ -39,7 +39,7 @@
     "build:cache-opening-times": "npx cache-opening-times",
     "build:cache-sumup-products": "npx cache-sumup-products",
     "build:cache-sumup-customers": "npx cache-sumup-customers",
-    "build:cache-sumup-updates": "npx cache-sumup-updates",
+    "build:cache-sumup-updates": "npx cache-sumup-updates commit",
     "build:cache-sumup-checks": "npx cache-sumup-checks",
     "build:cache-sumup-reconcile": "npx cache-sumup-reconcile",
     "build:cache-sumup-categories": "npx cache-sumup-categories",

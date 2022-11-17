@@ -62,17 +62,25 @@
   status = 200
   
 [[redirects]]
-  to = "/.netlify/functions/staff"
-  from = "/api/staff"
+  to = "/.netlify/functions/timesheet"
+  from = "/api/timesheet"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/age"
+  from = "/api/age"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/new-social-members"
+  from = "/api/new-social-members"
   status = 200
 
 # [[edge_functions]]
 # function = "cookies"
 # path = "/*"
 
-[[edge_functions]]
-function = "new-social-members"
-path = "/new-social-members"
+
 
 [[edge_functions]]
 function = "card"
@@ -102,13 +110,11 @@ path = "/api/sumup-customers"
 function = "hello"
 path = "/api/hello"
 
-[[edge_functions]]
-function = "age"
-path = "/age"
 
 
 
-# start-generated-edge-functions
+
+# # start-generated-edge-functions
 [[edge_functions]]
 function="resources"
 path="/api/resources"
@@ -152,6 +158,10 @@ path="/api/bbq"
 [[edge_functions]]
 function="tea-coffee"
 path="/api/tea-coffee"
+
+[[edge_functions]]
+function="staff"
+path="/api/staff"
 
 [[edge_functions]]
 function="sports-teas"

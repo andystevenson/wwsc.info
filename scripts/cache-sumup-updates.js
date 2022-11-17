@@ -14,8 +14,33 @@ const ashbourneCacheFile = `.cache/ashbourne/ashbourne.json`
 
 const createCacheDir = require('./src/createCacheDir')
 
-const hasSameValues = require('@andystevenson/lib/hasSameValues')
 const ashbourne2sumup = require('./src/ashbourne2sumup')
+
+const { eq } = require('lodash')
+const { inspect } = require('node:util')
+const options = { depth: null, colors: true }
+
+function hasSameValues(a, b, verbose = false) {
+  const same = true
+  const diffs = []
+  for (const key in a) {
+    const equals = eq(a[key], b[key])
+    if (!equals) {
+      if (verbose) {
+        const valueA = a[key]
+        const typeA = typeof valueA
+        const displayA = inspect(valueA, options)
+        const valueB = b[key]
+        const typeB = typeof valueB
+        const displayB = inspect(valueB, options)
+        const diff = `key ${key} not equal [${typeA},${displayA}] != [${typeB},${displayB}]`
+        diffs.push(diff)
+      }
+      same = false
+    }
+  }
+  return { same, diffs }
+}
 
 const mapToMembership = (members) => {
   return members.reduce((membership, member) => {
@@ -76,21 +101,21 @@ const prepareMemberUpdates = (ashbourne, sumup) => {
       const update = ashbourne2sumup(ashbourne[memberNo])
       update.id = updates[memberNo].id
       // do a diff
-      const equal = hasSameValues(update, original, verbose)
-      if (equal) {
+      const { same, diffs } = hasSameValues(update, original, verbose)
+      if (same) {
         // log.info(`update to ${updates[memberNo].name} not required`)
         delete updates[memberNo]
       } else {
         // update required
         log.info(`updating ${updates[memberNo].name}`)
         updates[memberNo] = update
+        updates[memberNo].diffs = diffs
       }
     } else {
-      // there is no
+      // there is no such customer
       const { name, customer_group } = updates[memberNo]
-      customer_group === 'NON-MEMBERS'
-        ? log.info(`${name}, number ${memberNo}, does not exist in ashbourne`)
-        : log.error(`${name}, number ${memberNo}, does not exist in ashbourne`)
+      const message = `${name}, number ${memberNo}, does not exist in ashbourne`
+      customer_group === 'NON-MEMBERS' ? log.info(message) : log.error(message)
       delete updates[memberNo]
     }
   }
@@ -223,6 +248,9 @@ const cacheBuildRequired = () => {
     const sumupDate = date(sumupStat.mtime)
     if (sumupDate.isAfter(cacheDate)) return true
 
+    const updatedStat = statSync(updatedFile, { throwIfNoEntry: false })
+    if (!updatedStat) return true
+
     log.info(`cache-sumup-updates is up to date`)
     return false
   } catch (error) {
@@ -246,7 +274,7 @@ const readCustomers = () => {
   }
 }
 
-const doUpdates = async () => {
+const doUpdates = async (commit = false) => {
   try {
     createCacheDir(cacheDir)
 
@@ -257,16 +285,23 @@ const doUpdates = async () => {
         sumup,
       )
 
-      log.info('doUpdates...', { updates, newMembers, emailDuplicates })
+      // log.info('doUpdates...', { updates, newMembers, emailDuplicates })
       const nUpdates = Object.keys(updates).length
       const nNewMembers = Object.keys(newMembers).length
       const nEmailDuplicates = Object.keys(emailDuplicates).length
       log.info({ nUpdates, nNewMembers, nEmailDuplicates })
 
-      const customers = await goodtill(updates, newMembers, emailDuplicates)
-      writeFileSync(cacheFile, JSON.stringify({ updates, newMembers }, null, 2))
-      writeFileSync(updatedFile, JSON.stringify(customers, null, 2))
-      log.info(`cache-sumup-updates updated`)
+      const allUpdates = { updates, newMembers, emailDuplicates }
+      if (commit) {
+        log.info('committing updates....')
+        const customers = await goodtill(updates, newMembers, emailDuplicates)
+        writeFileSync(updatedFile, JSON.stringify(customers, null, 2))
+        writeFileSync(cacheFile, JSON.stringify(allUpdates, null, 2))
+        log.info(`cache-sumup-updates updated`)
+      } else {
+        log.info('skipping commit')
+        writeFileSync(cacheFile, JSON.stringify(allUpdates, null, 2))
+      }
     }
   } catch (error) {
     log.error(`cache-sumup-updates failed with [${error.message}]`)
@@ -275,4 +310,5 @@ const doUpdates = async () => {
   }
 }
 
-doUpdates()
+const commit = process.argv[2] === 'commit'
+doUpdates(commit)

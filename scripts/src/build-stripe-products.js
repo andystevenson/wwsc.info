@@ -45,7 +45,6 @@ const createPrices = async (stripeProduct, price) => {
   const nickname = price.nickname
   const unit_amount = price.price * 100
   const currency = 'gbp'
-  // const tax_behavior = 'inclusive'
   const recurring =
     price.interval === 'once' ? null : { interval: price.interval }
   const product = stripeProduct.id
@@ -56,7 +55,6 @@ const createPrices = async (stripeProduct, price) => {
       nickname,
       currency,
       unit_amount,
-      // tax_behavior,
       recurring,
       product,
     })
@@ -65,11 +63,11 @@ const createPrices = async (stripeProduct, price) => {
       nickname,
       currency,
       unit_amount,
-      // tax_behavior,
       product,
     })
   }
 
+  price.id = newPrice.id
   const line_item = {
     price: newPrice.id,
     quantity: 1,
@@ -108,6 +106,7 @@ const createProducts = async () => {
         console.log(`product ${product.name} already exists`)
         alreadyExists.push(product.name)
         stripeProduct = normalized[product.name]
+        product.id = stripeProduct.id
       }
 
       if (!exists) {
@@ -122,6 +121,8 @@ const createProducts = async () => {
               tax_code,
             })
           : await stripe.products.create({ name, description, tax_code })
+
+        product.id = stripeProduct.id
       }
 
       let stripePrice = null
@@ -136,11 +137,13 @@ const createProducts = async () => {
           if (stripePaymentLink) {
             price.paymentLink = stripePaymentLink
           }
+          price.id = stripePrice.id
         }
 
         if (!exists) {
           console.log('new price', price.nickname)
           stripePrice = await createPrices(stripeProduct, price)
+          price.id = stripePrice.id
         }
       }
     }
@@ -177,8 +180,8 @@ const assets = async () => {
 }
 
 module.exports = assets
-;(async () => {
-  const json = await assets()
-  console.log('done')
-  // console.log(inspect(json, { depth: null, colors: true }))
-})()
+// ;(async () => {
+//   const json = await assets()
+//   console.log('done')
+//   // console.log(inspect(json, { depth: null, colors: true }))
+// })()

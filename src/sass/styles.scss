@@ -85,14 +85,19 @@ body > footer {
   }
 }
 
-main > section {
+main > section,
+main > section > section {
   --article-size: var(--size-content-1);
-  grid-template-columns: repeat(auto-fit, minmax(var(--article-size), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--article-size), max-content)
+  );
   grid-auto-rows: min-content;
   gap: var(--size-3);
   background-color: var(--surface-4);
   block-size: min-content;
   padding-block-end: var(--size-3);
+  padding-inline: var(--size-2);
   border-radius: var(--radius-2);
   box-shadow: var(--shadow-4);
 

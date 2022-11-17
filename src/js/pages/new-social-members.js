@@ -5,10 +5,8 @@ const year = document.getElementById('year')
 const placeholder = document.getElementById('placeholder')
 
 async function newMembers() {
-  console.log('newMembers')
   const params = new URLSearchParams({ members: 'all' })
-  const uri = `${location.href.replace(/#+\w*/g, '')}?${params}`
-  console.log({ uri })
+  const uri = `/api/new-social-members?${params}`
   let html = await fetch(uri)
   html = await html.text()
   placeholder.innerHTML = html
