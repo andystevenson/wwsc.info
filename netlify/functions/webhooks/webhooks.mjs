@@ -102,7 +102,7 @@ export const handler = async (event) => {
       console.log({ configPrice, subscriptionPrice })
       let schedule = null
       if (configPrice.phases)
-        schedule = createSubscriptionSchedule(
+        schedule = await createSubscriptionSchedule(
           subscription,
           subscriptionPrice,
           configPrice,
