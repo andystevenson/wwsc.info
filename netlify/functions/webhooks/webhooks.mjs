@@ -90,13 +90,16 @@ export const handler = async (event) => {
     const { object } = stripeEvent.data
 
     if (type === 'customer.subscription.updated') {
+      console.log({ type })
       const subscription = object
+      console.log('status', subscription.status, subscription.schedule)
       if (subscription.status !== 'active') return success
       if (subscription.schedule) return success
 
       let subscriptionPrice = subscription.items?.data[0]?.price
       const { price: configPrice } = findPrice(subscriptionPrice.id)
 
+      console.log({ configPrice, subscriptionPrice })
       let schedule = null
       if (configPrice.phases)
         schedule = createSubscriptionSchedule(
@@ -105,6 +108,7 @@ export const handler = async (event) => {
           configPrice,
         )
 
+      console.log({ schedule })
       return success
     }
 
