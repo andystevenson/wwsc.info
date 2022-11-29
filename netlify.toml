@@ -76,11 +76,23 @@
   from = "/api/new-social-members"
   status = 200
 
+[[redirects]]
+  to = "/.netlify/functions/webhooks"
+  from = "/api/webhooks"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/invoice"
+  from = "/api/invoice"
+  status = 200
+
+[[redirects]]
+  to = "/.netlify/functions/success"
+  from = "/api/success"
+  status = 200
 # [[edge_functions]]
 # function = "cookies"
 # path = "/*"
-
-
 
 [[edge_functions]]
 function = "card"

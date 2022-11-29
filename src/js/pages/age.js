@@ -20,7 +20,6 @@ const send = debounce(async (e) => {
 
   const params = new URLSearchParams({ search, active, ascending })
   const uri = `/api/age?${params}`
-  console.log({ uri }, active.checked)
   let html = await fetch(uri)
   html = await html.text()
   placeholder.innerHTML = html

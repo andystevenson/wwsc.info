@@ -35,7 +35,6 @@ const listSubscriptions = async () => {
   subscriptions = await stripe.subscriptions
     .list({ status: 'active', expand: ['data.customer'] })
     .autoPagingToArray({ limit: 10000 })
-  // console.log({ subscriptions })
   return subscriptions
 }
 
@@ -180,8 +179,3 @@ const assets = async () => {
 }
 
 module.exports = assets
-// ;(async () => {
-//   const json = await assets()
-//   console.log('done')
-//   // console.log(inspect(json, { depth: null, colors: true }))
-// })()

@@ -148,8 +148,6 @@ const hof = (api) =>
   async function () {
     let timer = null
 
-    console.log('hof....')
-
     async function process() {
       if (timer) clearInterval(timer)
       const url = `${location.origin}/api/${api}`
@@ -159,7 +157,6 @@ const hof = (api) =>
       const ytd = document.getElementById(`${api}:ytd`)
 
       const update = async () => {
-        console.log(`${api}...`)
         try {
           const response = await fetch(url)
           const json = await response.json()

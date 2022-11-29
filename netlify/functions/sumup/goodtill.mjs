@@ -9,7 +9,6 @@ export async function clockUpdate(id, staff_id, start, end) {
   const clock_out = end
 
   const url = `https://api.thegoodtill.com/api/staff_clock_records/${id}`
-  console.log({ id, staff_id, start, end, clock_in, clock_out, url })
   try {
     await login()
     const response = await fetch(url, {
@@ -35,13 +34,6 @@ export async function clockUpdate(id, staff_id, start, end) {
 const findTodaysRecord = (records, staff_id) => {
   const today = dayjs()
   const staffRecords = records.filter((record) => {
-    console.log(
-      'filtering',
-      record,
-      record.staff_id,
-      staff_id,
-      staff_id === record.staff_id,
-    )
     return record.staff_id === staff_id
   })
   const record = staffRecords.find((record) => {
@@ -51,7 +43,6 @@ const findTodaysRecord = (records, staff_id) => {
     // if (clock_out && toDate(clock_out).isSame(today, 'day')) return true
   })
 
-  console.log('found', { record })
   return record
 }
 
@@ -64,7 +55,6 @@ export async function clockIn(staff_id, start = null) {
 
   try {
     await login()
-    console.log('clockIn', { staff_id, clock_in })
     const response = await fetch(url, {
       method: 'POST',
       headers: { ...authorization(), 'content-type': 'application/json' },
@@ -88,7 +78,6 @@ export async function clockIn(staff_id, start = null) {
 
 export async function clock(staff_id, id = null, start = null, end = null) {
   try {
-    console.log('goodtill.clock', { staff_id, id, start, end })
     let url = 'https://api.thegoodtill.com/api/staff_clock_records'
     if (id) url = `${url}/${id}`
     await login()

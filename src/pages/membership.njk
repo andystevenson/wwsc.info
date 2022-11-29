@@ -24,17 +24,19 @@
                     {% if price.interval !== 'once' %}
                       <p><small>per</small><small>{{price.interval}}</small></p>          
                     {% endif %}
-                    <form action="{{price.link.url}}" target="_blank">
-                      <button>Card</button>
-                    </form>
+                    {% if price.interval === 'once' and category.name === 'classes' %}
+                      {% set classes = 'class' if price.qty === 1 else 'classes' %}
+                      <p><small>{{price.qty}}</small><small>{{classes}}</small></p>          
+                    {% endif %}
                     <form action="/stripe-customer/">
-                      <button>Cash</button>
+                      <button>Buy</button>
+                      <input type="hidden" value="{{category.name}}" name="category">
                       <input type="hidden" value="{{product.name}}" name="name">
+                      <input type="hidden" value="{{price.name}}" name="type">
                       <input type="hidden" value="{{price.interval}}" name="recurring">
                       <input type="hidden" value="{{price.price}}" name="price">
                       <input type="hidden" value="{{price.id}}" name="id">
                       <input type="hidden" value="{{product.id}}" name="product">
-                      <input type="hidden" value="cash" name="payment">
                     </form>
                   </section>
                 </section>

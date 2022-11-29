@@ -50,6 +50,32 @@ body.stripe-customer {
       gap: 0;
       line-height: 1;
     }
+    p {
+      margin-inline-start: auto;
+    }
+    small {
+      margin-inline-end: auto;
+    }
+    label:first-of-type {
+      margin-inline-start: auto;
+    }
+    input {
+      inline-size: 8ch;
+    }
+  }
+
+  #pay {
+    border: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    button {
+      color: var(--text-1);
+    }
+  }
+
+  #abandon {
+    grid-column: 1 / -1;
   }
 
   #customer {

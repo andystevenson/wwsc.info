@@ -20,7 +20,7 @@ async function find(postcode, format, sort, expand, fuzzy) {
   if (format) findApi += '&format=true'
   if (expand) findApi += '&expand=true'
 
-  console.log({ findApi })
+  // console.log({ findApi })
   // NOTE: format & expand together is ignored and just the first is taken
   return fetch(findApi)
 }
@@ -64,7 +64,7 @@ async function distance(from, to) {
 export const handler = async (event) => {
   if (!apiKey) return { statusCode: 500, body: `getaddress.io api key not set` }
 
-  console.log('event = ', inspect(event, { depth: null, colors: true }))
+  // console.log('event = ', inspect(event, { depth: null, colors: true }))
   const params = event.queryStringParameters
   const { action } = params
   const { id, postcode, term, from, to, format, sort, expand, fuzzy } = params

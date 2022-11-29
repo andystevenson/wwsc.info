@@ -11,6 +11,5 @@ if (!process.argv[2]) {
 const destination = process.argv[2]
 const options = { ...defaultUpdate, destination }
 
-console.log({ options })
 await update(options)
 await list()

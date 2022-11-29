@@ -186,7 +186,6 @@ const links = {
     const content = {
       links: { all, ...createTaggedLinks(all), ...createNamedLink(all) },
     }
-    // console.log(util.inspect(content, undefined, null, true))
 
     return content
   },
@@ -274,7 +273,6 @@ const people = {
 
     annotateTrustees(content.people.trustees.members)
     annotateStaff(content.people.staff.members)
-    // console.log(util.inspect(content, undefined, null, true))
 
     return content
   },
@@ -343,6 +341,5 @@ module.exports = async () => {
     cms = { ...cms, ...content }
   }
 
-  // console.log(util.inspect(cms, undefined, null, true))
   return cms
 }

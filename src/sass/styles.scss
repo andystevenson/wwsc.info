@@ -227,3 +227,65 @@ main > section > article {
     background-color: orange;
   }
 }
+
+#spinner {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: var(--layer-important);
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+}
+
+#spinner div {
+  animation: spinner-dance 1.875s infinite backwards;
+  background-color: hsl(135, 61%, 40%);
+  border-radius: 50%;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+#spinner div:nth-child(1) {
+  animation-delay: 0.15s;
+  background-color: hsl(135, 61%, 40%, 0.9);
+}
+
+#spinner div:nth-child(2) {
+  animation-delay: 0.3s;
+  background-color: hsl(135, 61%, 40%, 0.8);
+}
+
+#spinner div:nth-child(3) {
+  animation-delay: 0.45s;
+  background-color: hsl(135, 61%, 40%, 0.7);
+}
+
+#spinner div:nth-child(4) {
+  animation-delay: 0.6s;
+  background-color: hsl(135, 61%, 40%, 0.6);
+}
+
+#spinner div:nth-child(5) {
+  animation-delay: 0.75s;
+  background-color: hsl(135, 61%, 40%, 0.5);
+}
+
+@keyframes spinner-dance {
+  0% {
+    transform: rotate(0deg) translateY(-200%);
+  }
+
+  60%,
+  100% {
+    transform: rotate(360deg) translateY(-200%);
+  }
+}
+
+#error-dialog[open] {
+  max-inline-size: 60vw;
+  display: grid;
+  gap: var(--size-7);
+}

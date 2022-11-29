@@ -26,7 +26,6 @@ export const handler = async (event) => {
     let result = {}
     if (name) result = await byName(stripe, name)
     if (email) result = await byEmail(stripe, email)
-    console.log({ result })
     return { statusCode: 200, body: JSON.stringify(result) }
   } catch (error) {
     return { statusCode: 500, body: error.toString() }

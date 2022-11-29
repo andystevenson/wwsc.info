@@ -10,7 +10,6 @@ const getPrices = () => {
         const { paymentLink } = price
 
         const { id, active, url } = paymentLink
-        console.log({ price })
         const link = { id, active, url }
         price.link = link
         delete price.paymentLink

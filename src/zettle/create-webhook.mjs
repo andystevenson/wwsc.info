@@ -11,6 +11,5 @@ if (!process.argv[2]) {
 const destination = process.argv[2]
 const options = { ...defaultSubscription, destination }
 
-console.log({ options })
 await subscribe(options)
 await list()

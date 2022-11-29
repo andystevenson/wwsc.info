@@ -1,10 +1,23 @@
 
-<form action="#" id="stripe-customer">
+<form action="/api/invoice" method="POST" id="stripe-customer">
   <fieldset id="purchase">
     <legend>Purchase</legend>
-    <p id="purchase">Classes</p>
+    <p><span id="type"></span> <span id="category">Classes</span> / <span id="product-name">Classes</span></p>
     <strong id="price">£100</strong>
-    <small id="recurring"><span>per</span><span>month</span></small>
+    <small id="recurring"><span>per</span><span id="interval">month</span></small>
+    <label for="quantity" id="quantity-label">
+      <span>Quantity</span>
+      <input type="number" name="quantity" id="quantity" value="1" min="1" max="99">
+      <input type="hidden" name="price-value" id="price-value">
+      <input type="hidden" name="recurring-times" id="recurring-times">
+      <input type="hidden" value="" name="price-id" id="price-id">
+      <input type="hidden" value="" name="product-id" id="product-id">
+      <input type="hidden" value="" name="payment" id="payment">
+    </label>
+    <label for="total" id="total-label">
+      <span>Total</span>
+      <input type="text" name="total" id="total" readonly>
+    </label>    
   </fieldset>
   <fieldset id="customer">
     <legend>Customer</legend>
@@ -18,19 +31,20 @@
         <span>Email</span>
         <input type="email" name="email" id="email" placeholder="e.g.: someone@example.com" required>
       </label>
+      <input type="hidden" value="" name="customer-id" id="customer-id">
+      <input type="hidden" value="" name="source-id" id="source-id">
       <div id="email-autocomplete"></div>
     </section>
 
     <section id="new-or-existing">
         <label>
           <span>new</span>
-          <input type="radio" name="new-or-existing" id="new" >
+          <input type="radio" name="new-or-existing" id="new" value="new" >
         </label>
         <label>
           <span>existing</span>
-          <input type="radio" name="new-or-existing" id="existing" checked>
+          <input type="radio" name="new-or-existing" id="existing" value="existing" checked>
         </label>
-
     </section>
   </fieldset>
 
@@ -46,7 +60,7 @@
   <section id='date-of-birth'>
     <label for="dob">
       <span>Date Of Birth</span>
-      <input type="date" name="dob" id="dob" required>
+      <input type="date" name="dob" id="dob" >
     </label>
   </section>
 {# https://www.ruth-ng.co.uk/how-to-ask-about-gender-in-forms-respectfully #}
@@ -162,5 +176,25 @@
         <input type="checkbox" name="social" id="social">
       </label>
     </section>
-  </fieldset>  
+  </fieldset>
+    <fieldset id="pay">
+    <button type="submit" id="card">Card</button>
+    <button type="submit" id="cash">Cash</button>
+    <button type="submit" id="abandon">Abandon</button>
+  </fieldset>
 </form>
+<div id="spinner">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<dialog id="error-dialog">
+  <section>
+    <p id="error-dialog-message"></p>
+  </section>
+  <form method="dialog" id="error-dialog-form">
+    <button>quit</button>
+  </form>
+</dialog>

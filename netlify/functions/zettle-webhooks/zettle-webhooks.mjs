@@ -11,8 +11,6 @@ export const handler = async ({ headers, body }) => {
 
     const { signingKey } = subscriptions[0]
 
-    console.log({ signingKey, headers, body })
-
     const json = JSON.parse(body)
     const { timestamp, payload } = json
     const crypted = crypto

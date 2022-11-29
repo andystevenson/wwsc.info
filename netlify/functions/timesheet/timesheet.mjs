@@ -8,7 +8,6 @@ const handleLogin = async (staff, login) => {
     try {
       const { id, staff_name: name, is_manager: manager, passcode } = found
       const sheet = await timesheet(id)
-      console.log({ name, id, manager, login, timesheet: sheet })
 
       return { id, name, manager, timesheet: sheet, passcode }
     } catch (error) {

@@ -34,7 +34,6 @@ const checks = async () => {
         const json = JSON.parse(readFileSync(jsonFile))
         const cardChecks = cardCheck(json)
         const nameChecks = nameCheck(json)
-        // console.log({ transformed })
         writeFileSync(cacheFile, JSON.stringify(cardChecks))
         writeFileSync(nameFile, JSON.stringify(nameChecks))
         log.info(`cache-sumup-checks updated`)

@@ -2,16 +2,9 @@ import { utils, writeFileXLSX } from 'xlsx'
 import cloneDeep from 'lodash.clonedeep'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
-dayjs.extend(advancedFormat)
+import spinner from './utilities/spinner.mjs'
 
-const spinner = {
-  on() {
-    document.getElementById('spinner').style.display = 'block'
-  },
-  off() {
-    document.getElementById('spinner').style.display = 'none'
-  },
-}
+dayjs.extend(advancedFormat)
 
 const toDurationMinutes = (start, end) => {
   const diff = Math.floor((end.valueOf() - start.valueOf()) / 1000 / 60)
@@ -213,7 +206,6 @@ const handleLogin = async (passcode) => {
 
   const url = `/api/timesheet?login=${passcode}`
   dialog.close()
-  console.log('dialog close')
   spinner.on()
   try {
     const response = await fetch(url)
@@ -231,7 +223,6 @@ const handleLogin = async (passcode) => {
   } catch (error) {
     spinner.off()
     dialog.showModal()
-    console.log('dialog showModal')
 
     setErrorMessage(error.message)
     console.error(error)
@@ -243,7 +234,6 @@ const doLogin = () => {
   clearErrorMessage()
   clearTimesheet()
   dialog.showModal()
-  console.log('dialog showModal')
 }
 
 login?.addEventListener('click', doLogin)
@@ -610,7 +600,6 @@ const updateDB = async () => {
   const updates = dbFiltered?.filter((ts) => ts.updated)
   const checks = timesheetDatabase.checkValidity()
 
-  console.log({ updates, checks })
   try {
     for (const change of updates) {
       const { id, staff_id: update, clock_in: start, clock_out: end } = change
@@ -620,7 +609,6 @@ const updateDB = async () => {
       if (response.ok) {
         const json = await response.json()
         delete change.updated
-        console.log('update success', json)
       } else {
         console.log(
           `update failed [${response.status}, ${response.statusText}]`,
@@ -633,7 +621,6 @@ const updateDB = async () => {
 }
 
 async function saveUpdates(e) {
-  console.log('saveUpdates')
   e.preventDefault()
 
   spinner.on()

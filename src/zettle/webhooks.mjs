@@ -49,7 +49,6 @@ export async function subscribe(options = defaultSubscription) {
     const response = await fetch(url, { method: 'POST', headers, body })
     if (response.ok) {
       const json = await response.json()
-      console.log({ json })
       writeFileSync(subscriptionFile, JSON.stringify(json))
       return json
     }
@@ -80,8 +79,6 @@ export async function update(options = defaultUpdate) {
 
     const response = await fetch(url, { method: 'PUT', headers, body })
     if (response.ok) {
-      // const json = await response.json()
-      console.log('update succeeded')
       writeFileSync(updateFile, body)
       return true
     }
@@ -103,8 +100,6 @@ export async function unsubscribe() {
 
     const response = await fetch(url, { method: 'DELETE', headers })
     if (response.ok) {
-      // const json = await response.json()
-      console.log('delete succeeded')
       writeFileSync(unsubscribeFile, JSON.stringify({ uuid }))
       return true
     }
@@ -126,7 +121,6 @@ export async function list() {
     const response = await fetch(url, { headers })
     if (response.ok) {
       const json = await response.json()
-      console.log({ json })
       writeFileSync(subscriptionListFile, JSON.stringify(json))
       return json
     }
@@ -147,7 +141,6 @@ export async function self() {
     const response = await fetch(url, { headers })
     if (response.ok) {
       const json = await response.json()
-      console.log({ json })
       writeFileSync(selfFile, JSON.stringify(json))
       return json
     }

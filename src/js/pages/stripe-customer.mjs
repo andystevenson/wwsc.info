@@ -1,7 +1,72 @@
-import { find } from 'lodash'
 import debounce from 'lodash.debounce'
+import capitalize from 'lodash.capitalize'
+import spinner from './utilities/spinner.mjs'
+
+const gbp = Intl.NumberFormat('en', {
+  style: 'currency',
+  currency: 'GBP',
+})
+
+const hide = (el) => (el.style.display = 'none')
 
 const form = document.getElementById('stripe-customer')
+const errorDialog = document.getElementById('error-dialog')
+
+const bodyParams = () => {
+  const data = new FormData(form)
+  const entries = Object.fromEntries(data.entries())
+  const params = new URLSearchParams(entries)
+  return params
+}
+
+const showError = (message) => {
+  const dialogMessage = document.getElementById('error-dialog-message')
+  dialogMessage.textContent = message
+  errorDialog.showModal()
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  spinner.on()
+  try {
+    const response = await fetch('/api/invoice', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: bodyParams(),
+    })
+
+    let url = null
+    if (response.ok) {
+      const json = await response.json()
+      if (json.object === 'checkout.session') {
+        const session = json
+        url = session.url
+      }
+
+      if (json.object === 'subscription') {
+        const subscription = json
+        const { latest_invoice } = subscription
+        const { hosted_invoice_url } = latest_invoice
+        url = hosted_invoice_url
+      }
+
+      // we have an invoice
+      if (!url) {
+        let { invoice } = json
+        const { hosted_invoice_url } = invoice
+        url = hosted_invoice_url
+      }
+      location.href = url
+      return
+    }
+    // alert(await response.text())
+    showError(await response.text())
+  } catch (error) {
+    console.error(error)
+  }
+  form.reset()
+  spinner.off()
+})
 
 const address = document.getElementById('address')
 const addressInputs = [...address.querySelectorAll('input')]
@@ -11,7 +76,6 @@ const postcodeAddresses = document.getElementById('postcode-addresses')
 let addressList = []
 
 const fillAddress = (selected) => {
-  console.log({ selected })
   const { length } = addressInputs
 
   const town = addressInputs[length - 1]
@@ -56,22 +120,24 @@ const handleCustomer = async () => {
   const newOrExisting = document.getElementById('new-or-existing')
   const newElement = document.getElementById('new')
   const existing = document.getElementById('existing')
+  const customerId = document.getElementById('customer-id')
+  const sourceId = document.getElementById('source-id')
 
   const nameAutocomplete = document.getElementById('name-autocomplete')
   const emailAutocomplete = document.getElementById('email-autocomplete')
   let emails = []
   let names = []
 
-  newOrExisting.addEventListener('change', (e) => {
-    console.log('new-or-existing', e.target)
-  })
+  newOrExisting.addEventListener('change', (e) => {})
 
   const selectCustomer = (customer) => {
     name.value = customer.name
     email.value = customer.email
+    customerId.value = customer.id
+    sourceId.value = customer.default_source
 
     const { address } = customer
-    fillAddress(address)
+    if (address) fillAddress(address)
   }
 
   const hideCustomers = (id) => {
@@ -103,6 +169,7 @@ const handleCustomer = async () => {
   const handleName = async (e) => {
     e.preventDefault()
     if (newElement.checked) return
+    if (!name.value) return
 
     const displayName = (customers) => {
       hideCustomers(nameAutocomplete)
@@ -115,25 +182,25 @@ const handleCustomer = async () => {
       displayCustomers(customers, name, nameAutocomplete)
     }
 
-    console.log('name=', name.value)
+    spinner.on()
     const url = `/api/stripe-customers/?name=${name.value}`
     try {
       const response = await fetch(url, { method: 'POST' })
       if (response.ok) {
         const json = await response.json()
         names = json
-        console.log('name json', json)
         displayName(names, nameAutocomplete)
       }
     } catch (error) {
-      console.console.error()
-      ;`stripe-customers failed because [${error.message}]`
+      console.error(`stripe-customers failed because [${error.message}]`)
     }
+    spinner.off()
   }
 
   const handleEmail = async (e) => {
     e.preventDefault()
     if (newElement.checked) return
+    if (!email.value) return
 
     const displayEmail = (customers) => {
       hideCustomers(emailAutocomplete)
@@ -146,32 +213,30 @@ const handleCustomer = async () => {
       displayCustomers(customers, email, emailAutocomplete)
     }
 
-    console.log('email=', email.value)
+    spinner.on()
     const url = `/api/stripe-customers/?email=${email.value}`
     try {
       const response = await fetch(url, { method: 'POST' })
       if (response.ok) {
         const json = await response.json()
         emails = json
-        console.log('email json', json)
         displayEmail(emails, emailAutocomplete)
       }
     } catch (error) {
       console.error(`stripe-customers failed because [${error.message}]`)
     }
+    spinner.off()
   }
 
-  name.addEventListener('input', debounce(handleName, 1000))
-  email.addEventListener('input', debounce(handleEmail, 1000))
+  name.addEventListener('input', debounce(handleName, 300))
+  email.addEventListener('input', debounce(handleEmail, 300))
 
   emailAutocomplete.addEventListener('click', (e) => {
     const li = e.target.closest('li')
     if (!li) return
 
-    console.log({ li }, li.dataset)
     const index = li.dataset.index
     const selected = emails[index]
-    console.log('email selected', index, selected, this)
     selectCustomer(selected)
     hideCustomers(emailAutocomplete)
   })
@@ -180,10 +245,8 @@ const handleCustomer = async () => {
     const li = e.target.closest('li')
     if (!li) return
 
-    console.log({ li }, li.dataset)
     const index = li.dataset.index
     const selected = names[index]
-    console.log('name selected', index, selected)
     selectCustomer(selected)
     hideCustomers(nameAutocomplete)
   })
@@ -232,7 +295,6 @@ const handlePreferences = () => {
     },
   }
   preferences.addEventListener('change', (e) => {
-    console.log('changed', e.target)
     if (e.target.id === 'all') return selected.all()
     selected.toggle()
   })
@@ -281,6 +343,7 @@ const handleAddress = () => {
       expand: true,
     })
 
+    spinner.on()
     const uri = `/api/getaddress?${params}`
     let response = await fetch(uri, {
       method: 'POST',
@@ -291,21 +354,24 @@ const handleAddress = () => {
     if (response.ok) {
       let { addresses } = await response.json()
       addressList = addresses
-      console.log({ addresses })
       addresses = addresses.map((address) => {
         const finalAddress = address.formatted_address.reduce(
           (formatted, line) => {
             if (line.length > 0)
               formatted = formatted ? `${formatted}, ${line}` : line
+            spinner.off()
             return formatted
           },
           '',
         )
+        spinner.off()
         return finalAddress
       })
       displayAddresses(addresses)
+      spinner.off()
       return
     }
+    spinner.off()
     hideAddresses()
   }
 
@@ -316,6 +382,7 @@ const handleAddress = () => {
 
   const displayPostcodes = async (postcodes) => {
     hidePostcodes()
+    const rect = postcode.getBoundingClientRect()
 
     if (postcodes.length === 1) {
       postcode.value = postcodes[0]
@@ -348,6 +415,7 @@ const handleAddress = () => {
       term: postcode.value.trim(),
     })
 
+    spinner.on()
     const uri = `/api/getaddress?${params}`
     let response = await fetch(uri, {
       method: 'POST',
@@ -357,11 +425,12 @@ const handleAddress = () => {
 
     if (response.ok) {
       const postcodes = await response.json()
-      console.log({ postcodes })
       displayPostcodes(postcodes)
+      spinner.off()
       return
     }
 
+    spinner.off()
     hidePostcodes()
   }, 1000)
 
@@ -377,7 +446,6 @@ const handleAddress = () => {
   })
 
   postcodeAutocomplete.addEventListener('keyup', async (e) => {
-    console.log('postcodeAutocomplete', e.key)
     if (e.key === 'Escape') {
       hidePostcodes()
       return
@@ -415,7 +483,87 @@ const handleAddress = () => {
   })
 }
 
+const handlePurchase = () => {
+  const dom = {
+    purchase: document.getElementById('purchase'),
+    category: document.getElementById('category'),
+    productName: document.getElementById('product-name'),
+    type: document.getElementById('type'),
+    price: document.getElementById('price'),
+    priceValue: document.getElementById('price-value'),
+    recurring: document.getElementById('recurring'),
+    recurringTimes: document.getElementById('recurring-times'),
+    interval: document.getElementById('interval'),
+    quantityLabel: document.getElementById('quantity-label'),
+    quantity: document.getElementById('quantity'),
+    totalLabel: document.getElementById('total-label'),
+    total: document.getElementById('total'),
+    pay: document.getElementById('pay'),
+    // ids
+    payment: document.getElementById('payment'),
+    priceId: document.getElementById('price-id'),
+    productId: document.getElementById('product-id'),
+    customerId: document.getElementById('customer-id'),
+    sourceId: document.getElementById('source-id'),
+
+    // sections
+    onBehalfOf: document.getElementById('on-behalf-of'),
+    dateOfBirth: document.getElementById('date-of-birth'),
+    gender: document.getElementById('gender'),
+    address: document.getElementById('address'),
+    preferences: document.getElementById('preferences'),
+  }
+
+  const params = new URLSearchParams(location.search)
+  const category = params.get('category')
+  const name = params.get('name')
+  const recurring = params.get('recurring')
+  const price = params.get('price')
+  const type = params.get('type')
+  const id = params.get('id')
+  const product = params.get('product')
+
+  dom.priceId.value = id
+  dom.productId.value = product
+
+  type ? (dom.type.textContent = `(${type})`) : (dom.type.textContent = '')
+  dom.category.textContent = capitalize(category)
+  dom.productName.textContent = name
+  const priceValue = parseFloat(price.slice(1).replace(',', ''))
+  dom.price.textContent = gbp.format(priceValue)
+  dom.priceValue.value = priceValue
+  dom.recurringTimes.value = recurring
+
+  if (recurring === 'once') {
+    dom.interval.textContent = ''
+    hide(dom.recurring)
+    hide(dom.onBehalfOf)
+    hide(dom.dateOfBirth)
+    hide(dom.gender)
+    hide(dom.address)
+    hide(dom.preferences)
+  }
+
+  if (recurring !== 'once') {
+    dom.interval.textContent = recurring
+
+    hide(dom.quantityLabel)
+    hide(dom.totalLabel)
+  }
+
+  dom.total.value = gbp.format(priceValue)
+  dom.quantity.addEventListener('change', () => {
+    dom.total.value = gbp.format(dom.quantity.value * priceValue)
+  })
+  pay.addEventListener('click', (e) => {
+    const type = e.target.id
+    if (type === 'abandon') return history.back()
+    dom.payment.value = type
+  })
+}
+
 const init = () => {
+  handlePurchase()
   handleCustomer()
   handlePreferences()
   handleDateOfBirth()
