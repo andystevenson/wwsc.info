@@ -356,6 +356,23 @@ const join = {
               nickname: 'young-adult-monthly-blue-light-v2',
               discounted: true,
             },
+
+            {
+              interval: 'year',
+              price: 250,
+              type: 'student',
+              name: 'Student',
+              nickname: 'young-adult-annual-student-v2',
+              discounted: true,
+            },
+            {
+              interval: 'month',
+              price: 25,
+              type: 'student',
+              name: 'Student',
+              nickname: 'young-adult-monthly-student-v2',
+              discounted: true,
+            },
           ],
         },
         {
