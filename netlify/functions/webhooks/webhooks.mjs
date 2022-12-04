@@ -95,7 +95,9 @@ export const handler = async (event) => {
       if (subscription.schedule) return success
 
       let subscriptionPrice = subscription.items?.data[0]?.price
-      const { price: configPrice } = findPrice(subscriptionPrice.id)
+      const found = findPrice(subscriptionPrice.id)
+      if (!found) return success
+      const { price: configPrice } = found
 
       let schedule = null
       if (configPrice.phases)
