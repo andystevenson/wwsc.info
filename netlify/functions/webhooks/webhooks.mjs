@@ -99,14 +99,17 @@ export const handler = async (event) => {
       if (!found) return success
       const { price: configPrice } = found
 
+      console.log({ type }, subscription.id, subscription.customer)
+
       let schedule = null
-      if (configPrice.phases)
+      if (configPrice.phases) {
         schedule = await createSubscriptionSchedule(
           subscription,
           subscriptionPrice,
           configPrice,
         )
-      console.log({ type }, subscription.id, subscription.customer)
+        console.log('subscription schedule updated')
+      }
       return success
     }
 
