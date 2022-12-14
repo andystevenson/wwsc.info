@@ -18,10 +18,10 @@ const ashbourne2sumup = require('./src/ashbourne2sumup')
 
 const { eq } = require('lodash')
 const { inspect } = require('node:util')
-const options = { depth: null, colors: true }
+const options = { depth: null }
 
 function hasSameValues(a, b, verbose = false) {
-  const same = true
+  let same = true
   const diffs = []
   for (const key in a) {
     const equals = eq(a[key], b[key])
@@ -33,8 +33,10 @@ function hasSameValues(a, b, verbose = false) {
         const valueB = b[key]
         const typeB = typeof valueB
         const displayB = inspect(valueB, options)
-        const diff = `key ${key} not equal [${typeA},${displayA}] != [${typeB},${displayB}]`
-        diffs.push(diff)
+        const diff = `${key} a !== b`
+        const diffa = `${typeA}, ${displayA}`
+        const diffb = `${typeB}, ${displayB}`
+        diffs.push(diff, diffa, diffb)
       }
       same = false
     }
