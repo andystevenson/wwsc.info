@@ -1,14 +1,44 @@
+require('dotenv').config()
 const { exit } = require('node:process')
 const { inspect } = require('node:util')
 const formData = require('form-data')
 const Mailgun = require('mailgun.js')
 const mailgun = new Mailgun(formData)
-require('dotenv').config()
+
+const customers = {
+  stripe: require('../.cache/stripe/customers.json'),
+  sumup: require('../.cache/sumup/sumup-customers-updated.json'),
+}
+
+const uniqueEmail = () => {
+  const unique = {}
+  const subscribed = true
+  const vars = { validated: null }
+
+  customers.stripe.forEach((customer) => {
+    const { email: address, name } = customer
+    unique[address] ||= { address, name, subscribed, vars }
+  })
+
+  customers.sumup.forEach((customer) => {
+    if (customer.customer_group === 'MEMBERS' && customer.email) {
+      const { email: address, name } = customer
+      unique[address] ||= { address, name, subscribed, vars }
+    }
+  })
+
+  log({ unique })
+  log(Object.keys(unique).length)
+}
 
 const DOMAIN = 'email.westwarwicks.club'
 
 const log = (object) =>
   console.log(inspect(object, { depth: null, colors: true }))
+
+log(process.cwd())
+log(customers.sumup.length)
+log(customers.stripe.length)
 
 const apiKey = process.env.MAILGUN_API_KEY
 if (!apiKey) {
@@ -122,16 +152,37 @@ async function createMailingLists(lists = defaultLists) {
   try {
     for await (let list of lists) {
       list = await client.lists.create(list)
-      console.log({ list })
+      log({ list })
     }
   } catch (error) {
     console.error(error)
   }
 }
 
+async function mailingListMembers(list = `testlist@${DOMAIN}`) {
+  try {
+    let members = await client.lists.members.listMembers(list, {
+      limit: 2,
+    })
+    console.log('first', members.items)
+    members = await client.lists.members.listMembers(list, {
+      page: members.pages.next.page,
+    })
+    console.log('second', members.items)
+    members = await client.lists.members.listMembers(list, {
+      page: members.pages.next.page,
+    })
+    console.log('third', members.items)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 async function run() {
-  await createRoutes()
-  await listRoutes()
+  // await createRoutes()
+  // await listRoutes()
+  // await uniqueEmail()
+  await mailingListMembers()
 }
 
 run()
