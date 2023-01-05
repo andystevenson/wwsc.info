@@ -1,4 +1,4 @@
-import { debounce } from 'lodash'
+import debounce from 'lodash.debounce'
 
 console.log('finder...')
 

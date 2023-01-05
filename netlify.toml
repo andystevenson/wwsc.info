@@ -119,6 +119,10 @@ function = "sumup-customers"
 path = "/api/sumup-customers"
 
 [[edge_functions]]
+function = "customers"
+path = "/api/customers"
+
+[[edge_functions]]
 function = "hello"
 path = "/api/hello"
 
@@ -194,6 +198,10 @@ path="/api/food"
 [[edge_functions]]
 function="kids-menu"
 path="/api/kids-menu"
+
+[[edge_functions]]
+function="bjo"
+path="/api/bjo"
 
 [[edge_functions]]
 function="fizz-friday"

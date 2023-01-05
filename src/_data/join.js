@@ -56,6 +56,7 @@ const join = {
               type: 'blue-light',
               name: 'Blue Light',
               nickname: 'family-annual-blue-light-v2',
+              discounted: true,
             },
             {
               interval: 'month',
@@ -63,6 +64,7 @@ const join = {
               type: 'blue-light',
               name: 'Blue Light',
               nickname: 'family-monthly-blue-light-v2',
+              discounted: true,
             },
           ],
         },

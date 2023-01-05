@@ -3,7 +3,9 @@ const { log } = require('@andystevenson/lib/logger')
 
 // process all the content from CONTENTFUL CMS
 
-const { sortBy, without } = require('lodash')
+// const { sortBy, without } = require('lodash')
+const sortBy = require('lodash.sortby')
+const without = require('lodash.without')
 
 const createTags = (assets) => {
   const tags = {}

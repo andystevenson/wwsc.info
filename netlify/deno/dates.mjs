@@ -10,6 +10,7 @@ export const date = dayjs
 export const tz = 'Europe/London'
 export const todayUK = dayjs().tz(tz).startOf('day')
 export const today = dayjs().utc().startOf('day')
+export const year = today.year()
 
 export const lastOctoberUK =
   todayUK.month() >= 9
