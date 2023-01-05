@@ -78,10 +78,10 @@ let addressList = []
 const fillAddress = (selected) => {
   const { length } = addressInputs
 
-  const town = addressInputs[length - 1]
-  const street = addressInputs[length - 2]
-  const line2 = addressInputs[length - 3]
-  const line1 = addressInputs[length - 4]
+  const town = addressInputs[length - 2]
+  const street = addressInputs[length - 3]
+  const line2 = addressInputs[length - 4]
+  const line1 = addressInputs[length - 5]
 
   const {
     building_number,

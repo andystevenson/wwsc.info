@@ -120,4 +120,8 @@ body.stripe-customer {
       text-overflow: ellipsis;
     }
   }
+
+  #telephone {
+    inline-size: 16ch;
+  }
 }
