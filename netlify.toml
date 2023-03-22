@@ -140,6 +140,10 @@ function="sunday-lunch"
 path="/api/sunday-lunch"
 
 [[edge_functions]]
+function="beer"
+path="/api/beer"
+
+[[edge_functions]]
 function="cocktails"
 path="/api/cocktails"
 
@@ -160,10 +164,6 @@ function="spirits"
 path="/api/spirits"
 
 [[edge_functions]]
-function="beer"
-path="/api/beer"
-
-[[edge_functions]]
 function="bar-food"
 path="/api/bar-food"
 
@@ -174,10 +174,6 @@ path="/api/bbq"
 [[edge_functions]]
 function="tea-coffee"
 path="/api/tea-coffee"
-
-[[edge_functions]]
-function="staff"
-path="/api/staff"
 
 [[edge_functions]]
 function="sports-teas"
@@ -210,5 +206,9 @@ path="/api/fizz-friday"
 [[edge_functions]]
 function="mothers-day"
 path="/api/mothers-day"
+
+[[edge_functions]]
+function="staff"
+path="/api/staff"
 # end-generated-edge-functions
 
