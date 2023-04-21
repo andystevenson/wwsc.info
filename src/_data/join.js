@@ -315,22 +315,22 @@ const join = {
         {
           name: 'Young Adult',
           description: 'All sports and gym with classes.',
-          conditions: 'Aged 18-25',
+          conditions: 'Aged 19-25',
           images: ['https://westwarwicks.club/favicon.svg'],
           discounted: true,
           prices: [
-            { interval: 'year', price: 400, nickname: 'young-adult-annual-v2' },
+            { interval: 'year', price: 400, nickname: 'young-adult-annual-v3' },
             {
               interval: 'month',
               price: 37.5,
-              nickname: 'young-adult-monthly-v2',
+              nickname: 'young-adult-monthly-v3',
             },
             {
               interval: 'year',
               price: 400 * 0.8,
               type: 'family',
               name: 'Family Member',
-              nickname: 'young-adult-annual-family-member-v2',
+              nickname: 'young-adult-annual-family-member-v3',
               discounted: true,
             },
             {
@@ -338,7 +338,7 @@ const join = {
               price: 37.5 * 0.8,
               type: 'family',
               name: 'Family Member',
-              nickname: 'young-adult-monthly-family-member-v2',
+              nickname: 'young-adult-monthly-family-member-v3',
               discounted: true,
             },
 
@@ -347,7 +347,7 @@ const join = {
               price: 400 * 0.8,
               type: 'blue-light',
               name: 'Blue Light',
-              nickname: 'young-adult-annual-blue-light-v2',
+              nickname: 'young-adult-annual-blue-light-v3',
               discounted: true,
             },
             {
@@ -355,7 +355,7 @@ const join = {
               price: 37.5 * 0.8,
               type: 'blue-light',
               name: 'Blue Light',
-              nickname: 'young-adult-monthly-blue-light-v2',
+              nickname: 'young-adult-monthly-blue-light-v3',
               discounted: true,
             },
 
@@ -364,7 +364,7 @@ const join = {
               price: 250,
               type: 'student',
               name: 'Student',
-              nickname: 'young-adult-annual-student-v2',
+              nickname: 'young-adult-annual-student-v3',
               discounted: true,
             },
             {
@@ -372,27 +372,33 @@ const join = {
               price: 25,
               type: 'student',
               name: 'Student',
-              nickname: 'young-adult-monthly-student-v2',
+              nickname: 'young-adult-monthly-student-v3',
               discounted: true,
             },
           ],
         },
         {
-          name: 'Teens',
+          name: 'Aged 16-18',
           description: 'All sports and gym, kids & family classes.',
-          conditions: 'Aged 12-17',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'year', price: 105, nickname: 'teens-annual-v2' },
+            { interval: 'year', price: 175, nickname: 'aged16-18-annual-v3' },
           ],
         },
         {
-          name: 'Junior',
+          name: 'Aged 12-15',
           description: 'All sports and gym, kids & family classes.',
-          conditions: 'Aged 7-11',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'year', price: 75, nickname: 'junior-annual-v2' },
+            { interval: 'year', price: 105, nickname: 'aged12-15-annual-v3' },
+          ],
+        },
+        {
+          name: 'Aged 5-11',
+          description: 'All sports and gym, kids & family classes.',
+          images: ['https://westwarwicks.club/favicon.svg'],
+          prices: [
+            { interval: 'year', price: 75, nickname: 'aged5-11-annual-v3' },
           ],
         },
         {
