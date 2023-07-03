@@ -8,6 +8,7 @@
   command = "npm run dev" # Command to start your dev server
   functions = "netlify/functions"
   publish = "_site" # Folder with the static content for _redirect file
+  targetPort = 8080
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
@@ -164,12 +165,12 @@ function="spirits"
 path="/api/spirits"
 
 [[edge_functions]]
-function="bar-food"
-path="/api/bar-food"
-
-[[edge_functions]]
 function="bbq"
 path="/api/bbq"
+
+[[edge_functions]]
+function="bar-food"
+path="/api/bar-food"
 
 [[edge_functions]]
 function="tea-coffee"
@@ -186,10 +187,6 @@ path="/api/liquer-coffee"
 [[edge_functions]]
 function="snacks"
 path="/api/snacks"
-
-[[edge_functions]]
-function="food"
-path="/api/food"
 
 [[edge_functions]]
 function="kids-menu"

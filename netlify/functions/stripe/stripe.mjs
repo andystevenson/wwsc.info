@@ -11,14 +11,15 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 export async function charges() {
   try {
-    const all = await stripe.charges
-      .list({
-        created: { gte: `${lastOctoberUK.unix()}` },
-        limit: 100,
-      })
-      .autoPagingToArray({ limit: 10000 })
+    // const all = await stripe.charges
+    //   .list({
+    //     created: { gte: `${lastOctoberUK.unix()}` },
+    //     limit: 100,
+    //   })
+    //   .autoPagingToArray({ limit: 10000 })
 
-    return all
+    // return all
+    return []
   } catch (error) {
     console.error(`stripe fetch failed [${error.message}]`)
     throw error
