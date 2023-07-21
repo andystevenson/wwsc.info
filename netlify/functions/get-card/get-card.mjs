@@ -10,6 +10,7 @@ export const handler = async (event) => {
     body: JSON.stringify(result),
     headers: {
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
       'Content-Type': 'application/json',
     },
   }
