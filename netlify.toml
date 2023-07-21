@@ -26,6 +26,10 @@
 
   ## more info on configuring this file: https://docs.netlify.com/configure-builds/file-based-configuration/
 
+[[redirects]]
+  to = "/.netlify/functions/get-card"
+  from = "/api/get-card"
+  status = 200
 
 [[redirects]]
   to = "/.netlify/functions/ashbourne"
