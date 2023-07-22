@@ -91,6 +91,7 @@ function cardCheck(sumup) {
       const name = `${member.first_name} ${member.last_name}`
       const email = member.email ? member.email : ''
       const expired = member.membership_expiry_date
+      const mobile = member.mobile
       const status = member.custom_field_2
         ? member.custom_field_2.toLowerCase()
         : ''
@@ -112,7 +113,7 @@ function cardCheck(sumup) {
 
       // do not store 0 card numbers
       if (cardNo) {
-        checks[cardNo] = [valid, name, displayStatus, email, age]
+        checks[cardNo] = [valid, name, displayStatus, email, age, mobile]
       }
     }
     return checks
