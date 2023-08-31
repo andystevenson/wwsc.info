@@ -102,6 +102,7 @@ function cardCheck(sumup) {
       const now = date()
       const dob = date(member.date_of_birth)
       const age = now.diff(dob, 'years')
+      const DOB = dob.format('DD/MM/YYYY')
       // log.info({ now, dob, age })
       cardNo = +cardNo
       if (cardNo in checks) {
@@ -113,7 +114,7 @@ function cardCheck(sumup) {
 
       // do not store 0 card numbers
       if (cardNo) {
-        checks[cardNo] = [valid, name, displayStatus, email, age, mobile]
+        checks[cardNo] = [valid, name, displayStatus, email, age, mobile, DOB]
       }
     }
     return checks
