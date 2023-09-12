@@ -189,16 +189,16 @@ function="sports-teas"
 path="/api/sports-teas"
 
 [[edge_functions]]
+function="kids-menu"
+path="/api/kids-menu"
+
+[[edge_functions]]
 function="liquer-coffee"
 path="/api/liquer-coffee"
 
 [[edge_functions]]
 function="snacks"
 path="/api/snacks"
-
-[[edge_functions]]
-function="kids-menu"
-path="/api/kids-menu"
 
 [[edge_functions]]
 function="bjo"
