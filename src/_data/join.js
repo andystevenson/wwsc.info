@@ -135,7 +135,7 @@ const join = {
               price: Math.round(600 - ((600 / 12) * 1) / 2),
               type: 'offer',
               name: '1st month half price (annual)',
-              description: 'First month half price, 3 months upfront',
+              description: '... then £600 pa',
               phases: [{ change: 'classes-annual-v2' }],
               nickname: 'classes-annual-1st-month-half-price-v1',
               discounted: true,
@@ -146,8 +146,7 @@ const join = {
               price: Math.round(55 / 2 + 2 * 55),
               type: 'offer',
               name: '1st month half price, 3 months upfront',
-              description:
-                '1st month half price, 3 months upfront, then £55 pm',
+              description: '... then £55 pm',
               phases: [{ iterations: 1 }, { change: 'classes-monthly-v2' }],
               nickname:
                 'classes-monthly-1st-month-half-price-3-months-upfront-v1',
@@ -223,7 +222,7 @@ const join = {
               price: Math.round(550 - ((550 / 12) * 1) / 2),
               type: 'offer',
               name: '1st month half price (annual)',
-              description: '1st month half price, then £550 pa',
+              description: '... then £550 pa',
               phases: [{ change: 'adult-annual-v2' }],
               nickname: 'adult-annual-1st-month-half-price-v1',
               discounted: true,
@@ -234,8 +233,7 @@ const join = {
               price: Math.round(50 / 2 + 50 * 2),
               type: 'offer',
               name: '1st month half price, 3 months upfront',
-              description:
-                '1st month half price, 3 months upfront, then £50 pm',
+              description: '... then £50 pm',
               phases: [{ iterations: 1 }, { change: 'adult-monthly-v2' }],
               nickname:
                 'adult-monthly-1st-month-half-price-3-months-upfront-v1',
@@ -316,7 +314,7 @@ const join = {
               price: Math.round(400 - ((400 / 12) * 1) / 2),
               type: 'offer',
               name: '1st month half price (annual)',
-              description: '1st month half price, then £400 pa',
+              description: '... then £400 pa',
               phases: [{ change: 'off-peak-annual-v2' }],
               nickname: 'off-peak-annual-offer-1st-month-half-price-v1',
               discounted: true,
@@ -327,8 +325,7 @@ const join = {
               price: Math.round(37.5 / 2 + 37.5 * 2),
               type: 'offer',
               name: '1st month half price, 3 months upfront',
-              description:
-                '1st month half price, 3 months upfront, then £37.50 pm',
+              description: '... then £37.50 pm',
               phases: [{ iterations: 1 }, { change: 'off-peak-monthly-v2' }],
               nickname:
                 'off-peak-monthly-offer-1st-month-half-price-3-months-upfront-v1',
