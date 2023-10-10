@@ -44,8 +44,11 @@ const createPrices = async (stripeProduct, price) => {
   const nickname = price.nickname
   const unit_amount = price.price * 100
   const currency = 'gbp'
-  const recurring =
-    price.interval === 'once' ? null : { interval: price.interval }
+  let recurring =
+    price.interval === 'once'
+      ? null
+      : { interval: price.interval, interval_count: price.interval_count || 1 }
+
   const product = stripeProduct.id
 
   let newPrice = null

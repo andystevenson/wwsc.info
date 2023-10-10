@@ -174,7 +174,18 @@ const goodtill = async (updates, newMembers, emailDuplicates) => {
 
     for (const member in newMembers) {
       try {
+        // because emails are treated as unique in sumup, create without email
+        // then add with email
+        const newMember = newMembers[member]
+        const email = newMember.email
+        delete newMember.email
+
         const created = await create(newMembers[member])
+        const updated = await update({
+          id: created.id,
+          name: created.name,
+          email,
+        })
         log.info(`created`, created.name)
       } catch (error) {
         const { name, email, membership_no } = newMembers[member]

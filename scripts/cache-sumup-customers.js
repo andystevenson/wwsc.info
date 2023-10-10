@@ -17,7 +17,7 @@ const assertIntegrity = (customers) => {
   customers.reduce((members, member) => {
     const mno = member.membership_no
     // log.info(`checking ${mno}`)
-    if (member.active && mno in members) {
+    if (member.active && mno && mno in members) {
       log.error(`duplicate [${mno}],${member.name} with ${members[mno].name}`)
       return members
     }
