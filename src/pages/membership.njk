@@ -22,7 +22,8 @@
                   <section>
                     <p>{{price.price}}</p>
                     {% if price.interval !== 'once' %}
-                      <p><small>per {{price.interval_count || 1}}</small><small>{{price.interval}}</small></p>          
+                      {% set icount = price.interval_count or '' %}
+                      <p><small>per {{icount}}</small><small>{{price.interval}}</small></p>          
                     {% endif %}
                     {% if price.interval === 'once' and category.name === 'classes' %}
                       {% set classes = 'class' if price.qty === 1 else 'classes' %}
