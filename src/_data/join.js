@@ -152,6 +152,17 @@ const join = {
                 'classes-monthly-1st-month-half-price-3-months-upfront-v2',
               discounted: true,
             },
+
+            {
+              interval: 'month',
+              price: Math.floor(55 / 2),
+              type: 'offer',
+              name: '1st month half price',
+              description: '... then £55 pm',
+              phases: [{ change: 'classes-monthly-v2' }],
+              nickname: 'classes-monthly-1st-month-half-v1',
+              discounted: true,
+            },
           ],
         },
         {
@@ -237,6 +248,16 @@ const join = {
               phases: [{ iterations: 1 }, { change: 'adult-monthly-v2' }],
               nickname:
                 'adult-monthly-1st-month-half-price-3-months-upfront-v2',
+              discounted: true,
+            },
+            {
+              interval: 'month',
+              price: Math.floor(50 / 2),
+              type: 'offer',
+              name: '1st month half price',
+              description: '... then £50 pm',
+              phases: [{ change: 'adult-monthly-v2' }],
+              nickname: 'adult-monthly-1st-month-half-price-v1',
               discounted: true,
             },
           ],
@@ -329,6 +350,17 @@ const join = {
               phases: [{ iterations: 1 }, { change: 'off-peak-monthly-v2' }],
               nickname:
                 'off-peak-monthly-offer-1st-month-half-price-3-months-upfront-v2',
+              discounted: true,
+            },
+            {
+              interval: 'month',
+              interval_count: 3,
+              price: Math.floor(37.5 / 2),
+              type: 'offer',
+              name: '1st month half price',
+              description: '... then £37.50 pm',
+              phases: [{ change: 'off-peak-monthly-v2' }],
+              nickname: 'off-peak-monthly-offer-1st-month-half-price-v1',
               discounted: true,
             },
           ],

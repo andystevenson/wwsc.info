@@ -165,12 +165,12 @@ function="breakfast"
 path="/api/breakfast"
 
 [[edge_functions]]
-function="soft-drinks"
-path="/api/soft-drinks"
-
-[[edge_functions]]
 function="spirits"
 path="/api/spirits"
+
+[[edge_functions]]
+function="soft-drinks"
+path="/api/soft-drinks"
 
 [[edge_functions]]
 function="bbq"
