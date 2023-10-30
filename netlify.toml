@@ -145,12 +145,12 @@ function="resources"
 path="/api/resources"
 
 [[edge_functions]]
-function="sunday-lunch"
-path="/api/sunday-lunch"
-
-[[edge_functions]]
 function="beer"
 path="/api/beer"
+
+[[edge_functions]]
+function="sunday-lunch"
+path="/api/sunday-lunch"
 
 [[edge_functions]]
 function="cocktails"
@@ -203,6 +203,10 @@ path="/api/snacks"
 [[edge_functions]]
 function="bjo"
 path="/api/bjo"
+
+[[edge_functions]]
+function="halloween"
+path="/api/halloween"
 
 [[edge_functions]]
 function="fizz-friday"
