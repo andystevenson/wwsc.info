@@ -95,8 +95,7 @@ const createDocByTitle = (assets) => {
   const collection = {}
   assets.forEach((asset) => {
     const { title, contentType } = asset
-    if (contentType.startsWith('image/') || contentType.startsWith('video/'))
-      return
+    if (contentType.startsWith('application/pdf')) return
 
     if (title in collection) {
       log.warn(`document has a duplicate [${title}]`)
