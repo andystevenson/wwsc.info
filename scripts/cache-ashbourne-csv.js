@@ -15,7 +15,7 @@ const cacheFile = `${cacheDir}/ashbourne.csv`
 
 const ashbourne = async () => {
   try {
-    const fetch = (await import('node-fetch')).default
+    // const fetch = (await import('node-fetch')).default
 
     // ensure we have somewhere to store the resource
     createCacheDir(cacheDir)
