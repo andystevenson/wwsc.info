@@ -130,6 +130,10 @@ const ashbourne = async () => {
     csv = csv
       .filter((member) => member.Status.trim() !== 'Expired')
       .map((member) => {
+        const card = member['Card No']
+        const status = member.Status
+        const ref = member.AshRef
+
         const name = `${member[
           'First Name'
         ].trim()} ${member.Surname.trim()}`.trim()
@@ -147,24 +151,38 @@ const ashbourne = async () => {
           age = today.diff(dDob, 'years')
         }
 
-        const expires = member['Expire Date'].trim().split(' ')[0]
+        let expires = ref
+          ? member['Last Pay Date'].trim().split(' ')[0]
+          : member['Expire Date'].trim().split(' ')[0]
         let [eday, emonth, eyear] = expires.split('/')
-        const dExpires = dayjs({
+        let dExpires = dayjs({
           year: +eyear,
           month: +emonth - 1,
           day: +eday,
         })
         const eage = dExpires.diff(dDob, 'years')
 
-        const renewal = expires ? dExpires.format('MMMM') : 'renewal-unknown'
+        let renewal = expires ? dExpires.format('MMMM') : 'renewal-unknown'
+
+        // Complete and Non-Zero Card No with expiry in the past should be marked as expired
+        if (
+          status === 'Complete' &&
+          card &&
+          (dExpires.isBefore(today, 'day') || dExpires.isSame(today, 'day'))
+        ) {
+          renewal = 'should-have-expired'
+        }
+
         return {
           id: member['Member No'],
+          card: member['Card No'],
+          ref,
           name,
           known,
           dob,
           adob,
           age,
-          status: member.Status,
+          status,
           type: member['Mem Type'],
           expires,
           eage,
@@ -258,6 +276,8 @@ const ashbourne = async () => {
       .map((subscriber) => {
         const ashbourne = {
           id: '',
+          card: '',
+          ref: '',
           name: '',
           known: '',
           dob: '',
