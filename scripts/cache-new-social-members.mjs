@@ -13,7 +13,7 @@ const dateFormat = 'YYYY-MM-DD'
 const social = ashbourne
   .reduce((list, member) => {
     const { Status: status, 'Mem Type': type } = member
-    if (isMember(status) && isSocial(type)) {
+    if (isMember(member) && isSocial(type)) {
       const startDate = toDate(member['Joined date'])
       if (startDate.isAfter(jan1st)) {
         list.push(member)

@@ -1,6 +1,6 @@
 const { log } = require('@andystevenson/lib/logger')
 
-const { isMember } = require('./memberStatus')
+const isMember = require('./memberStatus.js')
 const toAddress = require('./transformAshbourneAddress')
 const toCity = require('./ashbourneAddressToCity')
 const toCounty = require('./ashbourneAddressToCounty')
@@ -10,12 +10,12 @@ const toGender = require('./ashbourneTitle2gender')
 const mapper = {
   customer_group_id(source) {
     // if Live etc
-    return isMember(source.Status)
+    return isMember(source)
       ? '5cfb66a0-8a47-4ead-a188-21e5d7acd247' // MEMBERS customer group
       : '51365c0e-ca32-45f5-bf83-99d22f1dab1b' // NON-MEMBERS customer group
   },
   name(source) {
-    const status = isMember(source.Status) ? ' (member)' : ' (non-member)'
+    const status = isMember(source) ? ' (member)' : ' (non-member)'
     const name = `${source[
       'First Name'
     ].trim()} ${source.Surname.trim()}${status}`
@@ -46,7 +46,7 @@ const mapper = {
     return source['Card No'].trim().replace(/\s/, '')
   },
   is_account_customer(source) {
-    return isMember(source.Status) ? 1 : 0
+    return isMember(source) ? 1 : 0
   },
   website() {
     return 'https://westwarwicks.club'

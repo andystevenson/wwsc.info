@@ -6,7 +6,7 @@ import objectSupport from 'dayjs/plugin/objectSupport.js'
 import { parse } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
 import Stripe from 'stripe'
-import { list } from 'postcss'
+import { isMember } from './src/memberStatus.mjs'
 
 dayjs.extend(objectSupport)
 const today = dayjs()
@@ -110,6 +110,24 @@ const upgradeFrom = (type) => {
   if (type.startsWith('Under 5s')) return '5 - 11 yrs Annual'
   return ''
 }
+
+// const isMember = (member) => {
+//   const status = member.Status.toLowerCase().trim()
+//   if (status === 'live') return true
+//   if (status === 'complete' || status === 'paid in full') {
+//     const card = member['Card No']
+//     const ashref = member.AshRef
+//     let lastPayDate = member['Last Pay Date'].trim().split(' ')[0]
+//     let [day, month, year] = lastPayDate.split('/')
+//     const dLastPayDate = dayjs({ year: +year, month: +month - 1, day: +day })
+//     const aMonthAgo = today.subtract(1, 'month')
+//     if (card && ashref && dLastPayDate.isAfter(aMonthAgo, 'day')) {
+//       return true
+//     }
+//   }
+//   return false
+// }
+
 const ashbourne = async () => {
   try {
     // fetch the 'ashbourne' asset from contentful
@@ -129,8 +147,21 @@ const ashbourne = async () => {
     csv = parse(csv, CSVoptions)
     csv = csv
       .filter((member) => member.Status.trim() !== 'Expired')
+      .filter((member) => {
+        const status = member.Status.trim()
+        if (status !== 'Complete') return true
+        const card = member['Card No'].trim()
+        if (card.length > 0) return true
+        return false
+      })
+      .filter((member) => {
+        const status = member.Status.trim()
+        if (status !== 'Paid in Full') return true
+        const card = member['Card No'].trim()
+        if (card.length > 0) return true
+        return false
+      })
       .map((member) => {
-        const card = member['Card No']
         const status = member.Status
         const ref = member.AshRef
 
@@ -165,11 +196,7 @@ const ashbourne = async () => {
         let renewal = expires ? dExpires.format('MMMM') : 'renewal-unknown'
 
         // Complete and Non-Zero Card No with expiry in the past should be marked as expired
-        if (
-          status === 'Complete' &&
-          card &&
-          (dExpires.isBefore(today, 'day') || dExpires.isSame(today, 'day'))
-        ) {
+        if (!isMember(member)) {
           renewal = 'should-have-expired'
         }
 

@@ -1,37 +1,24 @@
-const statuses = [
-  'live',
-  'dd hold',
-  'dd presale',
-  'defaulter',
-  'final',
-  'paid in full',
-  'complete',
-  'freeze',
-  'expired',
-  'prospects',
-]
+const dayjs = require('dayjs')
+const today = dayjs()
 
-const memberStatuses = [
-  'live',
-  'dd hold',
-  'dd presale',
-  'defaulter',
-  'paid in full',
-  'freeze',
-]
+const isMember = (member) => {
+  const status = member.Status.toLowerCase().trim()
+  if (status === 'live') return true
 
-const nonMemberStatuses = ['final', 'complete', 'expired', 'prospects']
+  const card = member['Card No']
+  if (status === 'paid in full' && card) return true
 
-const isMember = (status) =>
-  memberStatuses.includes(status.trim().toLowerCase())
-
-const isNonMember = (status) =>
-  nonMemberStatuses.includes(status.trim().toLowerCase())
-
-module.exports = {
-  statuses,
-  memberStatuses,
-  nonMemberStatuses,
-  isMember,
-  isNonMember,
+  if (status === 'complete') {
+    const ashref = member.AshRef
+    let lastPayDate = member['Last Pay Date'].trim().split(' ')[0]
+    let [day, month, year] = lastPayDate.split('/')
+    const dLastPayDate = dayjs({ year: +year, month: +month - 1, day: +day })
+    const aMonthAgo = today.subtract(1, 'month')
+    if (card && ashref && dLastPayDate.isAfter(aMonthAgo, 'day')) {
+      return true
+    }
+  }
+  return false
 }
+
+module.exports = isMember

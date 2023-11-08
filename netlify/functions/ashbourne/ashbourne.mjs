@@ -1,18 +1,7 @@
 import ashbourne from '../../../.cache/ashbourne/ashbourne.json'
 import { date } from '../../deno/dates.mjs'
 import gbp from '../../deno/gbp.mjs'
-
-const memberStatuses = [
-  'live',
-  'dd hold',
-  'dd presale',
-  'defaulter',
-  'paid in full',
-  'freeze',
-]
-
-const isMember = (status) =>
-  memberStatuses.includes(status.trim().toLowerCase())
+import { isMember } from '../../../scripts/src/memberStatus.mjs'
 
 const isMonthly = (type) => {
   const tType = type.trim().toLowerCase()
