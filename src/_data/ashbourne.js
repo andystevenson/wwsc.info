@@ -1,5 +1,5 @@
 const data = require('../../.cache/ashbourne/ashbourne.json')
-const { isMember } = require('../../scripts/src/memberStatus.js')
+const isMember = require('../../scripts/src/memberStatus.js')
 
 module.exports = {
   count: data.length,
