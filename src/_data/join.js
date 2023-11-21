@@ -558,16 +558,6 @@ const join = {
                 },
               ],
             },
-            {
-              interval: 'year',
-              price: Math.floor(400 - ((400 / 12) * 1) / 2),
-              type: 'offer',
-              name: '1st month half price (annual)',
-              description: '... then £400 pa',
-              phases: [{ change: 'young-adult-annual-v3' }],
-              nickname: 'young-adult-annual-1st-month-half-price-v1',
-              discounted: true,
-            },
           ],
         },
 
