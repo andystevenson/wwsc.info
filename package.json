@@ -98,7 +98,7 @@
     "postcss-jit-props": "^1.0.7",
     "rollup-plugin-sizes": "^1.0.4",
     "sass": "^1.54.9",
-    "stripe": "^14.3.0",
+    "stripe": "^14.5.0",
     "xlsx": "^0.18.5"
   },
   "dependencies": {

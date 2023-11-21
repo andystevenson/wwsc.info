@@ -3,7 +3,6 @@ const { log } = require('@andystevenson/lib/logger')
 
 // process all the content from CONTENTFUL CMS
 
-// const { sortBy, without } = require('lodash')
 const sortBy = require('lodash.sortby')
 const without = require('lodash.without')
 
@@ -187,6 +186,7 @@ const links = {
     const content = {
       links: { all, ...createTaggedLinks(all), ...createNamedLink(all) },
     }
+    // console.log(util.inspect(content, undefined, null, true))
 
     return content
   },
@@ -261,6 +261,18 @@ const annotateStaff = (staff) => {
   return staff
 }
 
+const annotateSquash = (squash) => {
+  squash.members.forEach((member) => {
+    const role = without(member.roles, 'committee member')[0]
+    const section = without(member.section, 'squash', 'trustees')[0]
+
+    member.squash = { role, section }
+  })
+  const members = squash.members.filter((member) => member.sequence >= 1000)
+  squash.members = members
+  return members
+}
+
 const people = {
   name: 'people',
   transform: (data) => {
@@ -274,6 +286,8 @@ const people = {
 
     annotateTrustees(content.people.trustees.members)
     annotateStaff(content.people.staff.members)
+    annotateSquash(content.people.squash)
+    // console.log(util.inspect(content, undefined, null, true))
 
     return content
   },
@@ -342,5 +356,6 @@ module.exports = async () => {
     cms = { ...cms, ...content }
   }
 
+  // console.log(util.inspect(cms, undefined, null, true))
   return cms
 }

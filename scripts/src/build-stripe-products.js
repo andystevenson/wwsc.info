@@ -83,12 +83,14 @@ const createPrices = async (stripeProduct, price) => {
       maximum: 99,
     }
 
+  const custom_fields = price.custom_fields ? price.custom_fields : []
   const paymentLink = await stripe.paymentLinks.create({
     metadata: { name: `payment-link-${newPrice.nickname}` },
     billing_address_collection: 'required',
     phone_number_collection: { enabled: true },
     // automatic_tax: { enabled: true },
     line_items: [line_item],
+    custom_fields,
   })
 
   price.paymentLink = paymentLink

@@ -498,22 +498,6 @@ const join = {
             },
             {
               interval: 'year',
-              price: 250,
-              type: 'student',
-              name: 'Student',
-              nickname: 'young-adult-annual-student-v3',
-              discounted: true,
-            },
-            {
-              interval: 'month',
-              price: 25,
-              type: 'student',
-              name: 'Student',
-              nickname: 'young-adult-monthly-student-v3',
-              discounted: true,
-            },
-            {
-              interval: 'year',
               price: Math.floor(400 - ((400 / 12) * 1) / 2),
               type: 'offer',
               name: '1st month half price (annual)',
@@ -534,6 +518,59 @@ const join = {
             },
           ],
         },
+
+        {
+          name: 'Student',
+          description: 'All sports and gym.',
+          conditions: 'With valid UK student ID card',
+          images: ['https://westwarwicks.club/favicon.svg'],
+          discounted: true,
+          prices: [
+            {
+              interval: 'year',
+              price: 250,
+              nickname: 'young-adult-annual-student-v6',
+              custom_fields: [
+                {
+                  key: 'studentId',
+                  label: {
+                    custom: 'Student ID (must be shown at reception)',
+                    type: 'custom',
+                  },
+                  type: 'text',
+                  text: { minimum_length: 8, maximum_length: 10 },
+                },
+              ],
+            },
+            {
+              interval: 'month',
+              price: 25,
+              nickname: 'young-adult-monthly-student-v6',
+              custom_fields: [
+                {
+                  key: 'studentId',
+                  label: {
+                    custom: 'Student ID (must be shown at reception)',
+                    type: 'custom',
+                  },
+                  type: 'text',
+                  text: { minimum_length: 8, maximum_length: 10 },
+                },
+              ],
+            },
+            {
+              interval: 'year',
+              price: Math.floor(400 - ((400 / 12) * 1) / 2),
+              type: 'offer',
+              name: '1st month half price (annual)',
+              description: '... then £400 pa',
+              phases: [{ change: 'young-adult-annual-v3' }],
+              nickname: 'young-adult-annual-1st-month-half-price-v1',
+              discounted: true,
+            },
+          ],
+        },
+
         {
           name: 'Aged 16-18',
           description: 'All sports and gym, kids & family classes.',
