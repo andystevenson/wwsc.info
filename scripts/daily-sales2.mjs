@@ -11,14 +11,16 @@ import { pMemoize } from '@rebundled/p-memoize'
 // make sure the cache directory exists
 const cacheDir = '.cache/sumup/daily-sales'
 const cacheFile = '.cache/sumup/daily-sales/daily-sales.json'
+const cacheFileAll = '.cache/sumup/daily-sales/daily-sales-all.json'
 const cacheFileItems = '.cache/sumup/daily-sales/daily-sales-items.json'
 
 // sales summary
 export async function dailySales(day = date()) {
   try {
     const startDay = day.startOf('day')
+    const nextDay = day.add(1, 'day').startOf('day')
     const from = `${startDay.format('YYYY-MM-DD')} 00:00:00`
-    const to = `${startDay.format('YYYY-MM-DD')} 23:59:59`
+    const to = `${nextDay.format('YYYY-MM-DD')} 00:00:00`
     const limit = 50
     let offset = 0
     const params = new URLSearchParams({ from, to, limit, offset })
@@ -113,6 +115,11 @@ const dailyTotal = (sales) => {
   return total
 }
 
+const writeAllDailySales = (sales) => {
+  writeFileSync(cacheFileAll, JSON.stringify(sales, null, 2))
+  info('saved', cacheFileAll)
+}
+
 const writeDailySales = (sales) => {
   writeFileSync(cacheFile, JSON.stringify(sales, null, 2))
   info('saved', cacheFile)
@@ -189,21 +196,26 @@ const updateDailySales = async () => {
 
     info(`daily-sales...`)
     // let targetDate = lastOctober.startOf('day')
-    let targetDate = today.startOf('year').startOf('day')
+    // let targetDate = today.startOf('year').startOf('day')
+    let targetDate = today.subtract(1, 'day').startOf('day')
     const endDate = today.startOf('day')
     // const endDate = lastOctober.add(2, 'days')
     // let targetDate = today.subtract(2, 'day').startOf('day')
 
+    let allDailySales = []
     const allSales = []
     let allSalesItems = []
     while (targetDate.isBefore(endDate)) {
       // deal with daily sales totals
       const sales = await dailySales(targetDate)
+      allDailySales = allDailySales.concat(sales)
+
       const numberOfSales = sales.length
       const total = +dailyTotal(sales).toFixed(2)
       const date = targetDate.format('YYYY-MM-DD')
       const day = targetDate.format('dddd')
       info(date, day, numberOfSales, total)
+
       allSales.push({ date, day, numberOfSales, total })
 
       // deal with daily sales items
@@ -213,6 +225,7 @@ const updateDailySales = async () => {
       targetDate = targetDate.add(1, 'day')
     }
 
+    writeAllDailySales(allDailySales)
     writeDailySales(allSales)
     writeDailySalesItems(allSalesItems)
     info(`daily-sales is up to date`)

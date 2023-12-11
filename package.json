@@ -103,14 +103,16 @@
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.1",
-    "@rebundled/p-memoize": "^7.1.2-next.4",
     "csv-stringify": "^6.4.4",
     "lodash": "^4.17.21",
     "lodash.capitalize": "^4.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.debounce": "^4.0.8",
+    "lodash.memoize": "^4.1.2",
     "lodash.sortby": "^4.7.0",
     "lodash.without": "^4.4.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3"
   }
 }
