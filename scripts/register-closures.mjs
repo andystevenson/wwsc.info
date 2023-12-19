@@ -8,6 +8,8 @@ import {
   ordinalDateTime,
   dateRange,
   sortAscending,
+  ukDateTimeFormat,
+  ukDateFormat,
 } from './src/dates.mjs'
 import { info, error } from 'node:console'
 import { writeFileSync } from 'node:fs'
@@ -122,14 +124,21 @@ const salesCategories = async (salesItems) => {
     DRINK: [],
     TEA_COFFEE: [],
     SNACKS: [],
+    MISC: [],
     DELETED: [],
   }
 
   for (const sale of salesItems) {
-    const { product_name, product_id, order_status } = sale
+    const { id, product_name, product_id, order_status } = sale
     if (order_status !== 'COMPLETED') continue
 
     try {
+      if (!product_id) {
+        // MISC sale
+        salesByCategory['MISC'].push(sale)
+        continue
+      }
+
       const parentCategory = await parentCategoryFromProductId(product_id)
       if (parentCategory) {
         const category = parentCategory.name
@@ -153,9 +162,11 @@ const salesCategories = async (salesItems) => {
         }
         continue
       }
+      sale.deleted_product = true
       salesByCategory['DELETED'].push(sale)
     } catch (err) {
-      console.error(err)
+      error('failed to find', { product_name, product_id, id }, err.message)
+      sale.deleted_product = true
       salesByCategory['DELETED'].push(sale)
     }
   }
@@ -200,7 +211,7 @@ const sortClosuresByTimeTo = (closures) => {
 const salesByClosure = (sales, closure) => {
   const register = closure.register_name
   const from = date(closure.time_from)
-  const to = date(closure.to)
+  const to = date(closure.time_to)
   closure.sales = []
   closure.items = []
 
@@ -279,15 +290,29 @@ const summarizeCategories = (categories) => {
     let totalSales = 0
     let discounts = 0
     let vat = 0
+    let list = []
 
     for (const sale of categories[category]) {
-      quantity += +sale.quantity
-      grossSales += +sale.quantity * +sale.price_inc_vat_per_item
-      totalSales += +sale.line_total_after_line_discount
-      discounts +=
-        +sale.quantity * +sale.price_inc_vat_per_item -
-        +sale.line_total_after_line_discount
-      vat += +sale.line_vat_after_line_discount
+      const detail = {
+        name: sale.product_name,
+        id: sale.product_id,
+        sale: sale.id,
+        quantity: +sale.quantity,
+        price: +sale.price_inc_vat_per_item,
+        gross: +sale.quantity * +sale.price_inc_vat_per_item,
+        total: +sale.line_total_after_line_discount,
+        discounts:
+          +sale.quantity * +sale.price_inc_vat_per_item -
+          +sale.line_total_after_line_discount,
+        vat: +sale.line_vat_after_line_discount,
+      }
+
+      quantity += detail.quantity
+      grossSales += detail.quantity * detail.price
+      totalSales += detail.total
+      discounts += detail.quantity * detail.price - detail.total
+      vat += detail.vat
+      if (sale.deleted_product) list.push(detail)
     }
 
     summaries[category] = {
@@ -297,6 +322,7 @@ const summarizeCategories = (categories) => {
       totalSales: +totalSales.toFixed(2),
       vat: +vat.toFixed(2),
       netSales: +(+totalSales.toFixed(2) - +vat.toFixed(2)).toFixed(2),
+      list,
     }
   }
   return summaries
@@ -304,6 +330,7 @@ const summarizeCategories = (categories) => {
 
 const run = async () => {
   const range = process.argv[2]
+  console.log(`argv`, process.argv.length)
   let { from, to } = dateRange(range)
   await login()
   const closures = await registers(from, to)
@@ -317,7 +344,14 @@ const run = async () => {
   // we have some closures to process
   {
     const { from, to } = closuresDateRange(closures.data)
+    console.log(
+      `gathering sales between ${from.format(ukDateTimeFormat)} and ${to.format(
+        ukDateTimeFormat,
+      )}`,
+    )
     const allSales = await sales(from, to)
+    writeFileSync('sales.json', JSON.stringify(allSales, null, 2))
+
     info(closures.data.length, 'closures')
     info(allSales.length, 'sales')
 
@@ -341,10 +375,13 @@ const run = async () => {
 
           return { [payment.method]: +payment.counted }
         }),
-        total: closure.payments.reduce((total, payment) => {
-          total += +payment.counted
-          return total
-        }, 0),
+        sales: closure.sales.length,
+        total: +closure.payments
+          .reduce((total, payment) => {
+            total += +payment.counted
+            return total
+          }, 0)
+          .toFixed(2),
         ...closure.summaries,
       })
     }
