@@ -15,7 +15,7 @@ const listProducts = async () => {
 let prices = []
 const listPrices = async () => {
   prices = await stripe.prices
-    .list({ limit: 100 })
+    .list({ limit: 100, active: true })
     .autoPagingToArray({ limit: 10000 })
   return prices
 }
@@ -25,6 +25,7 @@ const listPaymentLinks = async () => {
   paymentLinks = await stripe.paymentLinks
     .list({
       limit: 100,
+      active: true,
     })
     .autoPagingToArray({ limit: 10000 })
   return paymentLinks
@@ -37,8 +38,6 @@ const listSubscriptions = async () => {
     .autoPagingToArray({ limit: 10000 })
   return subscriptions
 }
-
-const alreadyExists = []
 
 const createPrices = async (stripeProduct, price) => {
   const nickname = price.nickname
@@ -104,12 +103,11 @@ const createProducts = async () => {
 
     for (const product of category.products) {
       let stripeProduct = null
-      const exists = product.name in normalized
+      const exists = product.name in normalized.products
 
       if (exists) {
         console.log(`product ${product.name} already exists`)
-        alreadyExists.push(product.name)
-        stripeProduct = normalized[product.name]
+        stripeProduct = normalized.products[product.name]
         product.id = stripeProduct.id
       }
 
@@ -131,13 +129,13 @@ const createProducts = async () => {
 
       let stripePrice = null
       for (const price of product.prices) {
-        const exists = price.nickname in normalized
+        const exists = price.nickname in normalized.prices
         if (exists) {
           console.log(`price ${price.nickname} exists`)
 
-          alreadyExists.push(price.nickname)
-          stripePrice = normalized[price.nickname]
-          const stripePaymentLink = normalized[`payment-link-${price.nickname}`]
+          stripePrice = normalized.prices[price.nickname]
+          const stripePaymentLink =
+            normalized.links[`payment-link-${price.nickname}`]
           if (stripePaymentLink) {
             price.paymentLink = stripePaymentLink
           }
@@ -154,29 +152,30 @@ const createProducts = async () => {
   }
 }
 
-const normalized = {}
+const normalized = { links: {}, products: {}, prices: {} }
 
 const normalize = () => {
   // take the products and prices from stripe and normalize them into a lookup structure
   paymentLinks.forEach((link) => {
     const name = link.metadata.name
     if (name) {
-      normalized[name] = link
+      normalized.links[name] = link
     }
   })
-  products.forEach((product) => (normalized[product.name] = product))
+  products.forEach((product) => (normalized.products[product.name] = product))
   prices.forEach((price) => {
     if (price.nickname) {
-      normalized[price.nickname] = price
+      normalized.prices[price.nickname] = price
     }
   })
+  // console.log('%o', normalized)
 }
 
 const assets = async () => {
   await listProducts()
   await listPrices()
   await listPaymentLinks()
-  await listSubscriptions()
+  // await listSubscriptions()
   normalize()
   await createProducts()
 
