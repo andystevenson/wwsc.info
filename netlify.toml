@@ -201,10 +201,6 @@ function="snacks"
 path="/api/snacks"
 
 [[edge_functions]]
-function="bjo"
-path="/api/bjo"
-
-[[edge_functions]]
 function="halloween"
 path="/api/halloween"
 
