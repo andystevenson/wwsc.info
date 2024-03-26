@@ -582,7 +582,7 @@ const join = {
           conditions: 'With a member',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'once', price: 5, nickname: 'visitors-guest-v2' },
+            { interval: 'once', price: 10, nickname: 'visitors-guest-v3' },
           ],
         },
         {
@@ -591,7 +591,7 @@ const join = {
           conditions: 'A single booking',
           images: ['https://westwarwicks.club/favicon.svg'],
           prices: [
-            { interval: 'once', price: 10, nickname: 'visitors-session-v2' },
+            { interval: 'once', price: 12.5, nickname: 'visitors-session-v3' },
           ],
         },
         {
