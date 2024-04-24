@@ -169,16 +169,16 @@ function="spirits"
 path="/api/spirits"
 
 [[edge_functions]]
+function="bar-food"
+path="/api/bar-food"
+
+[[edge_functions]]
 function="soft-drinks"
 path="/api/soft-drinks"
 
 [[edge_functions]]
 function="bbq"
 path="/api/bbq"
-
-[[edge_functions]]
-function="bar-food"
-path="/api/bar-food"
 
 [[edge_functions]]
 function="tea-coffee"

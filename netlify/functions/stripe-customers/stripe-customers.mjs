@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import Stripe from 'stripe'
 
 const { STRIPE_TEST_SECRET_KEY, STRIPE_SECRET_KEY } = process.env

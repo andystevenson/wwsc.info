@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import fetch from 'node-fetch'
 import { inspect } from 'node:util'
 

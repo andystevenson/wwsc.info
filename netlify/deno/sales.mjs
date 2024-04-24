@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import { date, tz, todayUK } from './dates.mjs'
 
 export const salesToday = (purchases = []) => {

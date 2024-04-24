@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import social from '../../../.cache/ashbourne/new-social-members.json' assert { type: 'json' }
 export const handler = async (event) => {
   const { members } = event.queryStringParameters

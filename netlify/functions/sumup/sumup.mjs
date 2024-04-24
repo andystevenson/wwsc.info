@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import { date, lastOctober } from '../../deno/dates.mjs'
 import gbp from '../../deno/gbp.mjs'
 import sales from './goodtill.mjs'

@@ -1,3 +1,5 @@
+// updated to drive new node version for lambda functions
+
 import ashbourne from '../../../.cache/sumup/sumup-check-card.json' assert { type: 'json' }
 
 export default async (request, context) => {
