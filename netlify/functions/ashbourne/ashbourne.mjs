@@ -18,7 +18,7 @@ const ashbourne2date = (aDate) => {
     .startOf('day')
 }
 
-const members = ashbourne.filter((member) => isMember(member.Status))
+const members = ashbourne.filter((member) => member && isMember(member.Status))
 
 const ashref = members
   .filter((member) => member.AshRef !== '')

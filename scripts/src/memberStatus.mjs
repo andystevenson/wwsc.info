@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 const today = dayjs()
 
 export const isMember = (member) => {
-  const status = member.Status.toLowerCase().trim()
+  const status = member.Status && member.Status.toLowerCase().trim()
   if (status === 'live') return true
 
   const card = member['Card No']
