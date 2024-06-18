@@ -189,6 +189,10 @@ function="sports-teas"
 path="/api/sports-teas"
 
 [[edge_functions]]
+function="euro-2024"
+path="/api/euro-2024"
+
+[[edge_functions]]
 function="kids-menu"
 path="/api/kids-menu"
 
