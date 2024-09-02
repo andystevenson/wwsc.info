@@ -161,16 +161,16 @@ function="wine"
 path="/api/wine"
 
 [[edge_functions]]
+function="bar-food"
+path="/api/bar-food"
+
+[[edge_functions]]
 function="breakfast"
 path="/api/breakfast"
 
 [[edge_functions]]
 function="spirits"
 path="/api/spirits"
-
-[[edge_functions]]
-function="bar-food"
-path="/api/bar-food"
 
 [[edge_functions]]
 function="soft-drinks"
@@ -189,12 +189,12 @@ function="sports-teas"
 path="/api/sports-teas"
 
 [[edge_functions]]
-function="euro-2024"
-path="/api/euro-2024"
-
-[[edge_functions]]
 function="kids-menu"
 path="/api/kids-menu"
+
+[[edge_functions]]
+function="euro-2024"
+path="/api/euro-2024"
 
 [[edge_functions]]
 function="liquer-coffee"
@@ -215,6 +215,14 @@ path="/api/fizz-friday"
 [[edge_functions]]
 function="mothers-day"
 path="/api/mothers-day"
+
+[[edge_functions]]
+function="reception-drinks"
+path="/api/reception-drinks"
+
+[[edge_functions]]
+function="functions"
+path="/api/functions"
 
 [[edge_functions]]
 function="staff"
