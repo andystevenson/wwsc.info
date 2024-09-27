@@ -205,6 +205,14 @@ function="snacks"
 path="/api/snacks"
 
 [[edge_functions]]
+function="functions"
+path="/api/functions"
+
+[[edge_functions]]
+function="tickets"
+path="/api/tickets"
+
+[[edge_functions]]
 function="halloween"
 path="/api/halloween"
 
@@ -219,10 +227,6 @@ path="/api/mothers-day"
 [[edge_functions]]
 function="reception-drinks"
 path="/api/reception-drinks"
-
-[[edge_functions]]
-function="functions"
-path="/api/functions"
 
 [[edge_functions]]
 function="staff"
