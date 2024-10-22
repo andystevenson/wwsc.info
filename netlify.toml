@@ -181,6 +181,10 @@ function="bbq"
 path="/api/bbq"
 
 [[edge_functions]]
+function="sunday-bar-menu"
+path="/api/sunday-bar-menu"
+
+[[edge_functions]]
 function="tea-coffee"
 path="/api/tea-coffee"
 
