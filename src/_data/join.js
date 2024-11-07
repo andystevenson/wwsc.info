@@ -50,7 +50,7 @@ const join = {
           images: ["https://westwarwicks.club/favicon.svg"],
           prices: [
             { interval: "year", price: 1000, nickname: "family-annual-v2" },
-            { interval: "month", price: 100, nickname: "family-monthly-v3" },
+            { interval: "month", price: 100, nickname: "family-monthly-v4" },
             {
               interval: "year",
               price: 1000 * 0.8,
@@ -478,7 +478,7 @@ const join = {
             {
               interval: "month",
               price: 37.5,
-              nickname: "young-adult-monthly-v3",
+              nickname: "young-adult-monthly-v4",
             },
             {
               interval: "year",
